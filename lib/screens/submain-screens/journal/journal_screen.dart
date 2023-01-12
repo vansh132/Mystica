@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/models/Journal/Journal.dart';
+import 'package:mytica/screens/submain-screens/journal/create_journal_screen.dart';
 import 'package:mytica/widgets/Items/journal_item.dart';
-import 'package:mytica/widgets/Items/new_journal.dart';
 import 'package:mytica/widgets/navigation.dart';
 
 class JournalScreen extends StatelessWidget {
@@ -101,7 +101,8 @@ class JournalScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(
+          Navigator.of(context).pushNamed(CreateJournalScreen.routeName);
+          /* showModalBottomSheet(
             context: context,
             builder: (_) {
               return GestureDetector(
@@ -109,7 +110,7 @@ class JournalScreen extends StatelessWidget {
                 child: const NewJournal(),
               );
             },
-          );
+          ); */
         },
         child: const Icon(Icons.add),
       ),

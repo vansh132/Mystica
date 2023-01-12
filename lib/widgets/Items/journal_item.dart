@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mytica/models/Gallery/Album.dart';
 import 'package:intl/intl.dart';
 import 'package:mytica/models/Journal/Journal.dart';
+import 'package:mytica/screens/submain-screens/journal/edit_journal_screen.dart';
 import 'dart:math';
 
-import 'package:mytica/screens/sub-screens/image_screen.dart';
-import 'package:mytica/widgets/Items/edit_album.dart';
-import 'package:mytica/widgets/Items/edit_journal.dart';
-import 'package:mytica/widgets/Items/new_album.dart';
 
 class JournalItem extends StatelessWidget {
   Journal journal;
@@ -34,7 +30,7 @@ class JournalItem extends StatelessWidget {
         child: GridTileBar(
           leading: Text(
             journal.tag,
-            style: TextStyle(color: Colors.white60), 
+            style: TextStyle(color: Colors.white60),
           ),
           backgroundColor: Colors.black87, //To-do (Vansh): Change the color
           title: Text(
@@ -58,10 +54,10 @@ class JournalItem extends StatelessWidget {
       ),
       child: GestureDetector(
           onTap: () {
-                        //Navigation: JournalScreen to EditJournalScreen
+            //Navigation: JournalScreen to EditJournalScreen
             //journal id passed by argement
             Navigator.of(context)
-                .pushNamed(EditJournal.routeName, arguments: journal.id);
+                .pushNamed(EditJournalScreen.routeName, arguments: journal.id);
           },
           child: Card(
             elevation: 14,

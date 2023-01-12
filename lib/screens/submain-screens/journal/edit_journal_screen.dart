@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class EditJournal extends StatelessWidget {
-  static const String routeName = '/edit-journal';
-  const EditJournal({super.key});
+class EditJournalScreen extends StatelessWidget {
+  static const routeName = "/edit-journal-screen";
+  const EditJournalScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class EditJournal extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        actions: [IconButton(onPressed: _updateData, icon: Icon(Icons.save))],
+        title: Text("Edit journal"),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -36,11 +36,11 @@ class EditJournal extends StatelessWidget {
             Container(
               width: 500,
               height: 500,
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               // color: Colors.red,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(22),
-                  gradient: LinearGradient(colors: [
+                  gradient: const LinearGradient(colors: [
                     Color(0xffEBF5FF),
                     Color(0xffADD8FF)
                   ], //final - 1
@@ -55,7 +55,7 @@ class EditJournal extends StatelessWidget {
                       decoration: InputDecoration(label: Text("Title")),
                       initialValue: journalTitle,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
                     TextFormField(
@@ -63,13 +63,17 @@ class EditJournal extends StatelessWidget {
                       decoration: InputDecoration(label: Text("Description")),
                       maxLines: 4,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
                     TextFormField(
                       initialValue: journalTag,
                       decoration: InputDecoration(label: Text("Tag")),
                     ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    IconButton(onPressed: _updateData, icon: Icon(Icons.save))
                   ],
                 ),
               ),

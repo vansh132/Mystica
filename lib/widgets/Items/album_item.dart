@@ -6,8 +6,6 @@ import 'dart:math';
 import 'package:mytica/screens/sub-screens/image_screen.dart';
 import 'package:mytica/screens/submain-screens/album/create_album_screen.dart';
 import 'package:mytica/screens/submain-screens/album/edit_album_screen.dart';
-import 'package:mytica/widgets/Items/edit_album.dart';
-import 'package:mytica/widgets/Items/new_album.dart';
 
 class AlbumItem extends StatelessWidget {
   Album album;
