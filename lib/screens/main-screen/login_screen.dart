@@ -158,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             user.password == password) {
                                           print(user);
                                           print(username + " " + password);
+                                          _db.close();
                                           Navigator.of(context)
                                               .pushNamed(HomeScreen.routeName);
                                         } else {
@@ -173,11 +174,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     Navigator.of(ctx).pop();
                                                   },
                                                   child: Container(
-                                                    color: Colors.green,
+                                                    color: Colors.red,
                                                     padding:
                                                         const EdgeInsets.all(
                                                             14),
-                                                    child: const Text("okay"),
+                                                    child: const Text("Okay"),
                                                   ),
                                                 ),
                                               ],
@@ -207,7 +208,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         onPressed: () {
                                           _db.close();
                                           Navigator.of(context).pushNamed(
-                                              SignUpScreen.routeName);
+                                              SignUpScreen.routeName,
+                                              arguments: _db);
                                         },
                                         child: const Text("Sign up"))
                                   ],

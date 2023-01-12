@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/album/album_screen.dart';
 import 'package:mytica/screens/submain-screens/journal/journal_screen.dart';
 import 'package:mytica/screens/submain-screens/notebook/notebook_screen.dart';

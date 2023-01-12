@@ -1,20 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:mytica/data/local/db/app_db.dart';
+import 'package:drift/drift.dart' as drift;
 
-class EditJournalScreen extends StatelessWidget {
+class EditJournalScreen extends StatefulWidget {
   static const routeName = "/edit-journal-screen";
   const EditJournalScreen({super.key});
 
   @override
+  State<EditJournalScreen> createState() => _EditJournalScreenState();
+}
+
+class _EditJournalScreenState extends State<EditJournalScreen> {
+  final _journalTitleController = TextEditingController();
+  final _journalDescriptionController = TextEditingController();
+  final _journalTagController = TextEditingController();
+
+  late AppDb _db;
+
+  @override
+  void initState() {
+    super.initState();
+    _db = AppDb();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final journalId = ModalRoute.of(context)?.settings.arguments as String;
+    final journal = ModalRoute.of(context)?.settings.arguments as Journal;
+    print("Journal value");
+    print(journal);
+    _journalTitleController.text = journal.title;
+    _journalDescriptionController.text = journal.body;
+    _journalTagController.text = journal.tag;
+
     //To-Do: Retrieve journal data
-    print(journalId);
+    print("Journal id (edit screen)- ${journal.id}");
+
     //To-Do: Update journal data
-    void _updateData() {}
-    //To-Do (Vansh): Set initial values to fields
-    final journalTitle = 'Goa trip';
-    final journalDescription = 'Final semester trip with juniors';
-    final journalTag = '#presidency';
+    void _updateData() async {
+      final journalEntity = JournalsCompanion(
+          id: drift.Value(journal.id),
+          title: drift.Value(_journalTitleController.text),
+          body: drift.Value(_journalDescriptionController.text),
+          tag: drift.Value(_journalTagController.text),
+          createdAt: drift.Value(journal.createdAt));
+
+      bool isUpdated = await _db.updateJournal(journalEntity);
+      if (isUpdated) {
+        print("Journal Added $isUpdated");
+        _db.close();
+        Navigator.of(context).pop();
+      } else {
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text("Failed"),
+            content: const Text("Journal Not Added. Please try again later."),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Container(
+                  color: Colors.red,
+                  padding: const EdgeInsets.all(14),
+                  child: const Text("Okay"),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -52,28 +108,30 @@ class EditJournalScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
-                      decoration: InputDecoration(label: Text("Title")),
-                      initialValue: journalTitle,
+                      controller: _journalTitleController,
+                      decoration: const InputDecoration(label: Text("Title")),
                     ),
                     const SizedBox(
                       height: 16,
                     ),
                     TextFormField(
-                      initialValue: journalDescription,
-                      decoration: InputDecoration(label: Text("Description")),
+                      controller: _journalDescriptionController,
+                      decoration:
+                          const InputDecoration(label: Text("Description")),
                       maxLines: 4,
                     ),
                     const SizedBox(
                       height: 16,
                     ),
                     TextFormField(
-                      initialValue: journalTag,
-                      decoration: InputDecoration(label: Text("Tag")),
+                      controller: _journalTagController,
+                      decoration: const InputDecoration(label: Text("Tag")),
                     ),
                     const SizedBox(
                       height: 16,
                     ),
-                    IconButton(onPressed: _updateData, icon: Icon(Icons.save))
+                    IconButton(
+                        onPressed: _updateData, icon: const Icon(Icons.save))
                   ],
                 ),
               ),

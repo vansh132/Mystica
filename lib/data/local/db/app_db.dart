@@ -54,6 +54,11 @@ class AppDb extends _$AppDb {
         .getSingle();
   }
 
+  // Update Journal
+  Future<bool> updateJournal(JournalsCompanion entity) async {
+    return await update(journals).replace(entity);
+  }
+
   // Albums
   // Get All Albums
   Future<List<Album>> getAlbums() async {
