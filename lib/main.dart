@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mytica/screens/sub-screens/image_screen.dart';
+import 'package:mytica/screens/submain-screens/album/image/add_image_screen.dart';
+import 'package:mytica/screens/submain-screens/album/image/image_screen.dart';
 import 'package:mytica/screens/submain-screens/album/create_album_screen.dart';
 import 'package:mytica/screens/submain-screens/album/edit_album_screen.dart';
 import 'package:mytica/screens/submain-screens/journal/create_journal_screen.dart';
@@ -52,16 +53,18 @@ class MyApp extends StatelessWidget {
         NotebookScreen.routeName: (ctx) => const NotebookScreen(),
         //journal-screens
         JournalScreen.routeName: (ctx) => const JournalScreen(),
-        CreateJournalScreen.routeName:(ctx) => const CreateJournalScreen(),
-        EditJournalScreen.routeName:(context) => const EditJournalScreen(),
+        CreateJournalScreen.routeName: (ctx) => const CreateJournalScreen(),
+        EditJournalScreen.routeName: (context) => const EditJournalScreen(),
         //albums-screens
         AlbumScreen.routeName: (ctx) => const AlbumScreen(),
         CreateAlbum.routeName: (ctx) => const CreateAlbum(),
         EditAlbumScreen.routeName: (ctx) => EditAlbumScreen(),
+        //Other-screens
         TodoScreen.routeName: (ctx) => const TodoScreen(),
         ReminderScreen.routeName: (ctx) => const ReminderScreen(),
-        //sub-screens
+        //image-screens
         ImageScreen.routeName: (ctx) => const ImageScreen(),
+        AddImageScreen.routeName: (ctx) => const AddImageScreen(),
         //testing-screen
         TestingScreen.routeName: (ctx) => TestingScreen()
       },

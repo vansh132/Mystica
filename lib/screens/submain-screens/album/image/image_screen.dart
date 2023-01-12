@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:mytica/models/Gallery/ImageAttr.dart';
+import 'package:mytica/screens/submain-screens/album/image/add_image_screen.dart';
 import 'package:mytica/widgets/Items/image_item.dart';
 import 'package:mytica/widgets/Items/new_image.dart';
 import 'package:mytica/widgets/navigation.dart';
@@ -132,7 +133,8 @@ class _ImageScreenState extends State<ImageScreen> {
           )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(
+          Navigator.of(context).pushNamed(AddImageScreen.routeName);
+          /* showModalBottomSheet(
             context: context,
             builder: (_) {
               return GestureDetector(
@@ -140,7 +142,7 @@ class _ImageScreenState extends State<ImageScreen> {
                 child: const NewImage(),
               );
             },
-          );
+          ); */
         },
         child: const Icon(Icons.add),
       ),

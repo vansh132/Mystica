@@ -9,25 +9,35 @@ class ImageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TO-DO: delete the image
+    void _deleteImage() {
+      print("Image deleted..");
+    }
+
     return Card(
         margin: const EdgeInsets.all(24),
         elevation: 7,
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  image.tag,
-                  style: TextStyle(fontSize: 16),
-                ),
-                IconButton(onPressed: () {}, icon: Icon(Icons.delete_rounded)),
-                IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
-              ],
+            Container(
+              color: Colors.black12,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    image.tag,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  IconButton(
+                      onPressed: _deleteImage,
+                      icon: Icon(Icons.delete_rounded)),
+                  // IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+                ],
+              ),
             ),
-            SizedBox(
+/*             SizedBox(
               height: 8,
-            ),
+            ), */
             Image.file(
               File(image.imagePath),
               fit: BoxFit.cover,
