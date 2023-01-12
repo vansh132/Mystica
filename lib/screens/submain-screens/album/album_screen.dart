@@ -20,13 +20,13 @@ class AlbumScreen extends StatelessWidget {
         createdAt: DateTime.now(),
       ),
       Album(
-        id: '1',
+        id: '2',
         title: "Gujarat Trip",
         desription: "Final semester trip with Juniors",
         createdAt: DateTime.now(),
       ),
       Album(
-        id: '1',
+        id: '3',
         title: "Bangalore Trip",
         desription: "Final semester trip with Juniors",
         createdAt: DateTime.now(),
