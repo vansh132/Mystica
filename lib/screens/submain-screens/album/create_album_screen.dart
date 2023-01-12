@@ -36,9 +36,6 @@ class _CreateAlbumState extends State<CreateAlbum> {
 
   @override
   Widget build(BuildContext context) {
-    final journalTitle = 'Goa trip';
-    final journalDescription = 'Final semester trip with juniors';
-    final journalTag = '#presidency';
     return Scaffold(
         appBar: AppBar(
           title: Text("Create an album"),
