@@ -83,7 +83,7 @@ class _ImageScreenState extends State<ImageScreen> {
           child: Row(
             children: [
               Container(
-                width: MediaQuery.of(context).size.width * 0.18,
+                width: MediaQuery.of(context).size.width * 0.12,
                 child: Column(
                   children: const [NavigationRow()],
                 ),
@@ -95,7 +95,7 @@ class _ImageScreenState extends State<ImageScreen> {
               SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.all(16),
-                  width: MediaQuery.of(context).size.width * 0.60,
+                  width: MediaQuery.of(context).size.width * 0.72,
                   // color: Colors.red,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
