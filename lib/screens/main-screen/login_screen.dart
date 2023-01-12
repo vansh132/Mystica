@@ -12,19 +12,13 @@ class LoginScreen extends StatelessWidget {
         ),
         body: Container(
           // color: Colors.red,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
                 'assets/images/image2.jpg',
               ),
               fit: BoxFit.cover,
             ),
-/*           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
-                stops: [0.4, 0.7],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight), */
           ),
           padding: const EdgeInsets.all(24),
           child: Row(
@@ -62,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Container(
@@ -73,10 +67,10 @@ class LoginScreen extends StatelessWidget {
                                           image: AssetImage(
                                               "assets/login_logo.png"))),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 25,
                                 ),
-                                Text(
+                                const Text(
                                   "Mystica",
                                   style: TextStyle(
                                       fontSize: 30,
@@ -85,7 +79,7 @@ class LoginScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Padding(
+                          const Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
                               "Home of emotions, experiences, observations, thoughts, events and many more insights of          sub-conscious",
@@ -93,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                                   fontSize: 16, color: Colors.black54),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           Padding(
@@ -133,13 +127,13 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 24,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Don't have an account? ",
                                       style: TextStyle(),
                                       textAlign: TextAlign.center,
