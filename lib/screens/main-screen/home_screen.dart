@@ -212,7 +212,7 @@ class HomeScreen extends StatelessWidget {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: const [
-                                Text("Gallery"),
+                                Text("Album"),
                                 Icon(Icons.arrow_forward_rounded)
                               ]),
                         ],
