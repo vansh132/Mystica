@@ -3,7 +3,6 @@ import 'package:mytica/models/Gallery/Album.dart';
 import 'package:mytica/screens/submain-screens/album/create_album_screen.dart';
 import 'package:mytica/widgets/Items/album_item.dart';
 import 'package:mytica/widgets/navigation.dart';
-import 'package:mytica/widgets/Items/new_album.dart';
 
 class AlbumScreen extends StatelessWidget {
   static const String routeName = '/album-screen';
