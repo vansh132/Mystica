@@ -3,8 +3,7 @@ import 'package:mytica/models/Gallery/Album.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 
-import 'package:mytica/screens/sub-screens/image_screen.dart';
-import 'package:mytica/screens/submain-screens/album/create_album_screen.dart';
+import 'package:mytica/screens/submain-screens/album/image/image_screen.dart';
 import 'package:mytica/screens/submain-screens/album/edit_album_screen.dart';
 
 class AlbumItem extends StatelessWidget {
