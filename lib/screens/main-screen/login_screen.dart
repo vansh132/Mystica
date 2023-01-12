@@ -31,17 +31,18 @@ class LoginScreen extends StatelessWidget {
                   elevation: 14,
                   child: Container(
                     decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [
-                          Color(0xffEBF5FF),
-                          Color(0xffADD8FF)
-                        ], //final - 1
-                            stops: [
-                          0.4,
-                          0.7
-                        ],
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft)),
+                      gradient: LinearGradient(
+                          colors: [
+                            Color(0xffEBF5FF),
+                            Color(0xffADD8FF)
+                          ], //final - 1
+                          stops: [
+                            0.4,
+                            0.7
+                          ],
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft),
+                    ),
                     padding: const EdgeInsets.all(24),
                     alignment: Alignment.center,
                     // color: Colors.red,
@@ -88,7 +89,10 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(
-                            height: 30,
+                            height: 14,
+                          ),
+                          const SizedBox(
+                            height: 14,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -140,8 +144,9 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                     TextButton(
                                         onPressed: () {
-                                          Navigator.of(context).pushNamed(
-                                              SignUpScreen.routeName);
+                                          Navigator.of(context)
+                                              .pushReplacementNamed(
+                                                  SignUpScreen.routeName);
                                         },
                                         child: Text("Sign up"))
                                   ],
@@ -168,6 +173,9 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(
+                width: 36,
+              ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(48),
                 child: Container(
@@ -181,7 +189,7 @@ class LoginScreen extends StatelessWidget {
                           0.7
                         ], begin: Alignment.topRight, end: Alignment.bottomLeft)), */
                   alignment: Alignment.center,
-                  color: Colors.black87,
+                  color: Colors.black87, //To-Do (Vansh): decrease opacity
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: Column(

@@ -66,6 +66,7 @@ flutter:
     - assets/logo_resized_1.png
     - assets/login_logo.png
     - assets/icon.png
+    - assets/camera.png
     - assets/images/image1.jpg
     - assets/images/image2.jpg
     - assets/images/image3.jpg
