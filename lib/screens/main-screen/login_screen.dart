@@ -21,7 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _usernameSignupEditController = TextEditingController();
   final _passwrodSignupEditController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,12 +36,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               fit: BoxFit.cover,
             ),
-/*           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
-                stops: [0.4, 0.7],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight), */
           ),
           padding: const EdgeInsets.all(24),
           child: Row(
@@ -55,17 +48,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   elevation: 14,
                   child: Container(
                     decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [
-                          Color(0xffEBF5FF),
-                          Color(0xffADD8FF)
-                        ], //final - 1
-                            stops: [
-                          0.4,
-                          0.7
-                        ],
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft)),
+                      gradient: LinearGradient(
+                          colors: [
+                            Color(0xffEBF5FF),
+                            Color(0xffADD8FF)
+                          ], //final - 1
+                          stops: [
+                            0.4,
+                            0.7
+                          ],
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft),
+                    ),
                     padding: const EdgeInsets.all(24),
                     alignment: Alignment.center,
                     // color: Colors.red,
@@ -96,13 +90,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 const Text(
                                   "Mystica",
-                                  style: TextStyle(fontSize: 30),
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
                           ),
                           const Padding(
-                            padding: const EdgeInsets.all(16.0),
+                            padding: EdgeInsets.all(16.0),
                             child: Text(
                               "Home of emotions, experiences, observations, thoughts, events and many more insights of          sub-conscious",
                               style: TextStyle(
@@ -110,7 +106,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const SizedBox(
-                            height: 30,
+                            height: 14,
+                          ),
+                          const SizedBox(
+                            height: 14,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -131,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const SizedBox(
-                            height: 24,
+                            height: 16,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -206,10 +205,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     TextButton(
                                         onPressed: () {
-                                          _db.close();
-                                          Navigator.of(context).pushNamed(
-                                              SignUpScreen.routeName,
-                                              arguments: _db);
+                                          Navigator.of(context)
+                                              .pushReplacementNamed(
+                                                  SignUpScreen.routeName);
                                         },
                                         child: const Text("Sign up"))
                                   ],
@@ -236,52 +234,63 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              Container(
-                /* decoration: const BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                  Color(0xffEBF5FF),
-                  Color(0xffADD8FF)
-                ], //final - 1
-                        stops: [
-                      0.4,
-                      0.7
-                    ], begin: Alignment.topRight, end: Alignment.bottomLeft)), */
-                alignment: Alignment.center,
-                // color: Colors.yellow,
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width * 0.5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("data")
-                    /* Container(
-                        margin: const EdgeInsets.all(8),
-                        // color: Colors.black,
-                        padding: const EdgeInsets.all(24),
-                        height: MediaQuery.of(context).size.height * 0.6,
-                        width: MediaQuery.of(context).size.width,
-                        alignment: Alignment.center,
-                        child: const CircleAvatar(
-                          radius: 300,
-                          backgroundColor: Colors.transparent,
-                          child: Image(
-                            image: AssetImage('assets/logo_resized_1.png'),
-                            height: 300,
-                            width: 300,
-                          ),
-                        )), */
-                    /* Container(
-                      margin: const EdgeInsets.all(8),
-                      height: MediaQuery.of(context).size.height * 0.10,
-                      width: MediaQuery.of(context).size.width,
-                      alignment: Alignment.center,
-                      // color: Colors.blueGrey,
-                      child: Text(
-                        "Mystica",
-                        style: TextStyle(fontSize: 48),
+              const SizedBox(
+                width: 36,
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(48),
+                child: Container(
+                  /* decoration: const BoxDecoration(
+                        gradient: LinearGradient(colors: [
+                      Color(0xffEBF5FF),
+                      Color(0xffADD8FF)
+                    ], //final - 1
+                            stops: [
+                          0.4,
+                          0.7
+                        ], begin: Alignment.topRight, end: Alignment.bottomLeft)), */
+                  alignment: Alignment.center,
+                  color: Colors.black87, //To-Do (Vansh): decrease opacity
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 150,
+                        height: 100,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                          image: AssetImage("assets/icon.png"),
+                        )),
                       ),
-                    ) */
-                  ],
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      const Text(
+                        "Start writing, no matter what,",
+                        style: TextStyle(
+                          fontSize: 40,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      const Text(
+                        "The water does not flow until the faucet is turned on",
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
