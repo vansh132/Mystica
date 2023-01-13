@@ -35,7 +35,7 @@ class NavigationRow extends StatelessWidget {
                     .pushReplacementNamed(NotebookScreen.routeName);
               },
               child: Text(
-                "Notebook",
+                "Notebooks",
                 style: TextStyle(fontSize: 22),
               )),
           Divider(
