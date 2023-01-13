@@ -156,6 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             height: 36,
                             child: ElevatedButton(
                               onPressed: () {
+                                print("checking creditentials");
                                 int res = 0;
                                 if (_usernameSignupEditController.text.isNotEmpty &&
                                     _fullnameSignupEditController
@@ -177,8 +178,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       });
                                 }
 
-                                // Navigator.of(context)
-                                // .pushNamed(HomeScreen.routeName);
+                                Navigator.of(context)
+                                    .pushNamed(LoginScreen.routeName);
                               },
                               child: Text(
                                 "Sign up",

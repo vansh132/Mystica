@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const Padding(
-                            padding: const EdgeInsets.all(16.0),
+                            padding: EdgeInsets.all(16.0),
                             child: Text(
                               "Home of emotions, experiences, observations, thoughts, events and many more insights of          sub-conscious",
                               style: TextStyle(
@@ -116,7 +116,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: TextFormField(
                               controller: _usernameSignupEditController,
                               decoration: const InputDecoration(
-                                
                                   border: UnderlineInputBorder(),
                                   labelText: 'Username'),
                             ),

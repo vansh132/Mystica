@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mytica/data/local/db/app_db.dart';
+import 'package:drift/drift.dart' as drift;
 
 class CreateJournalScreen extends StatefulWidget {
   static const routeName = "/create-journal-screen";
@@ -9,13 +11,21 @@ class CreateJournalScreen extends StatefulWidget {
 }
 
 class _CreateJournalScreenState extends State<CreateJournalScreen> {
+  late AppDb _db;
+
+  @override
+  void initState() {
+    super.initState();
+    _db = AppDb();
+  }
+
   @override
   Widget build(BuildContext context) {
     final _journalTitleController = TextEditingController();
     final _journalDescriptionController = TextEditingController();
     final _journalTagController = TextEditingController();
 
-    void _addJournal() {
+    void _addJournal() async {
       final enteredJournalTitle = _journalTitleController.text;
       final enteredJournalDescription = _journalDescriptionController.text;
       final enteredJournalTag = _journalTagController.text;
@@ -36,7 +46,38 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
       print(enteredJournalDescription);
       print(enteredJournalTag);
 
-      // Navigator.of(context).pop();
+      final journalEntity = JournalsCompanion(
+          title: drift.Value(enteredJournalTitle),
+          body: drift.Value(enteredJournalDescription),
+          tag: drift.Value(enteredJournalTag),
+          createdAt: drift.Value(DateTime.now()));
+
+      int res = await _db.insertJournal(journalEntity);
+      if (res != 0) {
+        print("Journal Added $res");
+        _db.close();
+        Navigator.of(context).pop();
+      } else {
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text("Failed"),
+            content: const Text("Journal Not Added. Please try again later."),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Container(
+                  color: Colors.red,
+                  padding: const EdgeInsets.all(14),
+                  child: const Text("Okay"),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
     }
 
     return Scaffold(

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mytica/models/Journal/Journal.dart';
+import 'package:mytica/data/local/db/app_db.dart';
+// import 'package:mytica/models/Journal/Journal.dart';
 import 'package:mytica/screens/submain-screens/journal/edit_journal_screen.dart';
 import 'dart:math';
 
-
-class JournalItem extends StatelessWidget {
+class JournalItem extends StatefulWidget {
   Journal journal;
   JournalItem(this.journal);
 
+  @override
+  State<JournalItem> createState() => _JournalItemState();
+}
+
+class _JournalItemState extends State<JournalItem> {
   @override
   Widget build(BuildContext context) {
     //To-do (Vansh): Change the colors
@@ -29,12 +34,12 @@ class JournalItem extends StatelessWidget {
         elevation: 14,
         child: GridTileBar(
           leading: Text(
-            journal.tag,
+            widget.journal.tag,
             style: TextStyle(color: Colors.white60),
           ),
           backgroundColor: Colors.black87, //To-do (Vansh): Change the color
           title: Text(
-            DateFormat('dd-MM-yyyy').format(journal.createdAt),
+            DateFormat('dd-MM-yyyy').format(widget.journal.createdAt),
             textAlign: TextAlign.end,
           ),
 /*           trailing: IconButton(
@@ -57,12 +62,15 @@ class JournalItem extends StatelessWidget {
             //Navigation: JournalScreen to EditJournalScreen
             //journal id passed by argement
             Navigator.of(context)
-                .pushNamed(EditJournalScreen.routeName, arguments: journal.id);
+                .pushNamed(EditJournalScreen.routeName,
+                    arguments: widget.journal)
+                .then((value) => setState(() {}));
+            ;
           },
           child: Card(
             elevation: 14,
             child: Container(
-              padding: EdgeInsets.all(32),
+              padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
                 colors[Random().nextInt(5)],
@@ -71,19 +79,19 @@ class JournalItem extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    journal.title,
-                    style: TextStyle(
+                    widget.journal.title,
+                    style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Text(
-                    journal.description,
-                    style: TextStyle(
+                    widget.journal.body,
+                    style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
