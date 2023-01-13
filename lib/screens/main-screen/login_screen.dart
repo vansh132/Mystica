@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:mytica/data/local/db/app_db.dart';
 import '../main-screen/home_screen.dart';
 import '../main-screen/signup_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static const String routeName = "/login-screen";
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late AppDb _db;
+
+  @override
+  void initState() {
+    super.initState();
+    _db = AppDb();
+  }
+
+  final _usernameSignupEditController = TextEditingController();
+  final _passwrodSignupEditController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +114,9 @@ class LoginScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: TextFormField(
+                              controller: _usernameSignupEditController,
                               decoration: const InputDecoration(
+                                
                                   border: UnderlineInputBorder(),
                                   labelText: 'Username'),
                             ),
@@ -105,6 +124,7 @@ class LoginScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: TextFormField(
+                              controller: _passwrodSignupEditController,
                               decoration: const InputDecoration(
                                   border: UnderlineInputBorder(),
                                   labelText: 'Password'),
@@ -121,9 +141,51 @@ class LoginScreen extends StatelessWidget {
                                 SizedBox(
                                   height: 36,
                                   child: ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pushNamed(HomeScreen.routeName);
+                                    onPressed: () async {
+                                      if (_usernameSignupEditController
+                                              .text.isNotEmpty &&
+                                          _passwrodSignupEditController
+                                              .text.isNotEmpty) {
+                                        String username =
+                                            _usernameSignupEditController.text
+                                                .toLowerCase();
+                                        String password =
+                                            _passwrodSignupEditController.text;
+                                        final user =
+                                            await _db.getUser(username);
+
+                                        if (user.username == username &&
+                                            user.password == password) {
+                                          print(user);
+                                          print(username + " " + password);
+                                          _db.close();
+                                          Navigator.of(context)
+                                              .pushNamed(HomeScreen.routeName);
+                                        } else {
+                                          showDialog(
+                                            context: context,
+                                            builder: (ctx) => AlertDialog(
+                                              title: const Text("Login Failed"),
+                                              content: const Text(
+                                                  "Username or password is incorrect"),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(ctx).pop();
+                                                  },
+                                                  child: Container(
+                                                    color: Colors.red,
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            14),
+                                                    child: const Text("Okay"),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+                                      }
                                     },
                                     child: const Text(
                                       "Login",

@@ -1,9 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/screens/main-screen/login_screen.dart';
-import './home_screen.dart';
+import 'package:drift/drift.dart' as drift;
+import '../../data/local/db/app_db.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   static const String routeName = '/signup-screen';
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  late AppDb _db;
+
+  @override
+  void initState() {
+    super.initState();
+    _db = AppDb();
+  }
+
+  final _fullnameSignupEditController = TextEditingController();
+  final _usernameSignupEditController = TextEditingController();
+  final _passwrodSignupEditController = TextEditingController();
+
+  @override
+  void dispose() {
+    _db.close();
+    // _fullnameSignupEditController.dispose();
+    // _usernameSignupEditController.dispose();
+    // _passwrodSignupEditController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,16 +132,19 @@ class SignUpScreen extends StatelessWidget {
                             height: 16,
                           ),
                           TextFormField(
+                            controller: _fullnameSignupEditController,
                             decoration: const InputDecoration(
                                 border: UnderlineInputBorder(),
                                 labelText: 'Enter Full Name'),
                           ),
                           TextFormField(
+                            controller: _usernameSignupEditController,
                             decoration: const InputDecoration(
                                 border: UnderlineInputBorder(),
                                 labelText: 'Create Username'),
                           ),
                           TextFormField(
+                            controller: _passwrodSignupEditController,
                             decoration: const InputDecoration(
                                 border: UnderlineInputBorder(),
                                 labelText: 'Create Password'),
@@ -125,8 +156,29 @@ class SignUpScreen extends StatelessWidget {
                             height: 36,
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context)
-                                    .pushNamed(HomeScreen.routeName);
+                                int res = 0;
+                                if (_usernameSignupEditController.text.isNotEmpty &&
+                                    _fullnameSignupEditController
+                                        .text.isNotEmpty &&
+                                    _passwrodSignupEditController
+                                        .text.isNotEmpty) {
+                                  final userEntity = UsersCompanion(
+                                      username: drift.Value(
+                                          _usernameSignupEditController.text
+                                              .toLowerCase()),
+                                      fullname: drift.Value(
+                                          _fullnameSignupEditController.text),
+                                      password: drift.Value(
+                                          _passwrodSignupEditController.text));
+                                  _db.insertUser(userEntity).then((value) => {
+                                        value != 0
+                                            ? Navigator.of(context).pop()
+                                            : 1
+                                      });
+                                }
+
+                                // Navigator.of(context)
+                                // .pushNamed(HomeScreen.routeName);
                               },
                               child: Text(
                                 "Sign up",
