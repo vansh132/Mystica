@@ -4,8 +4,8 @@ import 'package:mytica/data/local/entity/album_entity.dart';
 import 'package:mytica/data/local/entity/image_entity.dart';
 import 'package:mytica/data/local/entity/journal_entity.dart';
 import 'package:mytica/data/local/entity/user_entity.dart';
-import 'package:drift/native.dart';
 import 'package:path/path.dart' as path;
+import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 
 part 'app_db.g.dart';
@@ -13,7 +13,6 @@ part 'app_db.g.dart';
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
-    // final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(path.join(dbFolder.path, 'mystica.sqlite'));
     return NativeDatabase(file);
   });

@@ -1037,4 +1037,5 @@ abstract class _$AppDb extends GeneratedDatabase {
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [users, journals, albums, myImages];
+
 }
