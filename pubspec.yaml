@@ -71,6 +71,7 @@ flutter:
   assets:
     - assets/logo_resized_1.png
     - assets/login_logo.png
+    - assets/icons.png
     - assets/images/image1.jpg
     - assets/images/image2.jpg
     - assets/images/image3.jpg
@@ -89,10 +90,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: KronaOne
+      fonts:
+        - asset: assets/fonts/KronaOne-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

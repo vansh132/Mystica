@@ -76,7 +76,33 @@ class _JournalScreenState extends State<JournalScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Journal"),
+        title: const Center(child: Text("Journal")),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Row(
+                  children: [
+                    TextButton(
+                      child: Text(
+                        "Log out",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        print("Log out ");
+                      },
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Icon(Icons.logout_rounded),
+                    SizedBox(
+                      width: 8,
+                    ),
+                  ],
+                ),
+              )),
+        ],
       ),
       body: FutureBuilder<List<Journal>>(
         future: _db.getJournals(),
@@ -110,9 +136,33 @@ class _JournalScreenState extends State<JournalScreen> {
               child: Row(
                 children: [
                   Container(
+                    color: Color(0xff001427),
                     width: MediaQuery.of(context).size.width * 0.12,
+                    height: MediaQuery.of(context).size.height,
                     child: Column(
-                      children: const [NavigationRow()],
+                      children: const [
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Text(
+                          "Quote of the Day",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xffCAF0F8)),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          "\" Life is either a daring adventure or nothing at all \"",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              color: Color(0xffedf6f9)),
+                          textAlign: TextAlign.center,
+                        ),
+                        NavigationRow()
+                      ],
                     ),
                   ),
                   const VerticalDivider(

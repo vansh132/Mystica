@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: myColor,
+        textTheme: TextTheme(displayMedium: TextStyle(color: Color(0xfffefae0)))
       ),
       home: GetStartedScreen(),
       routes: {
