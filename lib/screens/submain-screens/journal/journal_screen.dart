@@ -18,6 +18,12 @@ class _JournalScreenState extends State<JournalScreen> {
   @override
   void initState() {
     super.initState();
+    /*  final data = [
+      _ChartData('David', 25),
+      _ChartData('Steve', 38),
+      _ChartData('Jack', 34),
+      _ChartData('Others', 52)
+    ]; */
     // _db = AppDb();
   }
 
@@ -84,7 +90,7 @@ class _JournalScreenState extends State<JournalScreen> {
                 child: Row(
                   children: [
                     TextButton(
-                      child: Text(
+                      child: const Text(
                         "Log out",
                         style: TextStyle(color: Colors.white),
                       ),
@@ -92,11 +98,11 @@ class _JournalScreenState extends State<JournalScreen> {
                         print("Log out ");
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
-                    Icon(Icons.logout_rounded),
-                    SizedBox(
+                    const Icon(Icons.logout_rounded),
+                    const SizedBox(
                       width: 8,
                     ),
                   ],
@@ -136,7 +142,7 @@ class _JournalScreenState extends State<JournalScreen> {
               child: Row(
                 children: [
                   Container(
-                    color: Color(0xff001427),
+                    color: const Color(0xff001427),
                     width: MediaQuery.of(context).size.width * 0.12,
                     height: MediaQuery.of(context).size.height,
                     child: Column(
@@ -188,6 +194,34 @@ class _JournalScreenState extends State<JournalScreen> {
                     width: 4,
                     color: Colors.grey,
                   ),
+                  Container(
+                    // color: Colors.white,
+                    padding: const EdgeInsets.all(16),
+                    width: MediaQuery.of(context).size.width * 0.1745,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      // ignore: prefer_const_literals_to_create_immutables
+                      children: [
+                        const Text(
+                          "Journal Overview:",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Journal count: ${journals.length}",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             );
@@ -203,16 +237,6 @@ class _JournalScreenState extends State<JournalScreen> {
           Navigator.of(context)
               .pushNamed(CreateJournalScreen.routeName)
               .then((value) => setState(() {}));
-          ;
-          /* showModalBottomSheet(
-            context: context,
-            builder: (_) {
-              return GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                child: const NewJournal(),
-              );
-            },
-          ); */
         },
         child: const Icon(Icons.add),
       ),

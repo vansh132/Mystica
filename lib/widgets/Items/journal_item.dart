@@ -44,7 +44,7 @@ class _JournalItemState extends State<JournalItem> {
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(DetailJournalScreen.routeName);
+        Navigator.of(context).pushNamed(DetailJournalScreen.routeName, arguments: [widget.journal, color]);
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(24),
