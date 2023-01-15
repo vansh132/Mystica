@@ -40,7 +40,7 @@ class _DetailJournalScreenState extends State<DetailJournalScreen> {
                   margin: const EdgeInsets.all(32),
                   padding: const EdgeInsets.all(16),
                   // color: Colors.red,
-                  width: double.infinity,
+                  width: MediaQuery.of(context).size.width * 0.5,
                   child: Column(
                     children: [
                       Text(

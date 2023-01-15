@@ -3,6 +3,7 @@ import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/journal/create_journal_screen.dart';
 import 'package:mytica/widgets/Items/journal_item.dart';
 import 'package:mytica/widgets/navigation.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 class JournalScreen extends StatefulWidget {
   static const String routeName = '/journal-screen';
@@ -18,12 +19,7 @@ class _JournalScreenState extends State<JournalScreen> {
   @override
   void initState() {
     super.initState();
-    /*  final data = [
-      _ChartData('David', 25),
-      _ChartData('Steve', 38),
-      _ChartData('Jack', 34),
-      _ChartData('Others', 52)
-    ]; */
+
     // _db = AppDb();
   }
 
@@ -36,49 +32,13 @@ class _JournalScreenState extends State<JournalScreen> {
   @override
   Widget build(BuildContext context) {
     _db = AppDb();
-    //To-do: Retrieve journals from database and convert it into List<Journal>.
-    // List<Journal> journals = [
-    //   Journal(
-    //     id: "Jid",
-    //     title: "Mid term",
-    //     description:
-    //         "I have worked hard and i got the desired results in mid term exams in fifth semester",
-    //     tag: "#presidency",
-    //     createdAt: DateTime.now(),
-    //   ),
-    //   Journal(
-    //     id: "Jid",
-    //     title: "Mid term",
-    //     description:
-    //         "I have worked hard and i got the desired results in mid term exams in fifth semester",
-    //     tag: "#presidencyThings",
-    //     createdAt: DateTime.now(),
-    //   ),
-    //   Journal(
-    //     id: "Jid",
-    //     title: "Mid term",
-    //     description:
-    //         "I have worked hard and i got the desired results in mid term exams in fifth semester",
-    //     tag: "#presidencyThings",
-    //     createdAt: DateTime.now(),
-    //   ),
-    //   Journal(
-    //     id: "Jid",
-    //     title: "Mid term",
-    //     description:
-    //         "I have worked hard and i got the desired results in mid term exams in fifth semester",
-    //     tag: "#presidencyThings",
-    //     createdAt: DateTime.now(),
-    //   ),
-    //   Journal(
-    //     id: "Jid",
-    //     title: "Mid term",
-    //     description:
-    //         "I have worked hard and i got the desired results in mid term exams in fifth semester",
-    //     tag: "#presidencyThings",
-    //     createdAt: DateTime.now(),
-    //   ),
-    // ];
+
+    Map<String, double> dataMap = {
+      "Jan-Mar": 5,
+      "Apr-Jun": 3,
+      "July-Sept": 2,
+      "Oct-Dec": 6,
+    };
 
     return Scaffold(
       appBar: AppBar(
@@ -209,15 +169,87 @@ class _JournalScreenState extends State<JournalScreen> {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              "Journal count: ${journals.length}",
-                              style: TextStyle(
-                                fontSize: 16,
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        const Divider(
+                          height: 2,
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Container(
+                          // color: Colors.amber,
+                          padding: const EdgeInsets.all(8),
+                          width: 250,
+                          height: 250,
+                          child: PieChart(
+                            dataMap: dataMap,
+                            animationDuration:
+                                const Duration(milliseconds: 1000),
+                            chartLegendSpacing: 32,
+                            chartRadius:
+                                MediaQuery.of(context).size.width / 3.2,
+                            initialAngleInDegree: 0,
+                            chartType: ChartType.ring,
+                            ringStrokeWidth: 32,
+                            centerText: "",
+                            // colorList: colorList,
+                            legendOptions: const LegendOptions(
+                              showLegendsInRow: false,
+                              legendPosition: LegendPosition.bottom,
+                              showLegends: true,
+                              // legendShape: BoxShape.rectangle,
+                              legendTextStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ],
+                            chartValuesOptions: const ChartValuesOptions(
+                              showChartValueBackground: true,
+                              showChartValues: true,
+                              showChartValuesInPercentage: false,
+                              showChartValuesOutside: false,
+                              decimalPlaces: 0,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          height: 48,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(25)),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.grey,
+                                offset: Offset(0.0, 1.0), //(x,y)
+                                blurRadius: 6.0,
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            // crossAxisAlignment: C,
+                            children: [
+                              const Text(
+                                "Journal count: ",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                width: 4,
+                              ),
+                              Text(
+                                "${journals.length}",
+                                style: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
