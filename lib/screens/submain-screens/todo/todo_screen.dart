@@ -13,7 +13,7 @@ class TodoScreen extends StatelessWidget {
     List<TODO> todoList = [
       TODO(
         id: "1",
-        title: "title",
+        title: "Finish Flutter - section five by the end of the day dwdwd wdw ",
         isCompleted: false,
         createdAt: DateTime.now(),
       ),
@@ -44,10 +44,8 @@ class TodoScreen extends StatelessWidget {
     ];
 
     Map<String, double> dataMap = {
-      "Jan-Mar": 5,
-      "Apr-Jun": 3,
-      "July-Sept": 2,
-      "Oct-Dec": 6,
+      "Completed": 5,
+      "In Completed": 3,
     };
 
     return Scaffold(
@@ -100,12 +98,14 @@ class TodoScreen extends StatelessWidget {
                 color: Colors.grey,
               ),
               Container(
-                  padding: const EdgeInsets.all(32),
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: ListView.builder(
-                    itemBuilder: (context, index) => todo_item(todoList[index]),
-                    itemCount: todoList.length,
-                  )),
+                padding: const EdgeInsets.all(32),
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: ListView.builder(
+                  itemBuilder: (context, index) =>
+                      todo_item(todoList[index], index),
+                  itemCount: todoList.length,
+                ),
+              ),
               const VerticalDivider(
                 width: 4,
                 color: Colors.grey,
@@ -119,7 +119,7 @@ class TodoScreen extends StatelessWidget {
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     const Text(
-                      "Journal Overview:",
+                      "To-Do Overview:",
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
@@ -189,7 +189,7 @@ class TodoScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            "Journal count: ",
+                            "Tasks: ",
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
@@ -197,8 +197,8 @@ class TodoScreen extends StatelessWidget {
                             width: 4,
                           ),
                           Text(
-                            "length",
-                            style: const TextStyle(
+                            "${todoList.length}",
+                            style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                         ],
