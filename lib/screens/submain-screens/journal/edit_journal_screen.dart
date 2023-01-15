@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 import 'package:drift/drift.dart' as drift;
+import 'package:mytica/screens/submain-screens/journal/journal_screen.dart';
 
 class EditJournalScreen extends StatefulWidget {
   static const routeName = "/edit-journal-screen";
@@ -25,7 +26,9 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final journal = ModalRoute.of(context)?.settings.arguments as Journal;
+    final args = ModalRoute.of(context)?.settings.arguments as List<Object>;
+    final journal = args[0] as Journal;
+    final colorValue = args[1] as Color;
     print("Journal value");
     print(journal);
     _journalTitleController.text = journal.title;
@@ -49,6 +52,7 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
         print("Journal Added $isUpdated");
         _db.close();
         Navigator.of(context).pop();
+        // Navigator.of(context).pushNamed(JournalScreen.routeName);
       } else {
         showDialog(
           context: context,
@@ -75,63 +79,99 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Edit journal"),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              print("deleted");
+            },
+            child: const Icon(
+              Icons.delete,
+            ),
+          ),
+          const SizedBox(
+            width: 16,
+          )
+        ],
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
-                stops: [0.4, 0.7],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight)),
-        // color: Colors.yellow,
+        color: colorValue,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               width: 500,
               height: 500,
-              padding: const EdgeInsets.all(16),
-              // color: Colors.red,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(22),
-                  gradient: const LinearGradient(colors: [
-                    Color(0xffEBF5FF),
-                    Color(0xffADD8FF)
-                  ], //final - 1
-                      stops: [
-                        0.4,
-                        0.7
-                      ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+              padding: const EdgeInsets.all(32),
+              decoration: const BoxDecoration(
+                color: Colors.white70,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.transparent,
+                    offset: Offset(0.0, 1.0),
+                    blurRadius: 6.0,
+                  ),
+                ],
+              ),
               child: Form(
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: 8,
+                    ),
                     TextFormField(
                       controller: _journalTitleController,
-                      decoration: const InputDecoration(label: Text("Title")),
+                      decoration: const InputDecoration(
+                        labelText: "Title",
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                     const SizedBox(
                       height: 16,
                     ),
                     TextFormField(
                       controller: _journalDescriptionController,
-                      decoration:
-                          const InputDecoration(label: Text("Description")),
-                      maxLines: 4,
+                      decoration: const InputDecoration(
+                        labelText: "Description",
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: 8,
                     ),
                     const SizedBox(
                       height: 16,
                     ),
                     TextFormField(
                       controller: _journalTagController,
-                      decoration: const InputDecoration(label: Text("Tag")),
+                      decoration: const InputDecoration(
+                        labelText: "Tag",
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 48,
                     ),
-                    IconButton(
-                        onPressed: _updateData, icon: const Icon(Icons.save))
+                    /* IconButton(
+                      onPressed: _updateData,
+                      icon: const Icon(Icons.save),
+                    ) */
+
+                    SizedBox(
+                      height: 36,
+                      child: ElevatedButton(
+                          onPressed: _updateData,
+                          child: Center(
+                            child: Text(
+                              "Save",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          )),
+                    )
                   ],
                 ),
               ),

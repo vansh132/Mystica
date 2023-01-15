@@ -176,9 +176,9 @@ class _JournalScreenState extends State<JournalScreen> {
                       itemCount: journals.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 7 / 3,
-                              crossAxisSpacing: 55,
+                              crossAxisCount: 3,
+                              childAspectRatio: 4.5 / 3,
+                              crossAxisSpacing: 40,
                               mainAxisSpacing: 35),
                       itemBuilder: (context, index) =>
                           JournalItem(journals[index]),

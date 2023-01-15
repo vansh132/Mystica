@@ -4,6 +4,7 @@ import 'package:mytica/screens/submain-screens/album/image/image_screen.dart';
 import 'package:mytica/screens/submain-screens/album/create_album_screen.dart';
 import 'package:mytica/screens/submain-screens/album/edit_album_screen.dart';
 import 'package:mytica/screens/submain-screens/journal/create_journal_screen.dart';
+import 'package:mytica/screens/submain-screens/journal/detail_journal_screen.dart';
 import 'package:mytica/screens/submain-screens/journal/edit_journal_screen.dart';
 import 'package:mytica/screens/submain-screens/notebook/create_notebook_screen.dart';
 import './screens/main-screen/get_started_screen.dart';
@@ -56,8 +57,9 @@ class MyApp extends StatelessWidget {
         CreateNotebookScreen.routeName: (ctx) => const CreateNotebookScreen(),
         //journal-screens
         JournalScreen.routeName: (ctx) => const JournalScreen(),
+        DetailJournalScreen.routeName:(ctx) => const DetailJournalScreen(),
         CreateJournalScreen.routeName: (ctx) => const CreateJournalScreen(),
-        EditJournalScreen.routeName: (context) => const EditJournalScreen(),
+        EditJournalScreen.routeName: (ctx) => const EditJournalScreen(),
         //albums-screens
         AlbumScreen.routeName: (ctx) => const AlbumScreen(),
         CreateAlbum.routeName: (ctx) => const CreateAlbum(),
