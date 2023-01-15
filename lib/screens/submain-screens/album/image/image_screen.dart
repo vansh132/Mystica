@@ -69,7 +69,35 @@ class _ImageScreenState extends State<ImageScreen> {
     ];
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Center(child: Text("Images")),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Row(
+                  children: [
+                    TextButton(
+                      child: const Text(
+                        "Log out",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        print("Log out ");
+                      },
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    const Icon(Icons.logout_rounded),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                  ],
+                ),
+              )),
+        ],
+      ),
       body: Container(
           // padding: EdgeInsets.all(16),
           width: double.infinity,
@@ -83,9 +111,33 @@ class _ImageScreenState extends State<ImageScreen> {
           child: Row(
             children: [
               Container(
+                color: const Color(0xff001427),
                 width: MediaQuery.of(context).size.width * 0.12,
+                height: MediaQuery.of(context).size.height,
                 child: Column(
-                  children: const [NavigationRow()],
+                  children: const [
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      "Quote of the Day",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xffCAF0F8)),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      "\" Life is either a daring adventure or nothing at all \"",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          color: Color(0xffedf6f9)),
+                      textAlign: TextAlign.center,
+                    ),
+                    NavigationRow()
+                  ],
                 ),
               ),
               const VerticalDivider(

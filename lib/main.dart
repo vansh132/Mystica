@@ -64,8 +64,9 @@ class MyApp extends StatelessWidget {
         AlbumScreen.routeName: (ctx) => const AlbumScreen(),
         CreateAlbum.routeName: (ctx) => const CreateAlbum(),
         EditAlbumScreen.routeName: (ctx) => EditAlbumScreen(),
-        //Other-screens
+        //todo-screens
         TodoScreen.routeName: (ctx) => const TodoScreen(),
+        //reminder-screens
         ReminderScreen.routeName: (ctx) => const ReminderScreen(),
         //image-screens
         ImageScreen.routeName: (ctx) => const ImageScreen(),
