@@ -8,12 +8,13 @@ class GetStartedScreen extends StatelessWidget {
         appBar: AppBar(title: const Text("Welcome to your Mytica World")),
         body: Container(
           decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  // colors: [Color(0xff8EC5FC), Color(0xffE0C3FC)], //final - 1
-                  colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
-                  stops: [0.4, 0.7],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight)),
+            gradient: LinearGradient(
+                // colors: [Color(0xff8EC5FC), Color(0xffE0C3FC)], //final - 1
+                colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
+                stops: [0.4, 0.7],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

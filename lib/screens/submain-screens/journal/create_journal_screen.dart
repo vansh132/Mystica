@@ -83,7 +83,16 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: Container(
-          height: MediaQuery.of(context).size.height * 0.5,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                // colors: [Color(0xff8EC5FC), Color(0xffE0C3FC)], //final - 1
+                colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
+                stops: [0.4, 0.7],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight),
+          ),
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.only(
               top: 10,
               left: 20,
@@ -93,27 +102,36 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'Title'),
-                controller: _journalTitleController,
-                onSubmitted: (_) => _addJournal(),
+              SizedBox(
+                width: 550,
+                child: TextField(
+                  decoration: const InputDecoration(labelText: 'Title'),
+                  controller: _journalTitleController,
+                  onSubmitted: (_) => _addJournal(),
+                ),
               ),
               const SizedBox(
                 height: 15,
               ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Description'),
-                maxLines: 4,
-                controller: _journalDescriptionController,
-                onSubmitted: (_) => _addJournal(),
+              SizedBox(
+                width: 550,
+                child: TextField(
+                  decoration: const InputDecoration(labelText: 'Description'),
+                  maxLines: 4,
+                  controller: _journalDescriptionController,
+                  onSubmitted: (_) => _addJournal(),
+                ),
               ),
               const SizedBox(
                 height: 25,
               ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Tag'),
-                controller: _journalTagController,
-                onSubmitted: (_) => _addJournal(),
+              SizedBox(
+                width: 550,
+                child: TextField(
+                  decoration: const InputDecoration(labelText: 'Tag'),
+                  controller: _journalTagController,
+                  onSubmitted: (_) => _addJournal(),
+                ),
               ),
               const SizedBox(
                 height: 35,

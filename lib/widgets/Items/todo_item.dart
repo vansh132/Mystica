@@ -67,7 +67,7 @@ class _todo_itemState extends State<todo_item> {
               Expanded(
                 flex: 1,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Checkbox(
                       shape: CircleBorder(),
@@ -82,6 +82,17 @@ class _todo_itemState extends State<todo_item> {
                         });
                       },
                     ),
+                    SizedBox(
+                      width: 24,
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          print("Task deleted..");
+                        },
+                        icon: const   Icon(
+                          Icons.delete,
+                          color: Color(0xffd90429),
+                        ))
                   ],
                 ),
               ),

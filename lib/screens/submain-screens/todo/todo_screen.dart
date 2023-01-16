@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/models/todo/todo.dart';
+import 'package:mytica/widgets/Items/add_task.dart';
 import 'package:mytica/widgets/Items/todo_item.dart';
 import 'package:mytica/widgets/navigation.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-class TodoScreen extends StatelessWidget {
+class TodoScreen extends StatefulWidget {
   static const String routeName = '/todo-screen';
   const TodoScreen({super.key});
 
   @override
+  State<TodoScreen> createState() => _TodoScreenState();
+}
+
+class _TodoScreenState extends State<TodoScreen> {
+  @override
   Widget build(BuildContext context) {
+      
+
     List<TODO> todoList = [
       TODO(
         id: "1",
@@ -42,6 +50,33 @@ class TodoScreen extends StatelessWidget {
         createdAt: DateTime.now(),
       ),
     ];
+
+    //To-do: Add new task
+    void _addNewTask(
+      String task) {
+    final newTask = TODO(
+        id: "10",
+        title: task,
+        createdAt: DateTime.now());
+    print("inside addTaskTransaction...");
+    setState(() {
+      todoList.add(newTask);
+    });
+  }
+
+        void _startAddTaskTransaction(BuildContext ctx) {
+    print("inside _startAddTaskTransaction...");
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          return GestureDetector(
+            onTap: () {},
+            child: AddTask(_addNewTask),
+            behavior: HitTestBehavior.opaque,
+            // behavior is important to catch the action like  onTap
+          );
+        });
+  }
 
     Map<String, double> dataMap = {
       "Completed": 5,
@@ -210,13 +245,10 @@ class TodoScreen extends StatelessWidget {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // Navigator.of(context)
-            //     .pushNamed(CreateJournalScreen.routeName)
-            //     .then((value) => setState(() {}));
-          },
-          child: const Icon(Icons.add),
+        floatingActionButton: FloatingActionButton.extended(
+          label: Text("Add Task"),
+          icon: Icon(Icons.add_task_rounded),
+          onPressed: () => _startAddTaskTransaction(context),
         ));
   }
 }

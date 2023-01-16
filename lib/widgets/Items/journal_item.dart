@@ -50,7 +50,7 @@ class _JournalItemState extends State<JournalItem> {
         borderRadius: BorderRadius.circular(24),
         child: Container(
           margin: const EdgeInsets.all(6.0),
-          decoration: BoxDecoration(
+          decoration: BoxDecoration(  
             color: colorIndex(),
             borderRadius: const BorderRadius.all(Radius.circular(25)),
             boxShadow: const [
