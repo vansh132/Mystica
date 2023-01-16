@@ -13,21 +13,22 @@ class NotebookScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Notebook> albums = [
       Notebook(
-        id: 'j11',
-        name: "IV SEM",
-        description: "Theory  ",
+        id: 1,
+        name: "Software Engineering",
+        description:
+            "Lifecycle of software development, Defining, Planning, Designing, Implementation, Testing, Deployment",
         tag: "#yeye",
         createdAt: DateTime.now(),
       ),
       Notebook(
-        id: 'j12',
+        id: 2,
         name: "GAnja Party",
         description: "i was high..",
         tag: "#yeye",
         createdAt: DateTime.now(),
       ),
       Notebook(
-        id: 'j13',
+        id: 3,
         name: "Bangalore Trip",
         tag: "#yeye",
         description: "Final semester trip with Juniors",
@@ -90,8 +91,8 @@ class NotebookScreen extends StatelessWidget {
                 child: GridView.builder(
                   itemCount: albums.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 5 / 2,
+                      crossAxisCount: 3,
+                      childAspectRatio: 2 / 2,
                       crossAxisSpacing: 45,
                       mainAxisSpacing: 35),
                   itemBuilder: (context, index) => NotebookItem(albums[index]),

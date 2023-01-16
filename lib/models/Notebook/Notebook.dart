@@ -1,5 +1,5 @@
 class Notebook {
-  String id;
+  int id;
   String name;
   String description;
   String tag;
