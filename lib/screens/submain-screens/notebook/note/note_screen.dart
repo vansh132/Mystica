@@ -53,7 +53,7 @@ class _NoteScreenState extends State<NoteScreen> {
       Note(
         notebookId: 1,
         id: 11,
-        title: "title",
+        title: "titlcde",
         body: "body",
         tag: "#tag",
         createdAt: DateTime.now(),
