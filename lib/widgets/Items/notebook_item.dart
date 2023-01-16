@@ -92,8 +92,20 @@ class _NotebookItemState extends State<NotebookItem> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(widget.notebook.tag),
-                    Text(DateFormat.yMMMd().format(widget.notebook.createdAt)),
+                    Text(
+                      widget.notebook.tag,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      DateFormat.yMMMd().format(
+                        widget.notebook.createdAt,
+                      ),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ],
                 )
               ],

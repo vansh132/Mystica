@@ -16,22 +16,23 @@ class NotebookScreen extends StatelessWidget {
         id: 1,
         name: "Software Engineering",
         description:
-            "Lifecycle of software development, Defining, Planning, Designing, Implementation, Testing, Deployment",
-        tag: "#yeye",
+            "Lifecycle of software development, Defining, Planning, Designing, Implementation, Testing, Deployment.",
+        tag: "#bcuExam",
         createdAt: DateTime.now(),
       ),
       Notebook(
         id: 2,
-        name: "GAnja Party",
-        description: "i was high..",
-        tag: "#yeye",
+        name: "ADA - Lab",
+        description: "Quick Sort, Binary Search, Merge Sort, Selection Sort.",
+        tag: "#practicals",
         createdAt: DateTime.now(),
       ),
       Notebook(
         id: 3,
-        name: "Bangalore Trip",
-        tag: "#yeye",
-        description: "Final semester trip with Juniors",
+        name: "Data Mining",
+        tag: "#favorite",
+        description:
+            "Data Warehouse, 3-tier architecture, Data cubes and its operations, OLAP Servers",
         createdAt: DateTime.now(),
       ),
     ];
