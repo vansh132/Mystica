@@ -7,6 +7,7 @@ import 'package:mytica/screens/submain-screens/journal/create_journal_screen.dar
 import 'package:mytica/screens/submain-screens/journal/detail_journal_screen.dart';
 import 'package:mytica/screens/submain-screens/journal/edit_journal_screen.dart';
 import 'package:mytica/screens/submain-screens/notebook/create_notebook_screen.dart';
+import 'package:mytica/screens/submain-screens/notebook/note_screen.dart';
 import './screens/main-screen/get_started_screen.dart';
 import './screens/main-screen/home_screen.dart';
 import './screens/main-screen/login_screen.dart';
@@ -43,9 +44,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: myColor,
-        textTheme: TextTheme(displayMedium: TextStyle(color: Color(0xfffefae0)))
-      ),
+          primarySwatch: myColor,
+          textTheme:
+              TextTheme(displayMedium: TextStyle(color: Color(0xfffefae0)))),
       home: GetStartedScreen(),
       routes: {
         //main-screens
@@ -55,9 +56,10 @@ class MyApp extends StatelessWidget {
         //submain-screens
         NotebookScreen.routeName: (ctx) => const NotebookScreen(),
         CreateNotebookScreen.routeName: (ctx) => const CreateNotebookScreen(),
+        NoteScreen.routeName: (ctx) => const NoteScreen(),
         //journal-screens
         JournalScreen.routeName: (ctx) => const JournalScreen(),
-        DetailJournalScreen.routeName:(ctx) => const DetailJournalScreen(),
+        DetailJournalScreen.routeName: (ctx) => const DetailJournalScreen(),
         CreateJournalScreen.routeName: (ctx) => const CreateJournalScreen(),
         EditJournalScreen.routeName: (ctx) => const EditJournalScreen(),
         //albums-screens

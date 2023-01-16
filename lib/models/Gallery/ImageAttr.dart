@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class ImageAttr {
   final String albumId;
   final String id;

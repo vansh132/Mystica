@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/models/Journal/Journal.dart';
 import 'package:mytica/models/Notebook/Notebook.dart';
+import 'package:mytica/screens/submain-screens/notebook/create_notebook_screen.dart';
 import 'package:mytica/widgets/Items/journal_item.dart';
 import 'package:mytica/widgets/Items/notebook_item.dart';
 import 'package:mytica/widgets/navigation.dart';
@@ -107,16 +108,7 @@ class NotebookScreen extends StatelessWidget {
           )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          /* showModalBottomSheet(
-            context: context,
-            builder: (_) {
-              return GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                child: const NewAlbum(),
-              );
-            },
-          ); */
-          //Navigator.of(context).pushNamed(CreateAlbum.routeName);
+          Navigator.of(context).pushNamed(CreateNotebookScreen.routeName);
         },
         child: const Icon(Icons.add),
       ),
