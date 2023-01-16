@@ -20,7 +20,6 @@ import 'package:mytica/screens/submain-screens/notebook/notebook_screen.dart';
 import 'package:mytica/screens/submain-screens/reminder_screen.dart';
 import 'package:mytica/screens/submain-screens/todo/todo_screen.dart';
 import 'package:mytica/screens/testing.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -60,7 +59,8 @@ class MyApp extends StatelessWidget {
         NotebookScreen.routeName: (ctx) => const NotebookScreen(),
         CreateNotebookScreen.routeName: (ctx) => const CreateNotebookScreen(),
         NoteScreen.routeName: (ctx) => const NoteScreen(),
-
+        CreateNoteScreen.routeName: (ctx) => const CreateNoteScreen(),
+        EditNoteScreen.routeName: (ctx) => const EditNoteScreen(),
         //journal-screens
         JournalScreen.routeName: (ctx) => const JournalScreen(),
         DetailJournalScreen.routeName: (ctx) => const DetailJournalScreen(),
