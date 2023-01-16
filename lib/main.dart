@@ -20,6 +20,7 @@ import 'package:mytica/screens/submain-screens/notebook/notebook_screen.dart';
 import 'package:mytica/screens/submain-screens/reminder_screen.dart';
 import 'package:mytica/screens/submain-screens/todo/todo_screen.dart';
 import 'package:mytica/screens/testing.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());

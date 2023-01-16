@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 import '../main-screen/home_screen.dart';
 import '../main-screen/signup_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = "/login-screen";
@@ -155,6 +156,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                         if (user.username == username &&
                                             user.password == password) {
+                                          final prefs = await SharedPreferences
+                                              .getInstance();
+                                          await prefs.setInt('userId', user.id);
+                                          await prefs.setString(
+                                              'username', user.username);
+                                          // TODO: Implement presistent user login
+
                                           print(user);
                                           print(username + " " + password);
                                           _db.close();
