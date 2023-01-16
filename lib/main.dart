@@ -59,8 +59,7 @@ class MyApp extends StatelessWidget {
         NotebookScreen.routeName: (ctx) => const NotebookScreen(),
         CreateNotebookScreen.routeName: (ctx) => const CreateNotebookScreen(),
         NoteScreen.routeName: (ctx) => const NoteScreen(),
-        // CreateNoteScreen.routeName: (ctx) => const CreateNoteScreen(),
-        // EditNoteScreen.routeName: (ctx) => const EditNoteScreen(),
+
         //journal-screens
         JournalScreen.routeName: (ctx) => const JournalScreen(),
         DetailJournalScreen.routeName: (ctx) => const DetailJournalScreen(),
