@@ -173,12 +173,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           _passwrodSignupEditController.text));
                                   _db.insertUser(userEntity).then((value) => {
                                         value != 0
-                                            ? Navigator.of(context).pop()
+                                            ? Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    LoginScreen.routeName)
                                             : 1
                                       });
                                 }
-                                Navigator.of(context)
-                                    .pushNamed(LoginScreen.routeName);
                               },
                               child: const Text(
                                 "Sign up",
