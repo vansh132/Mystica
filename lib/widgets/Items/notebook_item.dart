@@ -1,8 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:mytica/models/Notebook/Notebook.dart';
-import 'package:mytica/screens/submain-screens/notebook/note_screen.dart';
+import 'package:mytica/screens/submain-screens/notebook/note/note_screen.dart';
 
 class NotebookItem extends StatefulWidget {
   Notebook notebook;
@@ -115,7 +117,7 @@ class _NotebookItemState extends State<NotebookItem> {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

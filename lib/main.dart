@@ -7,7 +7,9 @@ import 'package:mytica/screens/submain-screens/journal/create_journal_screen.dar
 import 'package:mytica/screens/submain-screens/journal/detail_journal_screen.dart';
 import 'package:mytica/screens/submain-screens/journal/edit_journal_screen.dart';
 import 'package:mytica/screens/submain-screens/notebook/create_notebook_screen.dart';
-import 'package:mytica/screens/submain-screens/notebook/note_screen.dart';
+import 'package:mytica/screens/submain-screens/notebook/note/create_note.dart';
+import 'package:mytica/screens/submain-screens/notebook/note/edit_note_screen.dart';
+import 'package:mytica/screens/submain-screens/notebook/note/note_screen.dart';
 import './screens/main-screen/get_started_screen.dart';
 import './screens/main-screen/home_screen.dart';
 import './screens/main-screen/login_screen.dart';
@@ -50,13 +52,15 @@ class MyApp extends StatelessWidget {
       home: GetStartedScreen(),
       routes: {
         //main-screens
-        LoginScreen.routeName: ((ctx) => LoginScreen()),
+        LoginScreen.routeName: (ctx) => LoginScreen(),
         SignUpScreen.routeName: (ctx) => SignUpScreen(),
         HomeScreen.routeName: (ctx) => HomeScreen(),
         //submain-screens
         NotebookScreen.routeName: (ctx) => const NotebookScreen(),
         CreateNotebookScreen.routeName: (ctx) => const CreateNotebookScreen(),
         NoteScreen.routeName: (ctx) => const NoteScreen(),
+        CreateNoteScreen.routeName: (ctx) => const CreateNoteScreen(),
+        EditNoteScreen.routeName: (ctx) => const EditNoteScreen(),
         //journal-screens
         JournalScreen.routeName: (ctx) => const JournalScreen(),
         DetailJournalScreen.routeName: (ctx) => const DetailJournalScreen(),
