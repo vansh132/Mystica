@@ -213,17 +213,16 @@ class _JournalScreenState extends State<JournalScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 16,
                         ),
                         Container(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           height: 48,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Colors.white,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(25)),
-                            boxShadow: const [
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                            boxShadow: [
                               BoxShadow(
                                 color: Colors.grey,
                                 offset: Offset(0.0, 1.0), //(x,y)

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mytica/models/todo/todo.dart';
 import 'package:intl/intl.dart';
+import 'package:mytica/data/local/db/app_db.dart';
 
 class todo_item extends StatefulWidget {
-  TODO todoListItem;
+  Todo todoListItem;
   int index;
   todo_item(this.todoListItem, this.index);
 
@@ -12,12 +12,21 @@ class todo_item extends StatefulWidget {
 }
 
 class _todo_itemState extends State<todo_item> {
+  // late AppDb _db;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // _db = AppDb();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       // color: Colors.red,
       margin: const EdgeInsets.all(8),
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       height: 116,
       child: Column(
         children: [
@@ -31,7 +40,7 @@ class _todo_itemState extends State<todo_item> {
                   radius: 32,
                   child: Text(
                     "${widget.index + 1}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
@@ -47,19 +56,19 @@ class _todo_itemState extends State<todo_item> {
                     children: [
                       Text(
                         widget.todoListItem.title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
-                        DateFormat.yMMMd()
-                            .format(widget.todoListItem.createdAt),
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      // Text(
+                      //   DateFormat.yMMMd()
+                      //       .format(widget.todoListItem.createdAt),
+                      //   style: const TextStyle(
+                      //     fontSize: 12,
+                      //     fontWeight: FontWeight.w600,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -70,26 +79,34 @@ class _todo_itemState extends State<todo_item> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Checkbox(
-                      shape: CircleBorder(),
-                      activeColor: Color(0xff001427),
+                      shape: const CircleBorder(),
+                      activeColor: const Color(0xff001427),
                       checkColor: Colors.white,
                       splashRadius: 2,
-                      value: widget.todoListItem.isCompleted,
+                      value:
+                          widget.todoListItem.isCompleted == 0 ? false : true,
                       onChanged: (value) {
                         setState(() {
-                          widget.todoListItem.isCompleted =
-                              !widget.todoListItem.isCompleted;
+                          // widget.todoListItem.isCompleted =
+                          //     !widget.todoListItem.isCompleted;
+                          // if (widget.todoListItem.isCompleted == 0) {
+                          //   widget.todoListItem.isCompleted = 1;
+                          // } else {
+                          //   widget.todoListItem.isCompleted = 0;
+                          // }
                         });
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 24,
                     ),
                     IconButton(
                         onPressed: () {
-                          print("Task deleted..");
+                          // print("Task deleted..");
+                          // _db.deleteTodo(widget.todoListItem.id);
+                          // _db.close();
                         },
-                        icon: const   Icon(
+                        icon: const Icon(
                           Icons.delete,
                           color: Color(0xffd90429),
                         ))
@@ -98,10 +115,10 @@ class _todo_itemState extends State<todo_item> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
-          Divider(
+          const Divider(
             height: 2,
           )
         ],

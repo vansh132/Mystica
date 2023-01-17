@@ -52,7 +52,7 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
         print("Journal Added $isUpdated");
         _db.close();
         Navigator.of(context).pop();
-        // Navigator.of(context).pushNamed(JournalScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(JournalScreen.routeName);
       } else {
         showDialog(
           context: context,
@@ -82,7 +82,11 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
         actions: [
           GestureDetector(
             onTap: () {
-              print("deleted");
+              _db.deleteJournal(journal.id);
+              _db.close();
+              Navigator.of(context).pop();
+              Navigator.of(context)
+                  .pushReplacementNamed(JournalScreen.routeName);
             },
             child: const Icon(
               Icons.delete,

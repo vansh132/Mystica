@@ -15,6 +15,7 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(path.join(dbFolder.path, 'mystica.sqlite'));
+    print(file);
     return NativeDatabase(file);
   });
 }
@@ -64,6 +65,10 @@ class AppDb extends _$AppDb {
   // Update Journal
   Future<bool> updateJournal(JournalsCompanion entity) async {
     return await update(journals).replace(entity);
+  }
+
+  Future<int> deleteJournal(int id) async {
+    return await (delete(journals)..where((tbl) => tbl.id.equals(id))).go();
   }
 
   // Albums
@@ -119,5 +124,9 @@ class AppDb extends _$AppDb {
   // Update Journal
   Future<bool> updateTodo(TodosCompanion entity) async {
     return await update(todos).replace(entity);
+  }
+
+  Future<int> deleteTodo(int id) async {
+    return await (delete(todos)..where((tbl) => tbl.id.equals(id))).go();
   }
 }
