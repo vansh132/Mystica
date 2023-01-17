@@ -39,8 +39,8 @@ class _TodoScreenState extends State<TodoScreen> {
 
     //To-do: Add new task
     void _addNewTask(String task) async {
-      int id = 0;
-      userId.then((value) => {id = value});
+      int id = await userId;
+
       final todoEntity = TodosCompanion(
           title: drift.Value(task),
           isCompleted: drift.Value(0),
@@ -76,7 +76,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("To-do"),
+          title: const Text("To-do"),
         ),
         body: FutureBuilder<List<Todo>>(
           future: _db.getTodos(),
@@ -267,8 +267,8 @@ class _TodoScreenState extends State<TodoScreen> {
           }),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          label: Text("Add Task"),
-          icon: Icon(Icons.add_task_rounded),
+          label: const Text("Add Task"),
+          icon: const Icon(Icons.add_task_rounded),
           onPressed: () => _startAddTaskTransaction(context),
         ));
   }
