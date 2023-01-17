@@ -32,6 +32,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
+  Future<bool> checkIfUserExistByUsername(String username) async {
+    bool userExists = false;
+    final users = await _db.getUsers();
+    users.forEach((user) {
+      if (user.username == username) {
+        userExists = true;
+      }
+    });
+    return userExists;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -155,29 +166,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           SizedBox(
                             height: 36,
                             child: ElevatedButton(
-                              onPressed: () {
-                                print("checking creditentials");
-                                int res = 0;
+                              onPressed: () async {
                                 if (_usernameSignupEditController.text.isNotEmpty &&
                                     _fullnameSignupEditController
                                         .text.isNotEmpty &&
                                     _passwrodSignupEditController
                                         .text.isNotEmpty) {
-                                  final userEntity = UsersCompanion(
-                                      username: drift.Value(
-                                          _usernameSignupEditController.text
-                                              .toLowerCase()),
-                                      fullname: drift.Value(
-                                          _fullnameSignupEditController.text),
-                                      password: drift.Value(
-                                          _passwrodSignupEditController.text));
-                                  _db.insertUser(userEntity).then((value) => {
-                                        value != 0
-                                            ? Navigator.of(context)
-                                                .pushReplacementNamed(
-                                                    LoginScreen.routeName)
-                                            : 1
-                                      });
+                                  final userExists =
+                                      await checkIfUserExistByUsername(
+                                          _usernameSignupEditController.text);
+
+                                  if (userExists) {
+                                    showUserAlreadyExistsDialogBox(context);
+                                  } else {
+                                    // User Does Not Exist. So proceed with the user creation
+                                    final userEntity = UsersCompanion(
+                                        username: drift.Value(
+                                            _usernameSignupEditController.text
+                                                .toLowerCase()),
+                                        fullname: drift.Value(
+                                            _fullnameSignupEditController.text),
+                                        password: drift.Value(
+                                            _passwrodSignupEditController
+                                                .text));
+                                    _db.insertUser(userEntity).then((value) => {
+                                          value != 0
+                                              ? Navigator.of(context)
+                                                  .pushReplacementNamed(
+                                                      LoginScreen.routeName)
+                                              : 1
+                                        });
+                                    _db.close();
+                                  }
                                 }
                               },
                               child: const Text(
@@ -199,6 +219,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               TextButton(
                                   onPressed: () {
+                                    _db.close();
                                     Navigator.of(context).pushReplacementNamed(
                                         LoginScreen.routeName);
                                   },
@@ -276,5 +297,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ],
           ),
         ));
+  }
+
+  void showUserAlreadyExistsDialogBox(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("User Already Exists!"),
+        content: const Text(
+            "Username already exists. Please choose a different username..."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(14),
+              child: const Text("Okay"),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

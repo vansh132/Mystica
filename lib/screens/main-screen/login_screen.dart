@@ -226,6 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     TextButton(
                                         onPressed: () {
+                                          _db.close();
                                           Navigator.of(context)
                                               .pushReplacementNamed(
                                                   SignUpScreen.routeName);
@@ -341,26 +342,26 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-}
 
-void showPasswordIncorrectDialogBox(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (ctx) => AlertDialog(
-      title: const Text("Login Failed"),
-      content: const Text("Wrong Password. Please try again..."),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            Navigator.of(ctx).pop();
-          },
-          child: Container(
-            color: Colors.red,
-            padding: const EdgeInsets.all(14),
-            child: const Text("Okay"),
+  void showPasswordIncorrectDialogBox(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Login Failed"),
+        content: const Text("Wrong Password. Please try again..."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(14),
+              child: const Text("Okay"),
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }
