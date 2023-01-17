@@ -27,6 +27,12 @@ class AppDb extends _$AppDb {
   int get schemaVersion => 1;
 
   // Users
+
+  // Get All Journals
+  Future<List<User>> getUsers() async {
+    return await select(users).get();
+  }
+
   // get user by username
   Future<User> getUser(String username) async {
     return await (select(users)..where((tbl) => tbl.username.equals(username)))

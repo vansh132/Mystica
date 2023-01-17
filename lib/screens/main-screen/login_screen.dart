@@ -20,6 +20,28 @@ class _LoginScreenState extends State<LoginScreen> {
     _db = AppDb();
   }
 
+  Future<bool> checkIfUserExistByUsername(String username) async {
+    bool userExists = false;
+    // final users = _db.getUsers();
+    // users.then((values) => {
+    //       values.forEach((value) {
+    //         if (value.username == username) {
+    //           userExists = true;
+    //           print("userExist value After change: $userExists");
+    //         }
+    //       })
+    //     });
+    // print("userExist value: $userExists");
+
+    final users = await _db.getUsers();
+    users.forEach((user) {
+      if (user.username == username) {
+        userExists = true;
+      }
+    });
+    return userExists;
+  }
+
   final _usernameSignupEditController = TextEditingController();
   final _passwrodSignupEditController = TextEditingController();
   @override
@@ -151,46 +173,37 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 .toLowerCase();
                                         String password =
                                             _passwrodSignupEditController.text;
-                                        final user =
-                                            await _db.getUser(username);
+                                        bool userExists =
+                                            await checkIfUserExistByUsername(
+                                                username);
+                                        if (userExists) {
+                                          final user =
+                                              await _db.getUser(username);
 
-                                        if (user.username == username &&
-                                            user.password == password) {
-                                          final prefs = await SharedPreferences
-                                              .getInstance();
-                                          await prefs.setInt('userId', user.id);
-                                          await prefs.setString(
-                                              'username', user.username);
-                                          // TODO: Implement presistent user login
+                                          if (user.username == username &&
+                                              user.password == password) {
+                                            final prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            await prefs.setInt(
+                                                'userId', user.id);
+                                            await prefs.setString(
+                                                'username', user.username);
+                                            // TODO: Implement presistent user login
 
-                                          print(user);
-                                          print(username + " " + password);
-                                          _db.close();
-                                          Navigator.of(context)
-                                              .pushNamed(HomeScreen.routeName);
+                                            // print(user);
+                                            // print(username + " " + password);
+                                            _db.close();
+                                            Navigator.of(context).pushNamed(
+                                                HomeScreen.routeName);
+                                          } else {
+                                            showPasswordIncorrectDialogBox(
+                                                context);
+                                          }
                                         } else {
-                                          showDialog(
-                                            context: context,
-                                            builder: (ctx) => AlertDialog(
-                                              title: const Text("Login Failed"),
-                                              content: const Text(
-                                                  "Username or password is incorrect"),
-                                              actions: <Widget>[
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(ctx).pop();
-                                                  },
-                                                  child: Container(
-                                                    color: Colors.red,
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            14),
-                                                    child: const Text("Okay"),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          );
+                                          // user does not exist
+                                          showUserDoesNotExistDialogBox(
+                                              context);
                                         }
                                       }
                                     },
@@ -306,4 +319,48 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ));
   }
+
+  void showUserDoesNotExistDialogBox(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Login Failed"),
+        content: const Text("User Account Does Not Exist..."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(14),
+              child: const Text("Okay"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+void showPasswordIncorrectDialogBox(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: const Text("Login Failed"),
+      content: const Text("Wrong Password. Please try again..."),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(ctx).pop();
+          },
+          child: Container(
+            color: Colors.red,
+            padding: const EdgeInsets.all(14),
+            child: const Text("Okay"),
+          ),
+        ),
+      ],
+    ),
+  );
 }
