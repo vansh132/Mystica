@@ -1,6 +1,6 @@
 class Note {
-  final String notebookId;
-  final String id;
+  final int notebookId;
+  final int id;
   final String title;
   final String body;
   final String tag;

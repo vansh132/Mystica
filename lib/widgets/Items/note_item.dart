@@ -1,56 +1,30 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:mytica/models/Notebook/Note.dart';
 import 'package:intl/intl.dart';
+import 'package:mytica/screens/submain-screens/journal/detail_journal_screen.dart';
+import 'package:mytica/screens/submain-screens/notebook/note/detail_note.dart';
 
-import 'package:mytica/models/Notebook/Notebook.dart';
-import 'package:mytica/screens/submain-screens/notebook/note/note_screen.dart';
+class NoteItem extends StatefulWidget {
+  Note note;
 
-class NotebookItem extends StatefulWidget {
-  Notebook notebook;
-  NotebookItem(this.notebook);
+  NoteItem(this.note);
 
   @override
-  State<NotebookItem> createState() => _NotebookItemState();
+  State<NoteItem> createState() => _NoteItemState();
 }
 
-class _NotebookItemState extends State<NotebookItem> {
+class _NoteItemState extends State<NoteItem> {
   @override
   Widget build(BuildContext context) {
-    Color colorIndex() {
-      const colors = [
-        Color(0xfff4a261), //11
-        Color(0xff52b788), //10
-        Color(0xffe63946), //9
-        Color(0xfffff475), //6
-        Color(0xff70e000), //8
-        Color(0xffd7affa), //5
-        Color(0xff5d5d81), //7
-        Color(0xfffabd04), //4
-        Color(0xff457b9d), //3
-        Color(0xfffe6d73), //2
-        Color.fromARGB(232, 235, 236, 1), //1
-      ];
-      if (widget.notebook.id >= 9) {
-        var n = widget.notebook.id % 10;
-        return colors[n];
-      }
-      return colors[widget.notebook.id];
-    }
-
-    final color = colorIndex();
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(
-          NoteScreen.routeName,
-          arguments: widget.notebook.id,
-        );
+        Navigator.of(context).pushNamed(DetailNoteScreen.routeName, arguments: widget.note);
       },
       child: Container(
         margin: const EdgeInsets.all(6.0),
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: colorIndex(),
+          color: Colors.greenAccent,
           borderRadius: const BorderRadius.all(Radius.circular(25)),
           boxShadow: const [
             BoxShadow(
@@ -65,7 +39,7 @@ class _NotebookItemState extends State<NotebookItem> {
           children: [
             Center(
               child: Text(
-                widget.notebook.name,
+                widget.note.title,
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -82,7 +56,7 @@ class _NotebookItemState extends State<NotebookItem> {
               height: 16,
             ),
             Text(
-              widget.notebook.description,
+              widget.note.body,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
@@ -103,21 +77,21 @@ class _NotebookItemState extends State<NotebookItem> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.notebook.tag,
+                        widget.note.tag,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       Text(
                         DateFormat.yMMMd().format(
-                          widget.notebook.createdAt,
+                          widget.note.createdAt,
                         ),
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
-                  ),
+                  )
                 ],
               ),
             ),
