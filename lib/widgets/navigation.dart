@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mytica/screens/submain-screens/album/album_screen.dart';
 import 'package:mytica/screens/submain-screens/journal/journal_screen.dart';
 import 'package:mytica/screens/submain-screens/notebook/notebook_screen.dart';
-import 'package:mytica/screens/submain-screens/reminder_screen.dart';
+import 'package:mytica/screens/submain-screens/reminder/reminder_screen.dart';
 import 'package:mytica/screens/submain-screens/todo/todo_screen.dart';
 
 class NavigationRow extends StatefulWidget {

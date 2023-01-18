@@ -24,8 +24,8 @@ class _NoteItemState extends State<NoteItem> {
     int? selectedOption;
     return GestureDetector(
       onTap: () {
-        // Navigator.of(context)
-        //     .pushNamed(Edit_NoteScreen.routeName, arguments: widget.note);
+        Navigator.of(context)
+            .pushNamed(DetailNoteScreen.routeName, arguments: widget.note);
       },
       child: Container(
         margin: const EdgeInsets.all(6.0),
