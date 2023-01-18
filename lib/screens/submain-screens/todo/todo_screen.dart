@@ -39,6 +39,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
     //To-do: Add new task
     void _addNewTask(String task) async {
+      _db = AppDb();
       int id = await userId;
 
       final todoEntity = TodosCompanion(
@@ -53,6 +54,7 @@ class _TodoScreenState extends State<TodoScreen> {
           // todoList.add(newTask);
         });
       }
+      await _db.close();
     }
 
     void _startAddTaskTransaction(BuildContext ctx) {
@@ -95,6 +97,7 @@ class _TodoScreenState extends State<TodoScreen> {
             }
 
             if (todos != null) {
+              _db.close();
               return Container(
                 width: double.infinity,
                 height: double.infinity,

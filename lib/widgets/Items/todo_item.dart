@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:drift/drift.dart' as drift;
 import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/todo/todo_screen.dart';
 
@@ -86,22 +87,27 @@ class _todo_itemState extends State<todo_item> {
                       splashRadius: 2,
                       value:
                           widget.todoListItem.isCompleted == 0 ? false : true,
-                      onChanged: (value) {
-                        setState(() async {
-                          int isCompleted;
-                          if (value == true) {
-                            isCompleted = 1;
-                          } else {
-                            isCompleted = 0;
-                          }
-                          // final todoCompanion
-                          final db = AppDb();
-                          // await db.updateTodo()
-                          db.close();
-                          Navigator.of(context).pop();
-                          Navigator.of(context)
-                              .pushReplacementNamed(TodoScreen.routeName);
-                        });
+                      onChanged: (value) async {
+                        // setState(() async {
+                        int isCompleted;
+                        if (value == true) {
+                          isCompleted = 1;
+                        } else {
+                          isCompleted = 0;
+                        }
+                        final todoCompanion = TodosCompanion(
+                            id: drift.Value(widget.todoListItem.id),
+                            title: drift.Value(widget.todoListItem.title),
+                            isCompleted: drift.Value(isCompleted),
+                            userId: drift.Value(widget.todoListItem.userId));
+                        final db = AppDb();
+                        bool isUpdated = await db.updateTodo(todoCompanion);
+                        print("isUpdated: $isUpdated");
+                        await db.close();
+                        // Navigator.of(context).pop();
+                        Navigator.of(context)
+                            .pushReplacementNamed(TodoScreen.routeName);
+                        // });
                       },
                     ),
                     const SizedBox(
@@ -111,8 +117,8 @@ class _todo_itemState extends State<todo_item> {
                         onPressed: () async {
                           final db = AppDb();
                           await db.deleteTodo(widget.todoListItem.id);
-                          db.close();
-                          Navigator.of(context).pop();
+                          await db.close();
+                          // Navigator.of(context).pop();
                           Navigator.of(context)
                               .pushReplacementNamed(TodoScreen.routeName);
                         },
