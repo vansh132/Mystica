@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/models/Notebook/Note.dart';
 import 'package:intl/intl.dart';
-import 'package:mytica/screens/submain-screens/notebook/note/detail_note.dart';
 import 'package:mytica/screens/submain-screens/notebook/note/edit_note_screen.dart';
+import 'package:mytica/screens/submain-screens/notebook/note/detail_note_screen.dart';
 
 class NoteItem extends StatefulWidget {
   Note note;
@@ -14,11 +14,6 @@ class NoteItem extends StatefulWidget {
 }
 
 class _NoteItemState extends State<NoteItem> {
-  //To-Do: Update the note
-  void _updateNote() {
-    Navigator.of(context).pushNamed(DetailNoteScreen.routeName);
-  }
-
   //To-Do: delele the note
   void _deleteNote() {
     print("Delete the notes...");
@@ -30,7 +25,7 @@ class _NoteItemState extends State<NoteItem> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
-            .pushNamed(DetailNoteScreen.routeName, arguments: widget.note);
+            .pushNamed(Edit_NoteScreen.routeName, arguments: widget.note);
       },
       child: Container(
         margin: const EdgeInsets.all(6.0),
@@ -72,7 +67,9 @@ class _NoteItemState extends State<NoteItem> {
                       selectedOption = newSelectedOption;
                       switch (selectedOption) {
                         case 0:
-                          _updateNote();
+                          Navigator.of(context).pushNamed(
+                              Edit_NoteScreen.routeName,
+                              arguments: widget.note);
                           break;
                         case 1:
                           _deleteNote();

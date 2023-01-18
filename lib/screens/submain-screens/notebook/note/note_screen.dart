@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/models/Notebook/Note.dart';
 import 'package:mytica/screens/submain-screens/notebook/note/create_note.dart';
-import 'package:mytica/screens/submain-screens/notebook/note/edit_note_screen.dart';
+import 'package:mytica/screens/submain-screens/notebook/note/detail_note_screen.dart';
 import 'package:mytica/widgets/Items/note_item.dart';
 
 class NoteScreen extends StatefulWidget {
