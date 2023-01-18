@@ -95,7 +95,7 @@ class _TodoScreenState extends State<TodoScreen> {
             }
 
             if (todos != null) {
-              Container(
+              return Container(
                 width: double.infinity,
                 height: double.infinity,
                 decoration: const BoxDecoration(

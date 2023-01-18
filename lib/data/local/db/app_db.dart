@@ -15,7 +15,7 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(path.join(dbFolder.path, 'mystica.sqlite'));
-    print(file);
+    // print(file);
     return NativeDatabase(file);
   });
 }

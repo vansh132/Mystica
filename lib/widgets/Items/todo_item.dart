@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mytica/data/local/db/app_db.dart';
+import 'package:mytica/screens/submain-screens/todo/todo_screen.dart';
 
 class todo_item extends StatefulWidget {
   Todo todoListItem;
@@ -86,14 +87,20 @@ class _todo_itemState extends State<todo_item> {
                       value:
                           widget.todoListItem.isCompleted == 0 ? false : true,
                       onChanged: (value) {
-                        setState(() {
-                          // widget.todoListItem.isCompleted =
-                          //     !widget.todoListItem.isCompleted;
-                          // if (widget.todoListItem.isCompleted == 0) {
-                          //   widget.todoListItem.isCompleted = 1;
-                          // } else {
-                          //   widget.todoListItem.isCompleted = 0;
-                          // }
+                        setState(() async {
+                          int isCompleted;
+                          if (value == true) {
+                            isCompleted = 1;
+                          } else {
+                            isCompleted = 0;
+                          }
+                          // final todoCompanion
+                          final db = AppDb();
+                          // await db.updateTodo()
+                          db.close();
+                          Navigator.of(context).pop();
+                          Navigator.of(context)
+                              .pushReplacementNamed(TodoScreen.routeName);
                         });
                       },
                     ),
@@ -101,10 +108,13 @@ class _todo_itemState extends State<todo_item> {
                       width: 24,
                     ),
                     IconButton(
-                        onPressed: () {
-                          // print("Task deleted..");
-                          // _db.deleteTodo(widget.todoListItem.id);
-                          // _db.close();
+                        onPressed: () async {
+                          final db = AppDb();
+                          await db.deleteTodo(widget.todoListItem.id);
+                          db.close();
+                          Navigator.of(context).pop();
+                          Navigator.of(context)
+                              .pushReplacementNamed(TodoScreen.routeName);
                         },
                         icon: const Icon(
                           Icons.delete,
