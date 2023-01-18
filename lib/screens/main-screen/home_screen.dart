@@ -3,7 +3,7 @@ import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/album/album_screen.dart';
 import 'package:mytica/screens/submain-screens/journal/journal_screen.dart';
 import 'package:mytica/screens/submain-screens/notebook/notebook_screen.dart';
-import 'package:mytica/screens/submain-screens/reminder_screen.dart';
+import 'package:mytica/screens/submain-screens/reminder/reminder_screen.dart';
 import 'package:mytica/screens/submain-screens/todo/todo_screen.dart';
 
 class HomeScreen extends StatelessWidget {
