@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/models/Notebook/Note.dart';
 import 'package:intl/intl.dart';
-import 'package:mytica/screens/submain-screens/journal/detail_journal_screen.dart';
 import 'package:mytica/screens/submain-screens/notebook/note/detail_note.dart';
+import 'package:mytica/screens/submain-screens/notebook/note/edit_note_screen.dart';
 
 class NoteItem extends StatefulWidget {
   Note note;
@@ -14,11 +14,23 @@ class NoteItem extends StatefulWidget {
 }
 
 class _NoteItemState extends State<NoteItem> {
+  //To-Do: Update the note
+  void _updateNote() {
+    Navigator.of(context).pushNamed(DetailNoteScreen.routeName);
+  }
+
+  //To-Do: delele the note
+  void _deleteNote() {
+    print("Delete the notes...");
+  }
+
   @override
   Widget build(BuildContext context) {
+    int? selectedOption;
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(DetailNoteScreen.routeName, arguments: widget.note);
+        Navigator.of(context)
+            .pushNamed(DetailNoteScreen.routeName, arguments: widget.note);
       },
       child: Container(
         margin: const EdgeInsets.all(6.0),
@@ -37,14 +49,49 @@ class _NoteItemState extends State<NoteItem> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Text(
-                widget.note.title,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      widget.note.title,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                PopupMenuButton<int>(
+                  elevation: 7,
+                  icon: Icon(Icons.menu_rounded),
+                  initialValue: selectedOption,
+                  onSelected: (newSelectedOption) {
+                    setState(() {
+                      selectedOption = newSelectedOption;
+                      switch (selectedOption) {
+                        case 0:
+                          _updateNote();
+                          break;
+                        case 1:
+                          _deleteNote();
+                          break;
+                      }
+                    });
+                  },
+                  itemBuilder: (context) => <PopupMenuEntry<int>>[
+                    PopupMenuItem(
+                      value: 0,
+                      child: Text("Edit"),
+                    ),
+                    PopupMenuItem(
+                      value: 1,
+                      child: Text("Delete"),
+                    ),
+                  ],
+                ),
+              ],
             ),
             SizedBox(
               height: 16,

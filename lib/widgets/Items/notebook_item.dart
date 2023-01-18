@@ -15,8 +15,20 @@ class NotebookItem extends StatefulWidget {
 }
 
 class _NotebookItemState extends State<NotebookItem> {
+  //To-Do: Update the note
+  void _updateNotebook() {
+    print("Update the notes...");
+  }
+
+  //To-Do: delele the note
+  void _deleteNotebook() {
+    print("Delete the notes...");
+  }
+
   @override
   Widget build(BuildContext context) {
+    int? selectedOption;
+
     Color colorIndex() {
       const colors = [
         Color(0xfff4a261), //11
@@ -63,14 +75,48 @@ class _NotebookItemState extends State<NotebookItem> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Text(
-                widget.notebook.name,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+            Row(
+              children: [
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      widget.notebook.name,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                PopupMenuButton<int>(
+                  elevation: 7,
+                  // icon: Icon(Icons.menu_rounded),
+                  initialValue: selectedOption,
+                  onSelected: (newSelectedOption) {
+                    setState(() {
+                      selectedOption = newSelectedOption;
+                      switch (selectedOption) {
+                        case 0:
+                          _updateNotebook();
+                          break;
+                        case 1:
+                          _deleteNotebook();
+                          break;
+                      }
+                    });
+                  },
+                  itemBuilder: (context) => <PopupMenuEntry<int>>[
+                    PopupMenuItem(
+                      value: 0,
+                      child: Text("Edit"),
+                    ),
+                    PopupMenuItem(
+                      value: 1,
+                      child: Text("Delete"),
+                    ),
+                  ],
+                ),
+              ],
             ),
             SizedBox(
               height: 16,
@@ -108,6 +154,7 @@ class _NotebookItemState extends State<NotebookItem> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
+                      Text("10"), //To-Do: (Number of notes)
                       Text(
                         DateFormat.yMMMd().format(
                           widget.notebook.createdAt,
