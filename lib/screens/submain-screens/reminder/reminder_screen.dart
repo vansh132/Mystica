@@ -1,11 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:mytica/models/reminder/reminder.dart';
 import 'package:mytica/widgets/Items/add_reminder.dart';
+import 'package:mytica/widgets/Items/reminder_item.dart';
 import 'package:mytica/widgets/navigation.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-class ReminderScreen extends StatelessWidget {
+class ReminderScreen extends StatefulWidget {
   static const String routeName = '/reminder-screen';
   const ReminderScreen({super.key});
+
+  @override
+  State<ReminderScreen> createState() => _ReminderScreenState();
+}
+
+class _ReminderScreenState extends State<ReminderScreen> {
+  List<Reminder> reminderList = [
+    Reminder(
+      id: 1,
+      title: "Project Deadline",
+      selectedDate: DateTime.now(),
+    ),
+    Reminder(
+      id: 2,
+      title: "Project Deadline 2",
+      selectedDate: DateTime.now(),
+    ),
+    Reminder(
+      id: 3,
+      title: "Project Deadline 3",
+      selectedDate: DateTime.now(),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -98,16 +123,11 @@ class ReminderScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(32),
               width: MediaQuery.of(context).size.width * 0.7,
-              child: Text("Test"),
-              /* child: GridView.builder(
-                itemCount: journals.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 4.5 / 3,
-                    crossAxisSpacing: 40,
-                    mainAxisSpacing: 35),
-                itemBuilder: (context, index) => JournalItem(journals[index]),
-              ), */
+              child: ListView.builder(
+                itemBuilder: (context, index) =>
+                    reminder_item(reminderList[index], index),
+                itemCount: reminderList.length,
+              ),
             ),
             const VerticalDivider(
               width: 4,
