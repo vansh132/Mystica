@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mytica/data/local/db/app_db.dart';
+import 'package:mytica/screens/submain-screens/notebook/edit_notebook.dart';
 
 import 'package:mytica/screens/submain-screens/notebook/note/note_screen.dart';
 import 'package:mytica/screens/submain-screens/notebook/notebook_screen.dart';
@@ -18,6 +19,8 @@ class NotebookItem extends StatefulWidget {
 class _NotebookItemState extends State<NotebookItem> {
   //To-Do: Update the note
   void _updateNotebook() {
+    Navigator.of(context)
+        .pushNamed(EditNotebookScreen.routeName, arguments: widget.notebook);
     print("Update the notes...");
   }
 
