@@ -92,7 +92,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               File("$pathImage"),
                             ),
                           )
-                        : Text("No profile Image"),
+                        : Center(
+                            child: Text(
+                            "No profile Image",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              // backgroundColor: Colors.black,
+                              // color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
                     // child: Image.file(
                     //   File("C:/Users/hpCND/Downloads/StudentPhoto.jpg"),
                     //   fit: BoxFit.cover,
@@ -120,7 +130,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         // User canceled the picker
                       }
                     },
-                    child: Text("Change Profile Picture"),
+                    child: Text(
+                      "Change Profile Picture",
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
                   // ElevatedButton(
                   //   onPressed: _profileImage,
