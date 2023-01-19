@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:drift/drift.dart' as drift;
 import 'package:mytica/data/local/db/app_db.dart';
+import 'package:mytica/screens/submain-screens/reminder/reminder_screen.dart';
 import 'package:mytica/screens/submain-screens/todo/todo_screen.dart';
 
 class reminder_item extends StatefulWidget {
@@ -121,9 +122,9 @@ class _reminder_itemState extends State<reminder_item> {
                               await db.updateRemainder(remainderCompanion);
                           print("isUpdated: $isUpdated");
                           await db.close();
-                          Navigator.of(context).pop();
+                          // Navigator.of(context).pop();
                           Navigator.of(context)
-                              .pushReplacementNamed(TodoScreen.routeName);
+                              .pushReplacementNamed(ReminderScreen.routeName);
                         });
                       },
                     ),
@@ -136,9 +137,9 @@ class _reminder_itemState extends State<reminder_item> {
                           final db = AppDb();
                           await db.deleteRemainder(widget.reminderItem.id);
                           await db.close();
-                          Navigator.of(context).pop();
+                          // Navigator.of(context).pop();
                           Navigator.of(context)
-                              .pushReplacementNamed(TodoScreen.routeName);
+                              .pushReplacementNamed(ReminderScreen.routeName);
                         },
                         icon: const Icon(
                           Icons.delete,

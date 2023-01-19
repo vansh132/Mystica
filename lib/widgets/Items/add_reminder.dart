@@ -12,21 +12,19 @@ class AddReminder extends StatefulWidget {
 
 class _AddReminderState extends State<AddReminder> {
   final _titleController = TextEditingController();
-  final _dateController = TextEditingController();
+  DateTime deadline = DateTime.now();
 
   void _submitData() {
     final enteredReminder = _titleController.text;
-    final selectedDate = _dateController.text;
 
     if (enteredReminder.isEmpty) {
       return;
     }
 
-    widget.addReminder(enteredReminder);
+    widget.addReminder(enteredReminder, deadline);
 
     Navigator.of(context).pop();
-    print(_titleController.text);
-    print(_dateController.text);
+    // print(_titleController.text);
   }
 
   @override
@@ -42,7 +40,7 @@ class _AddReminderState extends State<AddReminder> {
             SizedBox(
               width: 950,
               child: TextField(
-                onSubmitted: (_) => _submitData(),
+                // onSubmitted: (_) => _submitData(),
                 controller: _titleController,
                 decoration: const InputDecoration(
                   labelText: "Title",
@@ -65,17 +63,18 @@ class _AddReminderState extends State<AddReminder> {
                         headerColor: Colors.black,
                         doneStyle: TextStyle(color: Colors.white),
                         cancelStyle: TextStyle(color: Colors.white),
-                        backgroundColor: Colors.white ,
+                        backgroundColor: Colors.white,
                         itemStyle: TextStyle(fontSize: 24)),
                     showTitleActions: true,
                     minTime: DateTime.now(),
                     // maxTime: DateTime(2019, 6, 7),
                     onChanged: (date) {
                       // print('change $date');
+                      deadline = date;
                     },
                     onConfirm: (date) {
                       // print('confirm $date');
-                      _dateController.text = date.toString();
+                      deadline = date;
                     },
                     currentTime: DateTime.now(),
                   );

@@ -5,6 +5,7 @@ import 'package:mytica/widgets/Items/reminder_item.dart';
 import 'package:mytica/widgets/navigation.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:drift/drift.dart' as drift;
 
 class ReminderScreen extends StatefulWidget {
   static const String routeName = '/reminder-screen';
@@ -30,22 +31,24 @@ class _ReminderScreenState extends State<ReminderScreen> {
     userId = _prefs.then((SharedPreferences prefs) {
       return prefs.getInt('userId') ?? 0;
     });
-    void _addNewTask(String task) {
+    void _addNewTask(String task, DateTime deadline) async {
       print(task);
-      // _db = AppDb();
-      // int id = await userId;
+      _db = AppDb();
+      int id = await userId;
 
-      // final todoEntity = TodosCompanion(
-      //     title: drift.Value(task),
-      //     isCompleted: drift.Value(0),
-      //     userId: drift.Value(id));
-      // print(todoEntity);
-      // int res = await _db.insertTodo(todoEntity);
-      // if (res != 0) {
-      //   print("Todo added: $res");
+      final remainderCompanion = RemaindersCompanion(
+          title: drift.Value(task),
+          isCompleted: drift.Value(0),
+          userId: drift.Value(id),
+          deadline: drift.Value(deadline));
+      print(remainderCompanion);
+      int res = await _db.insertRemainder(remainderCompanion);
+      if (res != 0) {
+        print("Remainder added: $res");
 
-      // }
-      // await _db.close();
+        Navigator.of(context).pushReplacementNamed(ReminderScreen.routeName);
+      }
+      await _db.close();
     }
 
     void _startAddReminderTransaction(BuildContext ctx) {
@@ -238,7 +241,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                                 width: 4,
                               ),
                               Text(
-                                "10",
+                                "${remainderList.length}",
                                 style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
