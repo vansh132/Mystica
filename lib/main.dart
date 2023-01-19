@@ -7,6 +7,7 @@ import 'package:mytica/screens/submain-screens/journal/create_journal_screen.dar
 import 'package:mytica/screens/submain-screens/journal/detail_journal_screen.dart';
 import 'package:mytica/screens/submain-screens/journal/edit_journal_screen.dart';
 import 'package:mytica/screens/submain-screens/notebook/create_notebook_screen.dart';
+import 'package:mytica/screens/submain-screens/notebook/edit_notebook.dart';
 import 'package:mytica/screens/submain-screens/notebook/note/create_note.dart';
 import 'package:mytica/screens/submain-screens/notebook/note/edit_note_screen.dart';
 import 'package:mytica/screens/submain-screens/notebook/note/detail_note_screen.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
         //submain-screens
         NotebookScreen.routeName: (ctx) => const NotebookScreen(),
         CreateNotebookScreen.routeName: (ctx) => const CreateNotebookScreen(),
+        EditNotebookScreen.routeName: (ctx) => const EditNotebookScreen(),
         NoteScreen.routeName: (ctx) => const NoteScreen(),
         Edit_NoteScreen.routeName: (ctx) => const Edit_NoteScreen(),
         CreateNoteScreen.routeName: (ctx) => const CreateNoteScreen(),
