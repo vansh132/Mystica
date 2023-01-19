@@ -25,9 +25,8 @@ class _NotebookItemState extends State<NotebookItem> {
   void _deleteNotebook() async {
     final db = AppDb();
     await db.deleteNotebook(widget.notebook.id);
-    await db.close();
-    // Navigator.of(context).pop();
-    Navigator.of(context).pushReplacementNamed(NotebookScreen.routeName);
+    await db.close().whenComplete(() =>
+        {Navigator.of(context).pushReplacementNamed(NotebookScreen.routeName)});
   }
 
   @override

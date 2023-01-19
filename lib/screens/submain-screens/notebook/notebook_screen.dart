@@ -57,6 +57,7 @@ class _NotebookScreenState extends State<NotebookScreen> {
           }
 
           if (notebooks != null) {
+            _db.close();
             return Container(
                 // padding: EdgeInsets.all(16),
                 width: double.infinity,
