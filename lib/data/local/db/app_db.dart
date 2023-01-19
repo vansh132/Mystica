@@ -4,6 +4,7 @@ import 'package:mytica/data/local/entity/album_entity.dart';
 import 'package:mytica/data/local/entity/image_entity.dart';
 import 'package:mytica/data/local/entity/journal_entity.dart';
 import 'package:mytica/data/local/entity/notebook_entity.dart';
+import 'package:mytica/data/local/entity/remainder_entity.dart';
 import 'package:mytica/data/local/entity/todo_entity.dart';
 import 'package:mytica/data/local/entity/user_entity.dart';
 import 'package:mytica/data/local/entity/note_entity.dart';
@@ -22,8 +23,16 @@ LazyDatabase _openConnection() {
   });
 }
 
-@DriftDatabase(
-    tables: [Users, Journals, Albums, MyImages, Todos, Notebooks, Notes])
+@DriftDatabase(tables: [
+  Users,
+  Journals,
+  Albums,
+  MyImages,
+  Todos,
+  Notebooks,
+  Notes,
+  Remainders
+])
 class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
@@ -106,6 +115,33 @@ class AppDb extends _$AppDb {
   Future<MyImage> getImage(int id) async {
     return await (select(myImages)..where((tbl) => tbl.id.equals(id)))
         .getSingle();
+  }
+
+  //Remainder
+  // Get all Remainder
+  Future<List<Remainder>> getRemainders() async {
+    return await select(remainders).get();
+  }
+
+  // Create Remainder
+  Future<int> insertRemainder(RemaindersCompanion entity) async {
+    return await into(remainders).insert(entity);
+  }
+
+  // Get Remainder By Id
+  Future<Remainder> getRemainder(int id) async {
+    return await (select(remainders)..where((tbl) => tbl.id.equals(id)))
+        .getSingle();
+  }
+
+  // Update Remainder
+  Future<bool> updateRemainder(RemaindersCompanion entity) async {
+    return await update(remainders).replace(entity);
+  }
+
+// delete Remainder
+  Future<int> deleteRemainder(int id) async {
+    return await (delete(remainders)..where((tbl) => tbl.id.equals(id))).go();
   }
 
   //Todos

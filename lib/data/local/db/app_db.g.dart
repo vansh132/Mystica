@@ -1953,6 +1953,294 @@ class NotesCompanion extends UpdateCompanion<Note> {
   }
 }
 
+class $RemaindersTable extends Remainders
+    with TableInfo<$RemaindersTable, Remainder> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RemaindersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+      'title', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _isCompletedMeta =
+      const VerificationMeta('isCompleted');
+  @override
+  late final GeneratedColumn<int> isCompleted = GeneratedColumn<int>(
+      'is_completed', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+      'user_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, title, isCompleted, userId, createdAt];
+  @override
+  String get aliasedName => _alias ?? 'remainders';
+  @override
+  String get actualTableName => 'remainders';
+  @override
+  VerificationContext validateIntegrity(Insertable<Remainder> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('is_completed')) {
+      context.handle(
+          _isCompletedMeta,
+          isCompleted.isAcceptableOrUnknown(
+              data['is_completed']!, _isCompletedMeta));
+    } else if (isInserting) {
+      context.missing(_isCompletedMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Remainder map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Remainder(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      title: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      isCompleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}is_completed'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $RemaindersTable createAlias(String alias) {
+    return $RemaindersTable(attachedDatabase, alias);
+  }
+}
+
+class Remainder extends DataClass implements Insertable<Remainder> {
+  final int id;
+  final String title;
+  final int isCompleted;
+  final int userId;
+  final DateTime createdAt;
+  const Remainder(
+      {required this.id,
+      required this.title,
+      required this.isCompleted,
+      required this.userId,
+      required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['title'] = Variable<String>(title);
+    map['is_completed'] = Variable<int>(isCompleted);
+    map['user_id'] = Variable<int>(userId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  RemaindersCompanion toCompanion(bool nullToAbsent) {
+    return RemaindersCompanion(
+      id: Value(id),
+      title: Value(title),
+      isCompleted: Value(isCompleted),
+      userId: Value(userId),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory Remainder.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Remainder(
+      id: serializer.fromJson<int>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      isCompleted: serializer.fromJson<int>(json['isCompleted']),
+      userId: serializer.fromJson<int>(json['userId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'title': serializer.toJson<String>(title),
+      'isCompleted': serializer.toJson<int>(isCompleted),
+      'userId': serializer.toJson<int>(userId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  Remainder copyWith(
+          {int? id,
+          String? title,
+          int? isCompleted,
+          int? userId,
+          DateTime? createdAt}) =>
+      Remainder(
+        id: id ?? this.id,
+        title: title ?? this.title,
+        isCompleted: isCompleted ?? this.isCompleted,
+        userId: userId ?? this.userId,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Remainder(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('isCompleted: $isCompleted, ')
+          ..write('userId: $userId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, title, isCompleted, userId, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Remainder &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.isCompleted == this.isCompleted &&
+          other.userId == this.userId &&
+          other.createdAt == this.createdAt);
+}
+
+class RemaindersCompanion extends UpdateCompanion<Remainder> {
+  final Value<int> id;
+  final Value<String> title;
+  final Value<int> isCompleted;
+  final Value<int> userId;
+  final Value<DateTime> createdAt;
+  const RemaindersCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.isCompleted = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  RemaindersCompanion.insert({
+    this.id = const Value.absent(),
+    required String title,
+    required int isCompleted,
+    required int userId,
+    required DateTime createdAt,
+  })  : title = Value(title),
+        isCompleted = Value(isCompleted),
+        userId = Value(userId),
+        createdAt = Value(createdAt);
+  static Insertable<Remainder> custom({
+    Expression<int>? id,
+    Expression<String>? title,
+    Expression<int>? isCompleted,
+    Expression<int>? userId,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (isCompleted != null) 'is_completed': isCompleted,
+      if (userId != null) 'user_id': userId,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  RemaindersCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? title,
+      Value<int>? isCompleted,
+      Value<int>? userId,
+      Value<DateTime>? createdAt}) {
+    return RemaindersCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      isCompleted: isCompleted ?? this.isCompleted,
+      userId: userId ?? this.userId,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (isCompleted.present) {
+      map['is_completed'] = Variable<int>(isCompleted.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RemaindersCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('isCompleted: $isCompleted, ')
+          ..write('userId: $userId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTable users = $UsersTable(this);
@@ -1962,10 +2250,11 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final $TodosTable todos = $TodosTable(this);
   late final $NotebooksTable notebooks = $NotebooksTable(this);
   late final $NotesTable notes = $NotesTable(this);
+  late final $RemaindersTable remainders = $RemaindersTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [users, journals, albums, myImages, todos, notebooks, notes];
+      [users, journals, albums, myImages, todos, notebooks, notes, remainders];
 }
