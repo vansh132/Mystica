@@ -2,9 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mytica/data/local/db/app_db.dart';
 
-import 'package:mytica/models/Notebook/Notebook.dart';
 import 'package:mytica/screens/submain-screens/notebook/note/note_screen.dart';
+import 'package:mytica/screens/submain-screens/notebook/notebook_screen.dart';
 
 class NotebookItem extends StatefulWidget {
   Notebook notebook;
@@ -21,8 +22,12 @@ class _NotebookItemState extends State<NotebookItem> {
   }
 
   //To-Do: delele the note
-  void _deleteNotebook() {
-    print("Delete the notes...");
+  void _deleteNotebook() async {
+    final db = AppDb();
+    await db.deleteNotebook(widget.notebook.id);
+    await db.close();
+    // Navigator.of(context).pop();
+    Navigator.of(context).pushReplacementNamed(NotebookScreen.routeName);
   }
 
   @override

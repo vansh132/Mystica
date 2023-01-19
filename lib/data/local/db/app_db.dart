@@ -3,8 +3,10 @@ import 'package:drift/drift.dart';
 import 'package:mytica/data/local/entity/album_entity.dart';
 import 'package:mytica/data/local/entity/image_entity.dart';
 import 'package:mytica/data/local/entity/journal_entity.dart';
+import 'package:mytica/data/local/entity/notebook_entity.dart';
 import 'package:mytica/data/local/entity/todo_entity.dart';
 import 'package:mytica/data/local/entity/user_entity.dart';
+import 'package:mytica/data/local/entity/note_entity.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:drift/native.dart';
 import 'package:path/path.dart' as path;
@@ -20,7 +22,8 @@ LazyDatabase _openConnection() {
   });
 }
 
-@DriftDatabase(tables: [Users, Journals, Albums, MyImages, Todos])
+@DriftDatabase(
+    tables: [Users, Journals, Albums, MyImages, Todos, Notebooks, Notes])
 class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
@@ -28,8 +31,7 @@ class AppDb extends _$AppDb {
   int get schemaVersion => 1;
 
   // Users
-
-  // Get All Journals
+  // Get All Users
   Future<List<User>> getUsers() async {
     return await select(users).get();
   }
@@ -67,6 +69,7 @@ class AppDb extends _$AppDb {
     return await update(journals).replace(entity);
   }
 
+// delete Journal
   Future<int> deleteJournal(int id) async {
     return await (delete(journals)..where((tbl) => tbl.id.equals(id))).go();
   }
@@ -121,12 +124,79 @@ class AppDb extends _$AppDb {
     return await (select(todos)..where((tbl) => tbl.id.equals(id))).getSingle();
   }
 
-  // Update Journal
+  // Update Todo
   Future<bool> updateTodo(TodosCompanion entity) async {
     return await update(todos).replace(entity);
   }
 
+// delete Todo
   Future<int> deleteTodo(int id) async {
     return await (delete(todos)..where((tbl) => tbl.id.equals(id))).go();
+  }
+
+  // Notebook
+  // Get All Notebooks
+  Future<List<Notebook>> getNotebooks() async {
+    return await select(notebooks).get();
+  }
+
+  // Get Notebook By UserId
+  Future<List<Notebook>> getNotebookByUserId(int userId) async {
+    return await (select(notebooks)..where((tbl) => tbl.userId.equals(userId)))
+        .get();
+  }
+
+  // Create Notebook
+  Future<int> insertNotebook(NotebooksCompanion entity) async {
+    return await into(notebooks).insert(entity);
+  }
+
+  // Get Notebook By Id
+  Future<Notebook> getNotebook(int id) async {
+    return await (select(notebooks)..where((tbl) => tbl.id.equals(id)))
+        .getSingle();
+  }
+
+  // Update Notebook
+  Future<bool> updateNotebook(NotebooksCompanion entity) async {
+    return await update(notebooks).replace(entity);
+  }
+
+  // delete Notebook
+  Future<int> deleteNotebook(int id) async {
+    return await (delete(notebooks)..where((tbl) => tbl.id.equals(id))).go();
+  }
+
+  // Note
+  // Get All Notes
+  Future<List<Note>> getNotes() async {
+    return await select(notes).get();
+  }
+
+  // Get Note By NotebookId
+  Future<List<Note>> getNoteByNotebookId(int notebookId) async {
+    return await (select(notes)
+          ..where((tbl) => tbl.notebookId.equals(notebookId)))
+        .get();
+  }
+
+  // Create Note
+  Future<int> insertNote(NotesCompanion entity) async {
+    return await into(notes).insert(entity);
+  }
+
+  // // Get Note By Id
+  Future<Note> getNote(int id) async {
+    return await (select(notes)..where((tbl) => tbl.id.equals(id))).getSingle();
+  }
+
+  // Update Note
+  Future<bool> updateNote(NotesCompanion entity) async {
+    return await update(notes).replace(entity);
+  }
+
+  // delete Note
+  Future<int> deleteNote(int id) async {
+    return await (delete(notes)..where((tbl) => tbl.id.equals(id))).go();
   }
 }

@@ -1271,6 +1271,688 @@ class TodosCompanion extends UpdateCompanion<Todo> {
   }
 }
 
+class $NotebooksTable extends Notebooks
+    with TableInfo<$NotebooksTable, Notebook> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NotebooksTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _tagMeta = const VerificationMeta('tag');
+  @override
+  late final GeneratedColumn<String> tag = GeneratedColumn<String>(
+      'tag', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+      'user_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, name, description, tag, userId, createdAt];
+  @override
+  String get aliasedName => _alias ?? 'notebooks';
+  @override
+  String get actualTableName => 'notebooks';
+  @override
+  VerificationContext validateIntegrity(Insertable<Notebook> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('tag')) {
+      context.handle(
+          _tagMeta, tag.isAcceptableOrUnknown(data['tag']!, _tagMeta));
+    } else if (isInserting) {
+      context.missing(_tagMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Notebook map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Notebook(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
+      tag: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tag'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $NotebooksTable createAlias(String alias) {
+    return $NotebooksTable(attachedDatabase, alias);
+  }
+}
+
+class Notebook extends DataClass implements Insertable<Notebook> {
+  final int id;
+  final String name;
+  final String description;
+  final String tag;
+  final int userId;
+  final DateTime createdAt;
+  const Notebook(
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.tag,
+      required this.userId,
+      required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['description'] = Variable<String>(description);
+    map['tag'] = Variable<String>(tag);
+    map['user_id'] = Variable<int>(userId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  NotebooksCompanion toCompanion(bool nullToAbsent) {
+    return NotebooksCompanion(
+      id: Value(id),
+      name: Value(name),
+      description: Value(description),
+      tag: Value(tag),
+      userId: Value(userId),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory Notebook.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Notebook(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String>(json['description']),
+      tag: serializer.fromJson<String>(json['tag']),
+      userId: serializer.fromJson<int>(json['userId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String>(description),
+      'tag': serializer.toJson<String>(tag),
+      'userId': serializer.toJson<int>(userId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  Notebook copyWith(
+          {int? id,
+          String? name,
+          String? description,
+          String? tag,
+          int? userId,
+          DateTime? createdAt}) =>
+      Notebook(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        description: description ?? this.description,
+        tag: tag ?? this.tag,
+        userId: userId ?? this.userId,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Notebook(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('tag: $tag, ')
+          ..write('userId: $userId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, name, description, tag, userId, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Notebook &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.tag == this.tag &&
+          other.userId == this.userId &&
+          other.createdAt == this.createdAt);
+}
+
+class NotebooksCompanion extends UpdateCompanion<Notebook> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> description;
+  final Value<String> tag;
+  final Value<int> userId;
+  final Value<DateTime> createdAt;
+  const NotebooksCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.tag = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  NotebooksCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String description,
+    required String tag,
+    required int userId,
+    required DateTime createdAt,
+  })  : name = Value(name),
+        description = Value(description),
+        tag = Value(tag),
+        userId = Value(userId),
+        createdAt = Value(createdAt);
+  static Insertable<Notebook> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<String>? tag,
+    Expression<int>? userId,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (tag != null) 'tag': tag,
+      if (userId != null) 'user_id': userId,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  NotebooksCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String>? description,
+      Value<String>? tag,
+      Value<int>? userId,
+      Value<DateTime>? createdAt}) {
+    return NotebooksCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      tag: tag ?? this.tag,
+      userId: userId ?? this.userId,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (tag.present) {
+      map['tag'] = Variable<String>(tag.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NotebooksCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('tag: $tag, ')
+          ..write('userId: $userId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $NotesTable extends Notes with TableInfo<$NotesTable, Note> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NotesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+      'title', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _bodyMeta = const VerificationMeta('body');
+  @override
+  late final GeneratedColumn<String> body = GeneratedColumn<String>(
+      'body', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _tagMeta = const VerificationMeta('tag');
+  @override
+  late final GeneratedColumn<String> tag = GeneratedColumn<String>(
+      'tag', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+      'user_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _notebookIdMeta =
+      const VerificationMeta('notebookId');
+  @override
+  late final GeneratedColumn<int> notebookId = GeneratedColumn<int>(
+      'notebook_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, title, body, tag, userId, notebookId, createdAt];
+  @override
+  String get aliasedName => _alias ?? 'notes';
+  @override
+  String get actualTableName => 'notes';
+  @override
+  VerificationContext validateIntegrity(Insertable<Note> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('body')) {
+      context.handle(
+          _bodyMeta, body.isAcceptableOrUnknown(data['body']!, _bodyMeta));
+    } else if (isInserting) {
+      context.missing(_bodyMeta);
+    }
+    if (data.containsKey('tag')) {
+      context.handle(
+          _tagMeta, tag.isAcceptableOrUnknown(data['tag']!, _tagMeta));
+    } else if (isInserting) {
+      context.missing(_tagMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('notebook_id')) {
+      context.handle(
+          _notebookIdMeta,
+          notebookId.isAcceptableOrUnknown(
+              data['notebook_id']!, _notebookIdMeta));
+    } else if (isInserting) {
+      context.missing(_notebookIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Note map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Note(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      title: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      body: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}body'])!,
+      tag: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tag'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
+      notebookId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}notebook_id'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $NotesTable createAlias(String alias) {
+    return $NotesTable(attachedDatabase, alias);
+  }
+}
+
+class Note extends DataClass implements Insertable<Note> {
+  final int id;
+  final String title;
+  final String body;
+  final String tag;
+  final int userId;
+  final int notebookId;
+  final DateTime createdAt;
+  const Note(
+      {required this.id,
+      required this.title,
+      required this.body,
+      required this.tag,
+      required this.userId,
+      required this.notebookId,
+      required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['title'] = Variable<String>(title);
+    map['body'] = Variable<String>(body);
+    map['tag'] = Variable<String>(tag);
+    map['user_id'] = Variable<int>(userId);
+    map['notebook_id'] = Variable<int>(notebookId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  NotesCompanion toCompanion(bool nullToAbsent) {
+    return NotesCompanion(
+      id: Value(id),
+      title: Value(title),
+      body: Value(body),
+      tag: Value(tag),
+      userId: Value(userId),
+      notebookId: Value(notebookId),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory Note.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Note(
+      id: serializer.fromJson<int>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      body: serializer.fromJson<String>(json['body']),
+      tag: serializer.fromJson<String>(json['tag']),
+      userId: serializer.fromJson<int>(json['userId']),
+      notebookId: serializer.fromJson<int>(json['notebookId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'title': serializer.toJson<String>(title),
+      'body': serializer.toJson<String>(body),
+      'tag': serializer.toJson<String>(tag),
+      'userId': serializer.toJson<int>(userId),
+      'notebookId': serializer.toJson<int>(notebookId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  Note copyWith(
+          {int? id,
+          String? title,
+          String? body,
+          String? tag,
+          int? userId,
+          int? notebookId,
+          DateTime? createdAt}) =>
+      Note(
+        id: id ?? this.id,
+        title: title ?? this.title,
+        body: body ?? this.body,
+        tag: tag ?? this.tag,
+        userId: userId ?? this.userId,
+        notebookId: notebookId ?? this.notebookId,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Note(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('body: $body, ')
+          ..write('tag: $tag, ')
+          ..write('userId: $userId, ')
+          ..write('notebookId: $notebookId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, title, body, tag, userId, notebookId, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Note &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.body == this.body &&
+          other.tag == this.tag &&
+          other.userId == this.userId &&
+          other.notebookId == this.notebookId &&
+          other.createdAt == this.createdAt);
+}
+
+class NotesCompanion extends UpdateCompanion<Note> {
+  final Value<int> id;
+  final Value<String> title;
+  final Value<String> body;
+  final Value<String> tag;
+  final Value<int> userId;
+  final Value<int> notebookId;
+  final Value<DateTime> createdAt;
+  const NotesCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.body = const Value.absent(),
+    this.tag = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.notebookId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  NotesCompanion.insert({
+    this.id = const Value.absent(),
+    required String title,
+    required String body,
+    required String tag,
+    required int userId,
+    required int notebookId,
+    required DateTime createdAt,
+  })  : title = Value(title),
+        body = Value(body),
+        tag = Value(tag),
+        userId = Value(userId),
+        notebookId = Value(notebookId),
+        createdAt = Value(createdAt);
+  static Insertable<Note> custom({
+    Expression<int>? id,
+    Expression<String>? title,
+    Expression<String>? body,
+    Expression<String>? tag,
+    Expression<int>? userId,
+    Expression<int>? notebookId,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (body != null) 'body': body,
+      if (tag != null) 'tag': tag,
+      if (userId != null) 'user_id': userId,
+      if (notebookId != null) 'notebook_id': notebookId,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  NotesCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? title,
+      Value<String>? body,
+      Value<String>? tag,
+      Value<int>? userId,
+      Value<int>? notebookId,
+      Value<DateTime>? createdAt}) {
+    return NotesCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      body: body ?? this.body,
+      tag: tag ?? this.tag,
+      userId: userId ?? this.userId,
+      notebookId: notebookId ?? this.notebookId,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (body.present) {
+      map['body'] = Variable<String>(body.value);
+    }
+    if (tag.present) {
+      map['tag'] = Variable<String>(tag.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (notebookId.present) {
+      map['notebook_id'] = Variable<int>(notebookId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NotesCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('body: $body, ')
+          ..write('tag: $tag, ')
+          ..write('userId: $userId, ')
+          ..write('notebookId: $notebookId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTable users = $UsersTable(this);
@@ -1278,10 +1960,12 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final $AlbumsTable albums = $AlbumsTable(this);
   late final $MyImagesTable myImages = $MyImagesTable(this);
   late final $TodosTable todos = $TodosTable(this);
+  late final $NotebooksTable notebooks = $NotebooksTable(this);
+  late final $NotesTable notes = $NotesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [users, journals, albums, myImages, todos];
+      [users, journals, albums, myImages, todos, notebooks, notes];
 }

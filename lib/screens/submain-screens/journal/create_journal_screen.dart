@@ -42,9 +42,9 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
       }
 
       //To-do: database
-      print(enteredJournalTitle);
-      print(enteredJournalDescription);
-      print(enteredJournalTag);
+      // print(enteredJournalTitle);
+      // print(enteredJournalDescription);
+      // print(enteredJournalTag);
 
       final journalEntity = JournalsCompanion(
           title: drift.Value(enteredJournalTitle),

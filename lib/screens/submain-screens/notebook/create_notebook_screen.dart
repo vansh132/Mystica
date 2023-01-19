@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mytica/data/local/db/app_db.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:drift/drift.dart' as drift;
 
 class CreateNotebookScreen extends StatefulWidget {
   static const routeName = '/create-notebook-screen';
@@ -9,17 +12,55 @@ class CreateNotebookScreen extends StatefulWidget {
 }
 
 class _CreateNotebookScreenState extends State<CreateNotebookScreen> {
+  late AppDb _db;
+
+  int userId = 0;
+
+  void getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? id = prefs.getInt('userId');
+    if (id != null) {
+      userId = id;
+    }
+  }
+
+  @override
+  void initState() {
+    getUserId();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _db = AppDb();
     final _nameController = TextEditingController();
     final _descriptionController = TextEditingController();
     final _tagController = TextEditingController();
 
-    
-    void _addNotebook() {
-      print(_nameController.text);
-      print(_descriptionController.text);
-      print(_tagController.text);
+    void _addNotebook() async {
+      final name = _nameController.text;
+      final description = _descriptionController.text;
+      final tag = _tagController.text;
+
+      if (name.isNotEmpty && description.isNotEmpty && tag.isNotEmpty) {
+        final notebookEntity = NotebooksCompanion(
+            name: drift.Value(name),
+            description: drift.Value(description),
+            tag: drift.Value(tag),
+            createdAt: drift.Value(DateTime.now()),
+            userId: drift.Value(userId));
+
+        int res = await _db.insertNotebook(notebookEntity);
+        if (res != 0) {
+          print("Journal Added $res");
+          await _db.close();
+          Navigator.of(context).pop();
+        } else {
+          showNotebookNotAddedDialogBox(context);
+        }
+      } else {
+        showFieldCannotBeEmptyDialogBox(context);
+      }
     }
 
     return Scaffold(
@@ -78,9 +119,53 @@ class _CreateNotebookScreenState extends State<CreateNotebookScreen> {
               height: 35,
             ),
             ElevatedButton(
-                onPressed: _addNotebook, child: const Text("Add Journal"))
+                onPressed: _addNotebook, child: const Text("Add Notebook"))
           ],
         ),
+      ),
+    );
+  }
+
+  void showFieldCannotBeEmptyDialogBox(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Fields Empty!"),
+        content: const Text("Fields cannot be empty."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(14),
+              child: const Text("Okay"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void showNotebookNotAddedDialogBox(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Failed"),
+        content: const Text("Notebook Not Added. Please try again later."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(14),
+              child: const Text("Okay"),
+            ),
+          ),
+        ],
       ),
     );
   }
