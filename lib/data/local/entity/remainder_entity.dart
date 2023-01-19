@@ -5,5 +5,5 @@ class Remainders extends Table {
   TextColumn get title => text()();
   IntColumn get isCompleted => integer()(); // 0 is false and 1 is true
   IntColumn get userId => integer()();
-  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get deadline => dateTime()();
 }

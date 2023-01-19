@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:drift/drift.dart' as drift;
 import 'package:mytica/data/local/db/app_db.dart';
-import 'package:mytica/models/reminder/reminder.dart';
 import 'package:mytica/screens/submain-screens/todo/todo_screen.dart';
 
 class reminder_item extends StatefulWidget {
-  Reminder todoReminderItem;
+  Remainder reminderItem;
   int index;
-  reminder_item(this.todoReminderItem, this.index);
+  reminder_item(this.reminderItem, this.index);
 
   @override
   State<reminder_item> createState() => _reminder_itemState();
@@ -58,25 +57,25 @@ class _reminder_itemState extends State<reminder_item> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.todoReminderItem.title,
+                        widget.reminderItem.title,
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 4,
                       ),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             "Deadline: ",
                             style: TextStyle(
                                 color: Colors.red, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             DateFormat.yMMMd()
-                                .format(widget.todoReminderItem.selectedDate),
+                                .format(widget.reminderItem.deadline),
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -98,46 +97,48 @@ class _reminder_itemState extends State<reminder_item> {
                       activeColor: const Color(0xff001427),
                       checkColor: Colors.white,
                       splashRadius: 2,
-                      value: widget.todoReminderItem.isCompleted == 0
-                          ? false
-                          : true,
+                      value:
+                          widget.reminderItem.isCompleted == 0 ? false : true,
                       onChanged: (value) {
                         //To-do: Add Reminder
                         //add async
-                        // setState(() async {
-                        // int isCompleted;
-                        // if (value == true) {
-                        //   isCompleted = 1;
-                        // } else {
-                        //   isCompleted = 0;
-                        // }
-                        // final todoCompanion = TodosCompanion(
-                        //     id: drift.Value(widget.todoReminderItem.id),
-                        //     title: drift.Value(widget.todoReminderItem.title),
-                        //     isCompleted: drift.Value(isCompleted),
-                        //     userId: drift.Value(widget.todoReminderItem.userId));
-                        // final db = AppDb();
-                        // bool isUpdated = await db.updateTodo(todoCompanion);
-                        // print("isUpdated: $isUpdated");
-                        // await db.close();
-                        // Navigator.of(context).pop();
-                        // Navigator.of(context)
-                        //     .pushReplacementNamed(TodoScreen.routeName);
-                        // });
+                        setState(() async {
+                          int isCompleted;
+                          if (value == true) {
+                            isCompleted = 1;
+                          } else {
+                            isCompleted = 0;
+                          }
+                          final remainderCompanion = RemaindersCompanion(
+                              id: drift.Value(widget.reminderItem.id),
+                              title: drift.Value(widget.reminderItem.title),
+                              isCompleted: drift.Value(isCompleted),
+                              userId: drift.Value(widget.reminderItem.userId),
+                              deadline:
+                                  drift.Value(widget.reminderItem.deadline));
+                          final db = AppDb();
+                          bool isUpdated =
+                              await db.updateRemainder(remainderCompanion);
+                          print("isUpdated: $isUpdated");
+                          await db.close();
+                          Navigator.of(context).pop();
+                          Navigator.of(context)
+                              .pushReplacementNamed(TodoScreen.routeName);
+                        });
                       },
                     ),
                     const SizedBox(
                       width: 24,
                     ),
                     IconButton(
-                        onPressed: () {
-                          //To-do: Delete Reminder
-                          // final db = AppDb();
-                          // await db.deleteTodo(widget.todoReminderItem.id);
-                          // await db.close();
-                          // Navigator.of(context).pop();
-                          // Navigator.of(context)
-                          //     .pushReplacementNamed(TodoScreen.routeName);
+                        onPressed: () async {
+                          // To-do: Delete Reminder
+                          final db = AppDb();
+                          await db.deleteRemainder(widget.reminderItem.id);
+                          await db.close();
+                          Navigator.of(context).pop();
+                          Navigator.of(context)
+                              .pushReplacementNamed(TodoScreen.routeName);
                         },
                         icon: const Icon(
                           Icons.delete,

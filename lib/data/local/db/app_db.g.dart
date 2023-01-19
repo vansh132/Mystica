@@ -1984,15 +1984,15 @@ class $RemaindersTable extends Remainders
   late final GeneratedColumn<int> userId = GeneratedColumn<int>(
       'user_id', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _createdAtMeta =
-      const VerificationMeta('createdAt');
+  static const VerificationMeta _deadlineMeta =
+      const VerificationMeta('deadline');
   @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-      'created_at', aliasedName, false,
+  late final GeneratedColumn<DateTime> deadline = GeneratedColumn<DateTime>(
+      'deadline', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, title, isCompleted, userId, createdAt];
+      [id, title, isCompleted, userId, deadline];
   @override
   String get aliasedName => _alias ?? 'remainders';
   @override
@@ -2025,11 +2025,11 @@ class $RemaindersTable extends Remainders
     } else if (isInserting) {
       context.missing(_userIdMeta);
     }
-    if (data.containsKey('created_at')) {
-      context.handle(_createdAtMeta,
-          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    if (data.containsKey('deadline')) {
+      context.handle(_deadlineMeta,
+          deadline.isAcceptableOrUnknown(data['deadline']!, _deadlineMeta));
     } else if (isInserting) {
-      context.missing(_createdAtMeta);
+      context.missing(_deadlineMeta);
     }
     return context;
   }
@@ -2048,8 +2048,8 @@ class $RemaindersTable extends Remainders
           .read(DriftSqlType.int, data['${effectivePrefix}is_completed'])!,
       userId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
-      createdAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      deadline: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}deadline'])!,
     );
   }
 
@@ -2064,13 +2064,13 @@ class Remainder extends DataClass implements Insertable<Remainder> {
   final String title;
   final int isCompleted;
   final int userId;
-  final DateTime createdAt;
+  final DateTime deadline;
   const Remainder(
       {required this.id,
       required this.title,
       required this.isCompleted,
       required this.userId,
-      required this.createdAt});
+      required this.deadline});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -2078,7 +2078,7 @@ class Remainder extends DataClass implements Insertable<Remainder> {
     map['title'] = Variable<String>(title);
     map['is_completed'] = Variable<int>(isCompleted);
     map['user_id'] = Variable<int>(userId);
-    map['created_at'] = Variable<DateTime>(createdAt);
+    map['deadline'] = Variable<DateTime>(deadline);
     return map;
   }
 
@@ -2088,7 +2088,7 @@ class Remainder extends DataClass implements Insertable<Remainder> {
       title: Value(title),
       isCompleted: Value(isCompleted),
       userId: Value(userId),
-      createdAt: Value(createdAt),
+      deadline: Value(deadline),
     );
   }
 
@@ -2100,7 +2100,7 @@ class Remainder extends DataClass implements Insertable<Remainder> {
       title: serializer.fromJson<String>(json['title']),
       isCompleted: serializer.fromJson<int>(json['isCompleted']),
       userId: serializer.fromJson<int>(json['userId']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      deadline: serializer.fromJson<DateTime>(json['deadline']),
     );
   }
   @override
@@ -2111,7 +2111,7 @@ class Remainder extends DataClass implements Insertable<Remainder> {
       'title': serializer.toJson<String>(title),
       'isCompleted': serializer.toJson<int>(isCompleted),
       'userId': serializer.toJson<int>(userId),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'deadline': serializer.toJson<DateTime>(deadline),
     };
   }
 
@@ -2120,13 +2120,13 @@ class Remainder extends DataClass implements Insertable<Remainder> {
           String? title,
           int? isCompleted,
           int? userId,
-          DateTime? createdAt}) =>
+          DateTime? deadline}) =>
       Remainder(
         id: id ?? this.id,
         title: title ?? this.title,
         isCompleted: isCompleted ?? this.isCompleted,
         userId: userId ?? this.userId,
-        createdAt: createdAt ?? this.createdAt,
+        deadline: deadline ?? this.deadline,
       );
   @override
   String toString() {
@@ -2135,13 +2135,13 @@ class Remainder extends DataClass implements Insertable<Remainder> {
           ..write('title: $title, ')
           ..write('isCompleted: $isCompleted, ')
           ..write('userId: $userId, ')
-          ..write('createdAt: $createdAt')
+          ..write('deadline: $deadline')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, title, isCompleted, userId, createdAt);
+  int get hashCode => Object.hash(id, title, isCompleted, userId, deadline);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2150,7 +2150,7 @@ class Remainder extends DataClass implements Insertable<Remainder> {
           other.title == this.title &&
           other.isCompleted == this.isCompleted &&
           other.userId == this.userId &&
-          other.createdAt == this.createdAt);
+          other.deadline == this.deadline);
 }
 
 class RemaindersCompanion extends UpdateCompanion<Remainder> {
@@ -2158,37 +2158,37 @@ class RemaindersCompanion extends UpdateCompanion<Remainder> {
   final Value<String> title;
   final Value<int> isCompleted;
   final Value<int> userId;
-  final Value<DateTime> createdAt;
+  final Value<DateTime> deadline;
   const RemaindersCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.isCompleted = const Value.absent(),
     this.userId = const Value.absent(),
-    this.createdAt = const Value.absent(),
+    this.deadline = const Value.absent(),
   });
   RemaindersCompanion.insert({
     this.id = const Value.absent(),
     required String title,
     required int isCompleted,
     required int userId,
-    required DateTime createdAt,
+    required DateTime deadline,
   })  : title = Value(title),
         isCompleted = Value(isCompleted),
         userId = Value(userId),
-        createdAt = Value(createdAt);
+        deadline = Value(deadline);
   static Insertable<Remainder> custom({
     Expression<int>? id,
     Expression<String>? title,
     Expression<int>? isCompleted,
     Expression<int>? userId,
-    Expression<DateTime>? createdAt,
+    Expression<DateTime>? deadline,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
       if (isCompleted != null) 'is_completed': isCompleted,
       if (userId != null) 'user_id': userId,
-      if (createdAt != null) 'created_at': createdAt,
+      if (deadline != null) 'deadline': deadline,
     });
   }
 
@@ -2197,13 +2197,13 @@ class RemaindersCompanion extends UpdateCompanion<Remainder> {
       Value<String>? title,
       Value<int>? isCompleted,
       Value<int>? userId,
-      Value<DateTime>? createdAt}) {
+      Value<DateTime>? deadline}) {
     return RemaindersCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       isCompleted: isCompleted ?? this.isCompleted,
       userId: userId ?? this.userId,
-      createdAt: createdAt ?? this.createdAt,
+      deadline: deadline ?? this.deadline,
     );
   }
 
@@ -2222,8 +2222,8 @@ class RemaindersCompanion extends UpdateCompanion<Remainder> {
     if (userId.present) {
       map['user_id'] = Variable<int>(userId.value);
     }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
+    if (deadline.present) {
+      map['deadline'] = Variable<DateTime>(deadline.value);
     }
     return map;
   }
@@ -2235,7 +2235,7 @@ class RemaindersCompanion extends UpdateCompanion<Remainder> {
           ..write('title: $title, ')
           ..write('isCompleted: $isCompleted, ')
           ..write('userId: $userId, ')
-          ..write('createdAt: $createdAt')
+          ..write('deadline: $deadline')
           ..write(')'))
         .toString();
   }
