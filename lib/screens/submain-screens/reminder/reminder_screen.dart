@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mytica/widgets/Items/add_reminder.dart';
 import 'package:mytica/widgets/navigation.dart';
 import 'package:pie_chart/pie_chart.dart';
 
@@ -8,6 +9,38 @@ class ReminderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void _addNewTask(String task) {
+      print(task);
+      // _db = AppDb();
+      // int id = await userId;
+
+      // final todoEntity = TodosCompanion(
+      //     title: drift.Value(task),
+      //     isCompleted: drift.Value(0),
+      //     userId: drift.Value(id));
+      // print(todoEntity);
+      // int res = await _db.insertTodo(todoEntity);
+      // if (res != 0) {
+      //   print("Todo added: $res");
+
+      // }
+      // await _db.close();
+    }
+
+    void _startAddReminderTransaction(BuildContext ctx) {
+      print("inside _startAddTaskTransaction...");
+      showModalBottomSheet(
+          context: ctx,
+          builder: (_) {
+            return GestureDetector(
+              onTap: () {},
+              child: AddReminder(_addNewTask),
+              behavior: HitTestBehavior.opaque,
+              // behavior is important to catch the action like  onTap
+            );
+          });
+    }
+
     Map<String, double> dataMap = {
       "Jan-Mar": 5,
       "Apr-Jun": 3,
@@ -179,6 +212,11 @@ class ReminderScreen extends StatelessWidget {
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Add Reminder"),
+        icon: const Icon(Icons.add_alarm_rounded),
+        onPressed: () => _startAddReminderTransaction(context),
       ),
     );
   }
