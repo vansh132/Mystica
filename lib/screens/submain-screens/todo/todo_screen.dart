@@ -50,7 +50,7 @@ class _TodoScreenState extends State<TodoScreen> {
       int res = await _db.insertTodo(todoEntity);
       if (res != 0) {
         print("Todo added: $res");
-        
+        Navigator.of(context).pushReplacementNamed(TodoScreen.routeName);
       }
       await _db.close();
     }
