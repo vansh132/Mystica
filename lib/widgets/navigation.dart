@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mytica/screens/main-screen/profile_screen.dart';
 import 'package:mytica/screens/submain-screens/album/album_screen.dart';
 import 'package:mytica/screens/submain-screens/journal/journal_screen.dart';
 import 'package:mytica/screens/submain-screens/notebook/notebook_screen.dart';
@@ -76,8 +77,8 @@ class _NavigationRowState extends State<NavigationRow> {
               ),
               TextButton(
                   onPressed: () {
-                    // Navigator.of(context)
-                    //     .pushReplacementNamed(JournalScreen.routeName);
+                    Navigator.of(context)
+                        .pushReplacementNamed(ProfileScreen.routeName);
                   },
                   child: Text(
                     "Profile",

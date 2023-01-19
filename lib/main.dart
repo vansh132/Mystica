@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mytica/screens/main-screen/profile_screen.dart';
 import 'package:mytica/screens/submain-screens/album/image/add_image_screen.dart';
 import 'package:mytica/screens/submain-screens/album/image/image_screen.dart';
 import 'package:mytica/screens/submain-screens/album/create_album_screen.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (ctx) => LoginScreen(),
         SignUpScreen.routeName: (ctx) => SignUpScreen(),
         HomeScreen.routeName: (ctx) => HomeScreen(),
+        ProfileScreen.routeName: (ctx) => const ProfileScreen(),
         //submain-screens
         NotebookScreen.routeName: (ctx) => const NotebookScreen(),
         CreateNotebookScreen.routeName: (ctx) => const CreateNotebookScreen(),
