@@ -41,10 +41,9 @@ class _NotebookScreenState extends State<NotebookScreen> {
         title: const Text("Notebook"),
       ),
       body: FutureBuilder<List<Notebook>>(
-        future: _db.getNotebookByUserId(userId),
+        future: _db.getNotebookByUserId(1),
         builder: ((context, snapshot) {
           final List<Notebook>? notebooks = snapshot.data;
-          _db.close();
           if (snapshot.connectionState != ConnectionState.done) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -58,6 +57,7 @@ class _NotebookScreenState extends State<NotebookScreen> {
           }
 
           if (notebooks != null) {
+            _db.close();
             return Container(
                 // padding: EdgeInsets.all(16),
                 width: double.infinity,
