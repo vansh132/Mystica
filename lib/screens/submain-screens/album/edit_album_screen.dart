@@ -1,19 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:mytica/models/Gallery/Album.dart';
 
-class EditAlbumScreen extends StatelessWidget {
+class EditAlbumScreen extends StatefulWidget {
   static const routeName = "/edit-album-screen";
 
   @override
+  State<EditAlbumScreen> createState() => _EditAlbumScreenState();
+}
+
+class _EditAlbumScreenState extends State<EditAlbumScreen> {
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
+    //Retriving albumId from Album Item (edit button)
+    final album = ModalRoute.of(context)?.settings.arguments as Album;
+    _titleController.text = album.title;
+    _descriptionController.text = album.desription;
     //TO-DO: update the album
     void _updateAlbum() {
+      final enteredAlbumName = _titleController.text;
+      final enteredDescription = _descriptionController.text;
+      print(enteredAlbumName);
+      print(enteredDescription);
       print("Album updated...");
     }
-    //Retriving albumId from Album Item (edit button)
-    final albumId = ModalRoute.of(context)?.settings.arguments as String;
-    print("Alubm - $albumId");
+
+    void _deleteAlbum() {
+      print("Delete album...");
+    }
+
+    print("Alubm - $album");
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: _deleteAlbum,
+              icon: Icon(
+                Icons.delete_forever_rounded,
+              ))
+        ],
+      ),
       body: Container(
         decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -51,6 +78,7 @@ class EditAlbumScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextField(
+                          controller: _titleController,
                           decoration:
                               const InputDecoration(labelText: 'Album name'),
                         ),
@@ -58,6 +86,7 @@ class EditAlbumScreen extends StatelessWidget {
                           height: 15,
                         ),
                         TextField(
+                          controller: _descriptionController,
                           decoration:
                               const InputDecoration(labelText: 'Description'),
                         ),

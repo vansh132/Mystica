@@ -7,6 +7,7 @@ import 'dart:math';
 
 import 'package:mytica/screens/submain-screens/album/image/image_screen.dart';
 import 'package:mytica/screens/submain-screens/album/edit_album_screen.dart';
+import 'package:fluttericon/elusive_icons.dart';
 
 class AlbumItem extends StatelessWidget {
   Album album;
@@ -27,20 +28,69 @@ class AlbumItem extends StatelessWidget {
       Color.fromRGBO(0, 32, 61, 1),
       Color.fromRGBO(0, 11, 20, 1),
     ];
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: FileImage(File("C:/Users/hpCND/Downloads/DSC_0822.NEF.jpg")),
-          fit: BoxFit.cover,
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(25)),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.grey,
-            offset: Offset(0.0, 2.0), //(x,y)
-            blurRadius: 6.0,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(ImageScreen.routeName, arguments: album.id);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: FileImage(File("C:/Users/hpCND/Downloads/DSC_0822.NEF.jpg")),
+            fit: BoxFit.cover,
           ),
-        ],
+          borderRadius: const BorderRadius.all(
+            Radius.circular(24),
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0.0, 2.0), //(x,y)
+              blurRadius: 6.0,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              height: 48,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(24),
+                  bottomRight: Radius.circular(24),
+                ),
+                color: Colors.black54,
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.transparent,
+                    offset: Offset(0.0, 2.0), //(x,y)
+                    blurRadius: 6.0,
+                  ),
+                ],
+              ),
+              // color: Colors.black54,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text("data"),
+                  Text("data"),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                            EditAlbumScreen.routeName,
+                            arguments: album);
+                      },
+                      icon: Icon(
+                        Elusive.th_large,
+                        color: Colors.white,
+                        size: 16,
+                      ))
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
