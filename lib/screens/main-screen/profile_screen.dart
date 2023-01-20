@@ -37,10 +37,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-              colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
-              stops: [0.4, 0.7],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight),
+            colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
+            stops: [0.4, 0.7],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
         ),
         child: Row(
           children: [
@@ -110,8 +111,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     // ),
                   ),
                   SizedBox(
-                    height: 24,
+                    height: 16,
                   ),
+
                   TextButton(
                     onPressed: () async {
                       FilePickerResult? result = await FilePicker.platform
@@ -123,6 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         editedPath = editedPath.replaceAll('\\', '/').trim();
                         // print(file.path);
                         profile.add(editedPath);
+                        print(editedPath);
                         setState(() {
                           pathImage = editedPath;
                         });
@@ -139,6 +142,151 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   //   onPressed: _profileImage,
                   //   child: const Text("Save Profile"),
                   // )
+                  SizedBox(
+                    height: 64,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    width: 500,
+                    height: 250,
+                    // color: Colors.red,
+                    decoration: const BoxDecoration(
+                      // color: Colors.black54,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
+                        bottomLeft: Radius.circular(24),
+                        bottomRight: Radius.circular(24),
+                      ),
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xffEBF5FF),
+                          Color(0xffADD8FF)
+                        ], //final - 1
+                        stops: [0.4, 0.7],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.transparent,
+                          offset: Offset(0.0, 1.0),
+                          blurRadius: 6.0,
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: SizedBox(
+                                width: 10,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                "User name: ",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                "vansh132 ",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          height: 2,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: SizedBox(
+                                width: 10,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                "Full name: ",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                "Vansh Shah",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          height: 2,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: SizedBox(
+                                width: 10,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                "Password: ",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                "I won't tell you",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
