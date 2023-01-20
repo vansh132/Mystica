@@ -142,7 +142,7 @@ class _NotebookScreenState extends State<NotebookScreen> {
                       // ignore: prefer_const_literals_to_create_immutables
                       children: [
                         const Text(
-                          "Journal Overview:",
+                          "Notebook Overview:",
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w700,
@@ -214,7 +214,7 @@ class _NotebookScreenState extends State<NotebookScreen> {
                             // crossAxisAlignment: C,
                             children: [
                               const Text(
-                                "Journal count: ",
+                                "Notebook count: ",
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),

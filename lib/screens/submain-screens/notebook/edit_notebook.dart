@@ -1,21 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
+import 'package:drift/drift.dart' as drift;
+import 'package:mytica/screens/submain-screens/notebook/notebook_screen.dart';
 
 class EditNotebookScreen extends StatefulWidget {
-  const EditNotebookScreen({super.key});
-
+  // Notebook notebook;
+  // EditNotebookScreen(this.notebook);
   static const routeName = 'edit-notebook-screen';
+
+  const EditNotebookScreen({super.key});
   @override
   State<EditNotebookScreen> createState() => _EditNotebookScreenState();
 }
 
 class _EditNotebookScreenState extends State<EditNotebookScreen> {
+  late AppDb _db;
+
+  @override
+  void initState() {
+    super.initState();
+    _db = AppDb();
+  }
+
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _tagController = TextEditingController();
 
-  void _updateNotebook() {
-    print("Notebook updated...");
+  void _updateNotebook() async {
+    final notebook = ModalRoute.of(context)?.settings.arguments as Notebook;
+    // final notebook = args as Notebook;
+    final name = _nameController.text;
+    final description = _descriptionController.text;
+    final tag = _tagController.text;
+
+    if (name.isNotEmpty && description.isNotEmpty && tag.isNotEmpty) {
+      final notebookEntity = NotebooksCompanion(
+          id: drift.Value(notebook.id),
+          name: drift.Value(name),
+          description: drift.Value(description),
+          tag: drift.Value(tag),
+          createdAt: drift.Value(notebook.createdAt),
+          userId: drift.Value(notebook.userId));
+
+      bool isUpdated = await _db.updateNotebook(notebookEntity);
+      if (isUpdated) {
+        print("Notebook Edited $isUpdated");
+        await _db.close();
+        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacementNamed(NotebookScreen.routeName);
+      } else {
+        // showNotebookNotAddedDialogBox(context);
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text("Failed"),
+            content:
+                const Text("Notebook Not Updated. Please try again later."),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Container(
+                  color: Colors.red,
+                  padding: const EdgeInsets.all(14),
+                  child: const Text("Okay"),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+    } else {
+      // showFieldCannotBeEmptyDialogBox(context);
+    }
   }
 
   @override
