@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
             //Dashboard
             Container(
               padding: const EdgeInsets.all(8),
-              height: MediaQuery.of(context).size.height * 0.40,
+              height: MediaQuery.of(context).size.height * 0.42,
               width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
                 color: Color(0xff000814),
@@ -63,12 +63,8 @@ class HomeScreen extends StatelessWidget {
                       color: Color(0xffc7f9cc),
                       letterSpacing: 0.75,
                     ),
-                    // axisLabelFormatter: (axisLabelRenderArgs) {
-                    //   print(axisLabelRenderArgs);
-                    // },
                     majorTickLines: MajorTickLines(width: 0),
                     majorGridLines: MajorGridLines(width: 0),
-                    // minorGridLines: MinorGridLines(width: 0),
                     axisLine: AxisLine(width: 0),
                   ),
                   crosshairBehavior: CrosshairBehavior(lineWidth: 10),
@@ -84,9 +80,7 @@ class HomeScreen extends StatelessWidget {
                         color: Color(0xffc7f9cc),
                         letterSpacing: 0.75,
                       ),
-                      //Hide the gridlines of y-axis
                       majorGridLines: MajorGridLines(width: 0),
-
                       axisLine: AxisLine(width: 0)),
                   legend: Legend(
                       isVisible: true,
@@ -96,7 +90,11 @@ class HomeScreen extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       )),
-                  title: ChartTitle(text: "Fuck"),
+                  title: ChartTitle(
+                      text: "Overview",
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                      )),
                   series: <ChartSeries>[
                     StackedColumn100Series<ChartData, String>(
                         dataSource: chartData,
