@@ -114,7 +114,7 @@ class AlbumScreen extends StatelessWidget {
                   itemCount: albums.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 5 / 2,
+                      childAspectRatio: 3 / 2,
                       crossAxisSpacing: 45,
                       mainAxisSpacing: 35),
                   itemBuilder: (context, index) => AlbumItem(albums[index]),
