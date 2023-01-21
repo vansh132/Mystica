@@ -5,6 +5,6 @@ class Journals extends Table {
   TextColumn get title => text()();
   TextColumn get body => text()();
   TextColumn get tag => text()();
-  IntColumn get userId => integer().autoIncrement()();
+  IntColumn get userId => integer()();
   DateTimeColumn get createdAt => dateTime()();
 }

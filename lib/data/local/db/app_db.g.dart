@@ -601,6 +601,12 @@ class $AlbumsTable extends Albums with TableInfo<$AlbumsTable, Album> {
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
       'description', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _imageurlMeta =
+      const VerificationMeta('imageurl');
+  @override
+  late final GeneratedColumn<String> imageurl = GeneratedColumn<String>(
+      'imageurl', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
   @override
   late final GeneratedColumn<int> userId = GeneratedColumn<int>(
@@ -614,7 +620,7 @@ class $AlbumsTable extends Albums with TableInfo<$AlbumsTable, Album> {
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, name, description, userId, createdAt];
+      [id, name, description, imageurl, userId, createdAt];
   @override
   String get aliasedName => _alias ?? 'albums';
   @override
@@ -640,6 +646,12 @@ class $AlbumsTable extends Albums with TableInfo<$AlbumsTable, Album> {
               data['description']!, _descriptionMeta));
     } else if (isInserting) {
       context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('imageurl')) {
+      context.handle(_imageurlMeta,
+          imageurl.isAcceptableOrUnknown(data['imageurl']!, _imageurlMeta));
+    } else if (isInserting) {
+      context.missing(_imageurlMeta);
     }
     if (data.containsKey('user_id')) {
       context.handle(_userIdMeta,
@@ -668,6 +680,8 @@ class $AlbumsTable extends Albums with TableInfo<$AlbumsTable, Album> {
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
+      imageurl: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}imageurl'])!,
       userId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
       createdAt: attachedDatabase.typeMapping
@@ -685,12 +699,14 @@ class Album extends DataClass implements Insertable<Album> {
   final int id;
   final String name;
   final String description;
+  final String imageurl;
   final int userId;
   final DateTime createdAt;
   const Album(
       {required this.id,
       required this.name,
       required this.description,
+      required this.imageurl,
       required this.userId,
       required this.createdAt});
   @override
@@ -699,6 +715,7 @@ class Album extends DataClass implements Insertable<Album> {
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     map['description'] = Variable<String>(description);
+    map['imageurl'] = Variable<String>(imageurl);
     map['user_id'] = Variable<int>(userId);
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
@@ -709,6 +726,7 @@ class Album extends DataClass implements Insertable<Album> {
       id: Value(id),
       name: Value(name),
       description: Value(description),
+      imageurl: Value(imageurl),
       userId: Value(userId),
       createdAt: Value(createdAt),
     );
@@ -721,6 +739,7 @@ class Album extends DataClass implements Insertable<Album> {
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       description: serializer.fromJson<String>(json['description']),
+      imageurl: serializer.fromJson<String>(json['imageurl']),
       userId: serializer.fromJson<int>(json['userId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
@@ -732,6 +751,7 @@ class Album extends DataClass implements Insertable<Album> {
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'description': serializer.toJson<String>(description),
+      'imageurl': serializer.toJson<String>(imageurl),
       'userId': serializer.toJson<int>(userId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
@@ -741,12 +761,14 @@ class Album extends DataClass implements Insertable<Album> {
           {int? id,
           String? name,
           String? description,
+          String? imageurl,
           int? userId,
           DateTime? createdAt}) =>
       Album(
         id: id ?? this.id,
         name: name ?? this.name,
         description: description ?? this.description,
+        imageurl: imageurl ?? this.imageurl,
         userId: userId ?? this.userId,
         createdAt: createdAt ?? this.createdAt,
       );
@@ -756,6 +778,7 @@ class Album extends DataClass implements Insertable<Album> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('description: $description, ')
+          ..write('imageurl: $imageurl, ')
           ..write('userId: $userId, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
@@ -763,7 +786,8 @@ class Album extends DataClass implements Insertable<Album> {
   }
 
   @override
-  int get hashCode => Object.hash(id, name, description, userId, createdAt);
+  int get hashCode =>
+      Object.hash(id, name, description, imageurl, userId, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -771,6 +795,7 @@ class Album extends DataClass implements Insertable<Album> {
           other.id == this.id &&
           other.name == this.name &&
           other.description == this.description &&
+          other.imageurl == this.imageurl &&
           other.userId == this.userId &&
           other.createdAt == this.createdAt);
 }
@@ -779,12 +804,14 @@ class AlbumsCompanion extends UpdateCompanion<Album> {
   final Value<int> id;
   final Value<String> name;
   final Value<String> description;
+  final Value<String> imageurl;
   final Value<int> userId;
   final Value<DateTime> createdAt;
   const AlbumsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.description = const Value.absent(),
+    this.imageurl = const Value.absent(),
     this.userId = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
@@ -792,16 +819,19 @@ class AlbumsCompanion extends UpdateCompanion<Album> {
     this.id = const Value.absent(),
     required String name,
     required String description,
+    required String imageurl,
     required int userId,
     required DateTime createdAt,
   })  : name = Value(name),
         description = Value(description),
+        imageurl = Value(imageurl),
         userId = Value(userId),
         createdAt = Value(createdAt);
   static Insertable<Album> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? description,
+    Expression<String>? imageurl,
     Expression<int>? userId,
     Expression<DateTime>? createdAt,
   }) {
@@ -809,6 +839,7 @@ class AlbumsCompanion extends UpdateCompanion<Album> {
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (description != null) 'description': description,
+      if (imageurl != null) 'imageurl': imageurl,
       if (userId != null) 'user_id': userId,
       if (createdAt != null) 'created_at': createdAt,
     });
@@ -818,12 +849,14 @@ class AlbumsCompanion extends UpdateCompanion<Album> {
       {Value<int>? id,
       Value<String>? name,
       Value<String>? description,
+      Value<String>? imageurl,
       Value<int>? userId,
       Value<DateTime>? createdAt}) {
     return AlbumsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      imageurl: imageurl ?? this.imageurl,
       userId: userId ?? this.userId,
       createdAt: createdAt ?? this.createdAt,
     );
@@ -841,6 +874,9 @@ class AlbumsCompanion extends UpdateCompanion<Album> {
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
+    if (imageurl.present) {
+      map['imageurl'] = Variable<String>(imageurl.value);
+    }
     if (userId.present) {
       map['user_id'] = Variable<int>(userId.value);
     }
@@ -856,6 +892,7 @@ class AlbumsCompanion extends UpdateCompanion<Album> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('description: $description, ')
+          ..write('imageurl: $imageurl, ')
           ..write('userId: $userId, ')
           ..write('createdAt: $createdAt')
           ..write(')'))

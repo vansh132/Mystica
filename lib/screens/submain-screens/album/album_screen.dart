@@ -1,69 +1,41 @@
 import 'dart:io';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:mytica/models/Gallery/Album.dart';
+import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/album/create_album_screen.dart';
 import 'package:mytica/widgets/Items/album_item.dart';
 import 'package:mytica/widgets/navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class AlbumScreen extends StatelessWidget {
+class AlbumScreen extends StatefulWidget {
   static const String routeName = '/album-screen';
   const AlbumScreen({super.key});
 
   @override
+  State<AlbumScreen> createState() => _AlbumScreenState();
+}
+
+class _AlbumScreenState extends State<AlbumScreen> {
+  late AppDb _db;
+
+  int userId = 0;
+
+  void getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? id = prefs.getInt('userId');
+    if (id != null) {
+      userId = id;
+    }
+  }
+
+  @override
+  void initState() {
+    getUserId();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    //To-do: Retrieve Albums from database and convert it into List<Album>.
-    final List<Album> albums = [
-      Album(
-        id: 1,
-        title: "Goa Trip",
-        desription: "Family Vacation",
-        coverImagePath:
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_1.jpg",
-        createdAt: DateTime.now(),
-      ),
-      Album(
-        id: 2,
-        title: "Gujarat Trip",
-        desription: "Final semester trip with Juniors",
-        coverImagePath:
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_2.jpg",
-        createdAt: DateTime.now(),
-      ),
-      Album(
-        id: 3,
-        title: "Bangalore Trip",
-        desription: "College Track",
-        coverImagePath:
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_3.jpg",
-        createdAt: DateTime.now(),
-      ),
-      Album(
-        id: 4,
-        title: "Goa Trip",
-        desription: "Final semester trip with Juniors",
-        coverImagePath:
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_4.jpg",
-        createdAt: DateTime.now(),
-      ),
-      Album(
-        id: 5,
-        title: "Gujarat Trip",
-        desription: "Final semester trip with Juniors",
-        coverImagePath:
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_5.jpg",
-        createdAt: DateTime.now(),
-      ),
-      Album(
-        id: 11,
-        title: "Bangalore Trip",
-        desription: "Final semester trip with Juniors",
-        coverImagePath:
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_6.jpg",
-        createdAt: DateTime.now(),
-      ),
-    ];
+    _db = AppDb();
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Album")),
@@ -94,148 +66,178 @@ class AlbumScreen extends StatelessWidget {
               )),
         ],
       ),
-      body: Container(
-          // padding: EdgeInsets.all(16),
-          width: double.infinity,
-          height: double.infinity,
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
-                  stops: [0.4, 0.7],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight)),
-          child: Row(
-            children: [
-              Container(
-                color: Color(0xff001427),
-                width: MediaQuery.of(context).size.width * 0.12,
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      "Quote of the Day",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xffCAF0F8)),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "\" Life is either a daring adventure or nothing at all \"",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w300,
-                          color: Color(0xffedf6f9)),
-                      textAlign: TextAlign.center,
-                    ),
-                    NavigationRow(),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              // margin: EdgeInsets.all(8),
+      body: FutureBuilder<List<Album>>(
+        future: _db.getAlbumByUserId(1),
+        builder: ((context, snapshot) {
+          final List<Album>? albums = snapshot.data;
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(24),
-                                ),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.black54,
-                                    offset: Offset(0.0, 2.0), //(x,y)
-                                    blurRadius: 6.0,
-                                  ),
-                                ],
-                                // gradient: LinearGradient(
-                                //   colors: [
-                                //     Color(0xffD6EFFF),
-                                //     Color(0xff85D0FF)
-                                //   ],
-                                // ),
-                              ),
-                              // color: Colors.yellow,
-                              height: 72,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
+
+          if (albums != null) {
+            _db.close();
+
+            return Container(
+                // padding: EdgeInsets.all(16),
+                width: double.infinity,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                  Color(0xffADD8FF),
+                  Color(0xffEBF5FF)
+                ], //final - 1
+                        stops: [
+                      0.4,
+                      0.7
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+                child: Row(
+                  children: [
+                    Container(
+                      color: Color(0xff001427),
+                      width: MediaQuery.of(context).size.width * 0.12,
+                      height: MediaQuery.of(context).size.height,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            "Quote of the Day",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xffCAF0F8)),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            "\" Life is either a daring adventure or nothing at all \"",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w300,
+                                color: Color(0xffedf6f9)),
+                            textAlign: TextAlign.center,
+                          ),
+                          NavigationRow(),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Expanded(
-                                    child: CircleAvatar(
-                                      radius: 30,
-                                      // backgroundColor: Colors.white,
-                                      backgroundImage: FileImage(File(
-                                          "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_3.jpg")),
+                                  Container(
+                                    padding: EdgeInsets.all(8),
+                                    // margin: EdgeInsets.all(8),
+
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(24),
+                                      ),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Colors.black54,
+                                          offset: Offset(0.0, 2.0), //(x,y)
+                                          blurRadius: 6.0,
+                                        ),
+                                      ],
+                                      // gradient: LinearGradient(
+                                      //   colors: [
+                                      //     Color(0xffD6EFFF),
+                                      //     Color(0xff85D0FF)
+                                      //   ],
+                                      // ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
+                                    // color: Colors.yellow,
+                                    height: 72,
+                                    child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          MainAxisAlignment.spaceAround,
                                       children: [
-                                        Text(
-                                          "Vansh Shah",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            // letterSpacing: 0.5,
-                                            fontWeight: FontWeight.w500,
+                                        Expanded(
+                                          child: CircleAvatar(
+                                            radius: 30,
+                                            // backgroundColor: Colors.white,
+                                            backgroundImage: FileImage(File(
+                                                "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_3.jpg")),
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text(
-                                          "vansh132",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            letterSpacing: 0.5,
-                                            fontWeight: FontWeight.w500,
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Vansh Shah",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  // letterSpacing: 0.5,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 8,
+                                              ),
+                                              Text(
+                                                "vansh132",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  letterSpacing: 0.5,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
+                                        )
                                       ],
                                     ),
                                   )
                                 ],
                               ),
-                            )
-                          ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const VerticalDivider(
+                      width: 4,
+                      color: Colors.grey,
+                    ),
+                    Container(
+                      // color: Colors.red,
+                      padding: const EdgeInsets.all(32),
+                      width: MediaQuery.of(context).size.width * 0.8773,
+                      child: GridView.builder(
+                        itemCount: albums.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          childAspectRatio: 1 / 1,
+                          crossAxisSpacing: 40,
+                          mainAxisSpacing: 48,
                         ),
+                        itemBuilder: (context, index) =>
+                            AlbumItem(albums[index]),
                       ),
                     ),
                   ],
-                ),
-              ),
-              const VerticalDivider(
-                width: 4,
-                color: Colors.grey,
-              ),
-              Container(
-                // color: Colors.red,
-                padding: const EdgeInsets.all(32),
-                width: MediaQuery.of(context).size.width * 0.8773,
-                child: GridView.builder(
-                  itemCount: albums.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 1 / 1,
-                    crossAxisSpacing: 40,
-                    mainAxisSpacing: 48,
-                  ),
-                  itemBuilder: (context, index) => AlbumItem(albums[index]),
-                ),
-              ),
-            ],
-          )),
+                ));
+          }
+          return const Center(
+            child: Text("0 entires found"),
+          );
+        }),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           /* showModalBottomSheet(

@@ -1,10 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:mytica/models/Gallery/Album.dart';
-import 'package:intl/intl.dart';
-import 'dart:math';
-
+import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/album/image/image_screen.dart';
 import 'package:mytica/screens/submain-screens/album/edit_album_screen.dart';
 import 'package:fluttericon/elusive_icons.dart';
@@ -19,7 +15,7 @@ class AlbumItem extends StatefulWidget {
 
 class _AlbumItemState extends State<AlbumItem> {
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
@@ -46,27 +42,27 @@ class _AlbumItemState extends State<AlbumItem> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Image(
-                  image: FileImage(File(widget.album.coverImagePath)),
+                  image: FileImage(File(widget.album.imageurl)),
                   fit: BoxFit.cover,
                   height: 296,
                   width: 296, //492
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Text(
-              widget.album.title,
-              style: TextStyle(
+              widget.album.name,
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1,
               ),
             ),
             Text(
-              widget.album.desription,
-              style: TextStyle(
+              widget.album.description,
+              style: const TextStyle(
                 fontSize: 20,
                 // fontWeight: FontWeight.bold,
                 color: Colors.black54,
