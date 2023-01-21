@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/album/album_screen.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:drift/drift.dart' as drift;
 
 String? pathImage;
 
@@ -13,15 +16,35 @@ class CreateAlbum extends StatefulWidget {
 }
 
 class _CreateAlbumState extends State<CreateAlbum> {
+  late AppDb _db;
+
+  int userId = 0;
+
+  void getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? id = prefs.getInt('userId');
+    if (id != null) {
+      userId = id;
+    }
+  }
+
+  @override
+  void initState() {
+    getUserId();
+    super.initState();
+  }
+
   final _albumTitleController = TextEditingController();
   final _albumDescriptionController = TextEditingController();
 
-  void _addAlbumData() {
+  void _addAlbumData() async {
     final enteredAlbumTitle = _albumTitleController.text;
     final enteredAlbumDescription = _albumDescriptionController.text;
 
     //To-DO: Maximum characters for description - 24
-    if (enteredAlbumTitle.isEmpty || enteredAlbumDescription.length < 10) {
+    if (enteredAlbumTitle.isEmpty ||
+        enteredAlbumDescription.length < 10 ||
+        pathImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
           "Minimum 10 characters of description",
@@ -29,17 +52,35 @@ class _CreateAlbumState extends State<CreateAlbum> {
         duration: Duration(seconds: 4),
       ));
       //Navigator.of(context).pushReplacementNamed(AlbumScreen.routeName);
+    } else {
+      final albumEntity = AlbumsCompanion(
+          name: drift.Value(enteredAlbumTitle),
+          description: drift.Value(enteredAlbumDescription),
+          imageurl: drift.Value(pathImage!),
+          createdAt: drift.Value(DateTime.now()),
+          userId: drift.Value(userId));
+
+      int res = await _db.insertAlbum(albumEntity);
+      if (res != 0) {
+        print("Album Added $res");
+        await _db.close();
+        Navigator.of(context).pop();
+      } else {
+        showAlbumNotAddedDialogBox(context);
+      }
     }
 
-    //To-do: add album
-    print(enteredAlbumTitle);
-    print(enteredAlbumDescription);
-    print(pathImage);
+    // //To-do: add album
+    // print(enteredAlbumTitle);
+    // print(enteredAlbumDescription);
+    // print(pathImage);
+
     // Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
+    _db = AppDb();
     return Scaffold(
         appBar: AppBar(
           title: Text("Create an album"),
@@ -108,5 +149,27 @@ class _CreateAlbumState extends State<CreateAlbum> {
                 ],
               ))),
         ));
+  }
+
+  void showAlbumNotAddedDialogBox(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Failed"),
+        content: const Text("Notebook Not Added. Please try again later."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(14),
+              child: const Text("Okay"),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

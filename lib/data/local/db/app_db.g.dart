@@ -261,7 +261,7 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
       'id', aliasedName, false,
       hasAutoIncrement: true,
       type: DriftSqlType.int,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
@@ -283,11 +283,7 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
   @override
   late final GeneratedColumn<int> userId = GeneratedColumn<int>(
       'user_id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -308,8 +304,6 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
     }
     if (data.containsKey('title')) {
       context.handle(
@@ -345,7 +339,7 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id, userId};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Journal map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -491,14 +485,13 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
     this.createdAt = const Value.absent(),
   });
   JournalsCompanion.insert({
-    required int id,
+    this.id = const Value.absent(),
     required String title,
     required String body,
     required String tag,
     required int userId,
     required DateTime createdAt,
-  })  : id = Value(id),
-        title = Value(title),
+  })  : title = Value(title),
         body = Value(body),
         tag = Value(tag),
         userId = Value(userId),

@@ -249,7 +249,9 @@ class _AlbumScreenState extends State<AlbumScreen> {
               );
             },
           ); */
-          Navigator.of(context).pushNamed(CreateAlbum.routeName);
+          Navigator.of(context)
+              .pushNamed(CreateAlbum.routeName)
+              .then((value) => setState(() {}));
         },
         child: const Icon(Icons.add),
       ),
