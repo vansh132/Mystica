@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 import 'package:drift/drift.dart' as drift;
@@ -78,7 +79,7 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit journal"),
+        title: const Text("Edit Journal"),
         actions: [
           GestureDetector(
             onTap: () {

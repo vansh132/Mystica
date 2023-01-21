@@ -78,7 +78,33 @@ class _TodoScreenState extends State<TodoScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("To-do"),
+        title: const Center(child: Text("To - Do")),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Row(
+                  children: [
+                    TextButton(
+                      child: const Text(
+                        "Log out",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        print("Log out ");
+                      },
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    const Icon(Icons.logout_rounded),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                  ],
+                ),
+              )),
+        ],
       ),
       body: FutureBuilder<List<Todo>>(
         future: _db.getTodos(),
@@ -347,22 +373,3 @@ class _TodoScreenState extends State<TodoScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///
-// 

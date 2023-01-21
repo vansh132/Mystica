@@ -47,7 +47,33 @@ class _NotebookScreenState extends State<NotebookScreen> {
     _db = AppDb();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Notebook"),
+        title: const Center(child: Text("Notebook")),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Row(
+                  children: [
+                    TextButton(
+                      child: const Text(
+                        "Log out",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        print("Log out ");
+                      },
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    const Icon(Icons.logout_rounded),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                  ],
+                ),
+              )),
+        ],
       ),
       body: FutureBuilder<List<Notebook>>(
         future: _db.getNotebookByUserId(1),

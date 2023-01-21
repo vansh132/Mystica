@@ -75,7 +75,33 @@ class _ReminderScreenState extends State<ReminderScreen> {
     };
     return Scaffold(
       appBar: AppBar(
-        title: Text("Reminder"),
+        title: const Center(child: Text("Reminder")),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Row(
+                  children: [
+                    TextButton(
+                      child: const Text(
+                        "Log out",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        print("Log out ");
+                      },
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    const Icon(Icons.logout_rounded),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                  ],
+                ),
+              )),
+        ],
       ),
       body: FutureBuilder<List<Remainder>>(
         future: _db.getRemainders(),

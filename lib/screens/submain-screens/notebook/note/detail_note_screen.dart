@@ -17,7 +17,35 @@ class _DetailNoteScreenState extends State<DetailNoteScreen> {
     final note = ModalRoute.of(context)?.settings.arguments as Note;
 
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: const Center(child: Text("Detail Note")),
+          actions: [
+            Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(
+                  child: Row(
+                    children: [
+                      TextButton(
+                        child: const Text(
+                          "Log out",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          print("Log out ");
+                        },
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      const Icon(Icons.logout_rounded),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                    ],
+                  ),
+                )),
+          ],
+        ),
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,

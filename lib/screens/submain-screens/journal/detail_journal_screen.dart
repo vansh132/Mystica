@@ -17,7 +17,35 @@ class _DetailJournalScreenState extends State<DetailJournalScreen> {
     final journal = args[0] as Journal;
     final journalColor = args[1] as Color;
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: const Center(child: Text("Detail Journal")),
+          actions: [
+            Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(
+                  child: Row(
+                    children: [
+                      TextButton(
+                        child: const Text(
+                          "Log out",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          print("Log out ");
+                        },
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      const Icon(Icons.logout_rounded),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                    ],
+                  ),
+                )),
+          ],
+        ),
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
