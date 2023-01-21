@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttericon/elusive_icons.dart';
+import 'package:fluttericon/linecons_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 
@@ -11,8 +13,21 @@ class DetailImageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final image = ModalRoute.of(context)?.settings.arguments as MyImage;
+
+    void _deleteImage() {
+      print("Image deleted...");
+    }
+
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: _deleteImage,
+              icon: Icon(
+                Icons.delete_forever_rounded,
+              ))
+        ],
+      ),
       body: Container(
         height: double.infinity,
         width: double.infinity,

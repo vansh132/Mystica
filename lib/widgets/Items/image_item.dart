@@ -16,6 +16,7 @@ class _ImageItemState extends State<ImageItem> {
   @override
   Widget build(BuildContext context) {
     //TO-DO: delete the image
+    print(widget.image.imageurl);
     void _deleteImage() async {
       print("Image deleted..");
       final db = AppDb();
@@ -29,16 +30,14 @@ class _ImageItemState extends State<ImageItem> {
         Navigator.of(context)
             .pushNamed(DetailImageScreen.routeName, arguments: widget.image);
       },
-      child: Container(
-        // color: Colors.amber,
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(
+      child: Column(
+        children: [
+          Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(
                   Radius.circular(24),
                 ),
-                boxShadow: const [
+                boxShadow: [
                   BoxShadow(
                     color: Colors.black54,
                     offset: Offset(0.0, 2.0), //(x,y)
@@ -51,41 +50,56 @@ class _ImageItemState extends State<ImageItem> {
                 child: Image(
                   image: FileImage(File(widget.image.imageurl)),
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return SizedBox(
+                      height: 220,
+                      width: 220,
+                      child: Center(
+                        child: Text(
+                          "Image not found",
+                          style: TextStyle(
+                            fontSize: 20,
+                            // color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+
                   height: 220,
                   width: 220, //492
                 ),
-              ),
-            ),
-            // SizedBox(
-            //   height: 8,
-            // ),
-            // Container(
-            //   width: 180,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text(
-            //         DateFormat.yMMMd().format(widget.image.createdAt),
-            //         style: TextStyle(
-            //           fontSize: 16,
-            //           fontWeight: FontWeight.bold,
-            //           letterSpacing: 0.2,
-            //         ),
-            //       ),
-            //       Text(
-            //         widget.image.tag,
-            //         style: TextStyle(
-            //           fontSize: 16,
-            //           // fontWeight: FontWeight.bold,
-            //           color: Colors.black54,
-            //           letterSpacing: 0.5,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-          ],
-        ),
+              )),
+          // SizedBox(
+          //   height: 8,
+          // ),
+          // Container(
+          //   width: 180,
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Text(
+          //         DateFormat.yMMMd().format(widget.image.createdAt),
+          //         style: TextStyle(
+          //           fontSize: 16,
+          //           fontWeight: FontWeight.bold,
+          //           letterSpacing: 0.2,
+          //         ),
+          //       ),
+          //       Text(
+          //         widget.image.tag,
+          //         style: TextStyle(
+          //           fontSize: 16,
+          //           // fontWeight: FontWeight.bold,
+          //           color: Colors.black54,
+          //           letterSpacing: 0.5,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+        ],
       ),
     );
   }

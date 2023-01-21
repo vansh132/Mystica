@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mytica/models/Gallery/Album.dart';
+import 'package:mytica/data/local/db/app_db.dart';
 
 class EditAlbumScreen extends StatefulWidget {
   static const routeName = "/edit-album-screen";
@@ -15,8 +15,8 @@ class _EditAlbumScreenState extends State<EditAlbumScreen> {
   Widget build(BuildContext context) {
     //Retriving albumId from Album Item (edit button)
     final album = ModalRoute.of(context)?.settings.arguments as Album;
-    _titleController.text = album.title;
-    _descriptionController.text = album.desription;
+    _titleController.text = album.name;
+    _descriptionController.text = album.description;
     //TO-DO: update the album
     void _updateAlbum() {
       final enteredAlbumName = _titleController.text;

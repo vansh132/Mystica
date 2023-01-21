@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mytica/data/local/db/app_db.dart';
+import 'package:mytica/screens/submain-screens/album/edit_album_screen.dart';
 import 'package:mytica/screens/submain-screens/album/image/add_image_screen.dart';
 import 'package:mytica/widgets/Items/image_item.dart';
 import 'package:mytica/widgets/navigation.dart';
@@ -214,6 +215,21 @@ class _ImageScreenState extends State<ImageScreen> {
                               ),
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        ElevatedButton.icon(
+                          icon: Icon(
+                            Icons.photo_album_rounded,
+                            size: 16,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(
+                                EditAlbumScreen.routeName,
+                                arguments: album);
+                          },
+                          label: Text("Edit Album"),
                         ),
                         const SizedBox(
                           height: 16,
