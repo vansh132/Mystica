@@ -106,20 +106,20 @@ class _AlbumScreenState extends State<AlbumScreen> {
                       height: MediaQuery.of(context).size.height,
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 16,
                           ),
-                          Text(
+                          const Text(
                             "Quote of the Day",
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xffCAF0F8)),
                             textAlign: TextAlign.center,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
-                          Text(
+                          const Text(
                             "\" Life is either a daring adventure or nothing at all \"",
                             style: TextStyle(
                                 fontWeight: FontWeight.w300,

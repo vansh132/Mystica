@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mytica/models/Gallery/ImageAttr.dart';
+import 'package:mytica/data/local/db/app_db.dart';
 
 class DetailImageScreen extends StatelessWidget {
   static const routeName = '/detail-image-screen';
@@ -10,7 +10,7 @@ class DetailImageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final image = ModalRoute.of(context)?.settings.arguments as ImageAttr;
+    final image = ModalRoute.of(context)?.settings.arguments as MyImage;
     return Scaffold(
       appBar: AppBar(),
       body: Container(
@@ -34,7 +34,7 @@ class DetailImageScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(24),
                 child: Image(
                   image: FileImage(
-                    File(image.imagePath),
+                    File(image.imageurl),
                   ),
                   fit: BoxFit.cover,
                   filterQuality: FilterQuality.high,
@@ -90,7 +90,7 @@ class DetailImageScreen extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    image.imagePath,
+                    image.imageurl,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,

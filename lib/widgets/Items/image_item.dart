@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:mytica/models/Gallery/ImageAttr.dart';
+import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/album/image/detail_image_screen.dart';
+import 'package:mytica/screens/submain-screens/album/image/image_screen.dart';
 
 class ImageItem extends StatefulWidget {
-  ImageAttr image;
+  MyImage image;
   ImageItem(this.image);
 
   @override
@@ -17,8 +16,12 @@ class _ImageItemState extends State<ImageItem> {
   @override
   Widget build(BuildContext context) {
     //TO-DO: delete the image
-    void _deleteImage() {
+    void _deleteImage() async {
       print("Image deleted..");
+      final db = AppDb();
+      await db.deleteImage(widget.image.id);
+      await db.close().whenComplete(() =>
+          {Navigator.of(context).pushReplacementNamed(ImageScreen.routeName)});
     }
 
     return GestureDetector(
@@ -46,7 +49,7 @@ class _ImageItemState extends State<ImageItem> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Image(
-                  image: FileImage(File(widget.image.imagePath)),
+                  image: FileImage(File(widget.image.imageurl)),
                   fit: BoxFit.cover,
                   height: 220,
                   width: 220, //492
