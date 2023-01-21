@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mytica/models/Notebook/Note.dart';
 import 'package:intl/intl.dart';
+import 'package:mytica/data/local/db/app_db.dart';
 
 class DetailNoteScreen extends StatefulWidget {
   const DetailNoteScreen({super.key});

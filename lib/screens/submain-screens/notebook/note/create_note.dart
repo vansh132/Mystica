@@ -1,20 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:mytica/data/local/db/app_db.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:drift/drift.dart' as drift;
 
-class CreateNoteScreen extends StatelessWidget {
+class CreateNoteScreen extends StatefulWidget {
   const CreateNoteScreen({super.key});
 
   static const routeName = '/create-note-screen';
 
   @override
+  State<CreateNoteScreen> createState() => _CreateNoteScreenState();
+}
+
+class _CreateNoteScreenState extends State<CreateNoteScreen> {
+  late AppDb _db;
+
+  int userId = 0;
+
+  void getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? id = prefs.getInt('userId');
+    if (id != null) {
+      userId = id;
+    }
+  }
+
+  @override
+  void initState() {
+    getUserId();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _db = AppDb();
+    final notebookId = ModalRoute.of(context)?.settings.arguments as int;
     final _nameController = TextEditingController();
     final _descriptionController = TextEditingController();
     final _tagController = TextEditingController();
 
-    void _addNote() {
-      print(_nameController.text);
-      print(_descriptionController.text);
-      print(_tagController.text);
+    void _addNote() async {
+      final title = _nameController.text;
+      final body = _descriptionController.text;
+      final tag = _tagController.text;
+
+      if (title.isNotEmpty && body.isNotEmpty && tag.isNotEmpty) {
+        final noteEntity = NotesCompanion(
+            title: drift.Value(title),
+            body: drift.Value(body),
+            tag: drift.Value(tag),
+            createdAt: drift.Value(DateTime.now()),
+            notebookId: drift.Value(notebookId),
+            userId: drift.Value(userId));
+
+        int res = await _db.insertNote(noteEntity);
+        if (res != 0) {
+          print("Note Added $res");
+          await _db.close();
+          Navigator.of(context).pop();
+        } else {
+          showNotebookNotAddedDialogBox(context);
+        }
+      } else {
+        showFieldCannotBeEmptyDialogBox(context);
+      }
     }
 
     return Scaffold(
@@ -78,6 +127,50 @@ class CreateNoteScreen extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  void showFieldCannotBeEmptyDialogBox(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Fields Empty!"),
+        content: const Text("Fields cannot be empty."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(14),
+              child: const Text("Okay"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void showNotebookNotAddedDialogBox(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Failed"),
+        content: const Text("Notebook Not Added. Please try again later."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(14),
+              child: const Text("Okay"),
+            ),
+          ),
+        ],
       ),
     );
   }

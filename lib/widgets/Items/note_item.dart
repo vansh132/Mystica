@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mytica/models/Notebook/Note.dart';
 import 'package:intl/intl.dart';
+import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/notebook/note/edit_note_screen.dart';
 import 'package:mytica/screens/submain-screens/notebook/note/detail_note_screen.dart';
+import 'package:mytica/screens/submain-screens/notebook/note/note_screen.dart';
 
 class NoteItem extends StatefulWidget {
   Note note;
@@ -15,12 +16,16 @@ class NoteItem extends StatefulWidget {
 
 class _NoteItemState extends State<NoteItem> {
   //To-Do: delele the note
-  void _deleteNote() {
-    print("Delete the notes...");
+  void _deleteNote() async {
+    final db = AppDb();
+    await db.deleteNote(widget.note.id);
+    await db.close().whenComplete(() =>
+        {Navigator.of(context).pushReplacementNamed(NoteScreen.routeName)});
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.note);
     int? selectedOption;
     return GestureDetector(
       onTap: () {

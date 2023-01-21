@@ -52,7 +52,7 @@ class _CreateNotebookScreenState extends State<CreateNotebookScreen> {
 
         int res = await _db.insertNotebook(notebookEntity);
         if (res != 0) {
-          print("Journal Added $res");
+          print("Notebook Added $res");
           await _db.close();
           Navigator.of(context).pop();
         } else {
