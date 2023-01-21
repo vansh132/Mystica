@@ -67,7 +67,35 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Center(child: Text("Create Note")),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Row(
+                  children: [
+                    TextButton(
+                      child: const Text(
+                        "Log out",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        print("Log out ");
+                      },
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    const Icon(Icons.logout_rounded),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                  ],
+                ),
+              )),
+        ],
+      ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
