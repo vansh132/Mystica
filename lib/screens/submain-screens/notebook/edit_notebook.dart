@@ -49,31 +49,55 @@ class _EditNotebookScreenState extends State<EditNotebookScreen> {
         Navigator.of(context).pop();
         Navigator.of(context).pushReplacementNamed(NotebookScreen.routeName);
       } else {
-        // showNotebookNotAddedDialogBox(context);
-        showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: const Text("Failed"),
-            content:
-                const Text("Notebook Not Updated. Please try again later."),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(ctx).pop();
-                },
-                child: Container(
-                  color: Colors.red,
-                  padding: const EdgeInsets.all(14),
-                  child: const Text("Okay"),
-                ),
-              ),
-            ],
-          ),
-        );
+        showNotebookNotUpdatedDialogBox();
       }
     } else {
-      // showFieldCannotBeEmptyDialogBox(context);
+      showFieldCannotBeEmptyDialogBox();
     }
+  }
+
+  void showFieldCannotBeEmptyDialogBox() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Failed"),
+        content: const Text("Notebook Not Updated. Please try again later."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(14),
+              child: const Text("Okay"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void showNotebookNotUpdatedDialogBox() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Failed"),
+        content: const Text("Notebook Not Updated. Please try again later."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(14),
+              child: const Text("Okay"),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

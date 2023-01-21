@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 import 'package:drift/drift.dart' as drift;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateJournalScreen extends StatefulWidget {
   static const routeName = "/create-journal-screen";
@@ -25,6 +26,22 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
     final _journalDescriptionController = TextEditingController();
     final _journalTagController = TextEditingController();
 
+    int userId = 0;
+
+    void getUserId() async {
+      final prefs = await SharedPreferences.getInstance();
+      final int? id = prefs.getInt('userId');
+      if (id != null) {
+        userId = id;
+      }
+    }
+
+    @override
+    void initState() {
+      getUserId();
+      super.initState();
+    }
+
     void _addJournal() async {
       final enteredJournalTitle = _journalTitleController.text;
       final enteredJournalDescription = _journalDescriptionController.text;
@@ -41,15 +58,11 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
         // Navigator.of(context).pushReplacementNamed(AlbumScreen.routeName);
       }
 
-      //To-do: database
-      // print(enteredJournalTitle);
-      // print(enteredJournalDescription);
-      // print(enteredJournalTag);
-
       final journalEntity = JournalsCompanion(
           title: drift.Value(enteredJournalTitle),
           body: drift.Value(enteredJournalDescription),
           tag: drift.Value(enteredJournalTag),
+          userId: drift.Value(userId),
           createdAt: drift.Value(DateTime.now()));
 
       int res = await _db.insertJournal(journalEntity);

@@ -62,6 +62,7 @@ class _AlbumItemState extends State<AlbumItem> {
             ),
             Text(
               widget.album.description,
+              textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 20,
                 // fontWeight: FontWeight.bold,

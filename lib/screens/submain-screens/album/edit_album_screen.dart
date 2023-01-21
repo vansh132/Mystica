@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
+import 'package:mytica/screens/submain-screens/album/album_screen.dart';
+import 'package:drift/drift.dart' as drift;
+import 'package:mytica/screens/submain-screens/album/image/image_screen.dart';
 
 class EditAlbumScreen extends StatefulWidget {
   static const routeName = "/edit-album-screen";
@@ -11,23 +14,56 @@ class EditAlbumScreen extends StatefulWidget {
 class _EditAlbumScreenState extends State<EditAlbumScreen> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+  late AppDb _db;
   @override
   Widget build(BuildContext context) {
     //Retriving albumId from Album Item (edit button)
+    _db = AppDb();
     final album = ModalRoute.of(context)?.settings.arguments as Album;
     _titleController.text = album.name;
     _descriptionController.text = album.description;
     //TO-DO: update the album
-    void _updateAlbum() {
+    void _updateAlbum() async {
       final enteredAlbumName = _titleController.text;
       final enteredDescription = _descriptionController.text;
-      print(enteredAlbumName);
-      print(enteredDescription);
-      print("Album updated...");
+      // final notebook = ModalRoute.of(context)?.settings.arguments as Notebook;
+      // final notebook = args as Notebook;
+
+      if (enteredAlbumName.isNotEmpty && enteredDescription.isNotEmpty) {
+        final albumEntity = AlbumsCompanion(
+            id: drift.Value(album.id),
+            name: drift.Value(enteredAlbumName),
+            description: drift.Value(enteredDescription),
+            imageurl: drift.Value(album.imageurl),
+            createdAt: drift.Value(album.createdAt),
+            userId: drift.Value(album.userId));
+
+        bool isUpdated = await _db.updateAlbum(albumEntity);
+        if (isUpdated) {
+          print("Album Updated $isUpdated");
+          final updatedAlbum = await _db.getAlbum(album.id);
+          await _db.close();
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacementNamed(AlbumScreen.routeName);
+          Navigator.of(context)
+              .pushNamed(ImageScreen.routeName, arguments: updatedAlbum);
+        } else {
+          showAlbumNotUpdatedDialogBox();
+        }
+      } else {
+        showFieldCannotBeEmptyDialogBox();
+      }
     }
 
-    void _deleteAlbum() {
-      print("Delete album...");
+    void _deleteAlbum() async {
+      final _db = AppDb();
+      await _db.deleteAlbum(album.id);
+      await _db.close().whenComplete(() {
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacementNamed(AlbumScreen.routeName);
+      });
     }
 
     print("Alubm - $album");
@@ -95,11 +131,55 @@ class _EditAlbumScreenState extends State<EditAlbumScreen> {
                         ),
                         ElevatedButton(
                             onPressed: _updateAlbum,
-                            child: const Text("Add Album"))
+                            child: const Text("Update Album"))
                       ],
                     ))),
           ],
         ),
+      ),
+    );
+  }
+
+  void showAlbumNotUpdatedDialogBox() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Failed"),
+        content: const Text("Album Not Updated. Please try again later."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(14),
+              child: const Text("Okay"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void showFieldCannotBeEmptyDialogBox() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Empty Fields"),
+        content: const Text("Fields cannot be empty. Please try again later."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              color: Colors.red,
+              padding: const EdgeInsets.all(14),
+              child: const Text("Okay"),
+            ),
+          ),
+        ],
       ),
     );
   }
