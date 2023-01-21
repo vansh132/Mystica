@@ -38,6 +38,7 @@ class DetailImageScreen extends StatelessWidget {
                   ),
                   fit: BoxFit.cover,
                   filterQuality: FilterQuality.high,
+                  colorBlendMode: BlendMode.clear,
                 ),
               ),
             ),
