@@ -19,8 +19,10 @@ class _NoteItemState extends State<NoteItem> {
   void _deleteNote() async {
     final db = AppDb();
     await db.deleteNote(widget.note.id);
-    await db.close().whenComplete(() =>
-        {Navigator.of(context).pushReplacementNamed(NoteScreen.routeName)});
+    await db.close().whenComplete(() => {
+          Navigator.of(context).pushReplacementNamed(NoteScreen.routeName,
+              arguments: widget.note.notebookId)
+        });
   }
 
   @override
