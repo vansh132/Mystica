@@ -89,6 +89,12 @@ class AppDb extends _$AppDb {
     return await select(albums).get();
   }
 
+  // Get Albums By UserId
+  Future<List<Album>> getAlbumByUserId(int userId) async {
+    return await (select(albums)..where((tbl) => tbl.userId.equals(userId)))
+        .get();
+  }
+
   // Create Album
   Future<int> insertAlbum(AlbumsCompanion entity) async {
     return await into(albums).insert(entity);
@@ -100,21 +106,47 @@ class AppDb extends _$AppDb {
         .getSingle();
   }
 
+  // Update Album
+  Future<bool> updateAlbum(AlbumsCompanion entity) async {
+    return await update(albums).replace(entity);
+  }
+
+  // delete Album
+  Future<int> deleteAlbum(int id) async {
+    return await (delete(albums)..where((tbl) => tbl.id.equals(id))).go();
+  }
+
   // Images
   // Get All Images
-  Future<List<MyImage>> getImages() async {
+  Future<List<MyImage>> getMyImages() async {
     return await select(myImages).get();
   }
 
-  // Create Image
+  // Get Image By AlbumId
+  Future<List<MyImage>> getImageByAlbumId(int albumId) async {
+    return await (select(myImages)..where((tbl) => tbl.albumId.equals(albumId)))
+        .get();
+  }
+
+  // Create MyImage
   Future<int> insertImage(MyImagesCompanion entity) async {
     return await into(myImages).insert(entity);
   }
 
-  // Get Image By Id
+  // // Get Image By Id
   Future<MyImage> getImage(int id) async {
     return await (select(myImages)..where((tbl) => tbl.id.equals(id)))
         .getSingle();
+  }
+
+  // Update Image
+  Future<bool> updateImage(MyImagesCompanion entity) async {
+    return await update(myImages).replace(entity);
+  }
+
+  // delete Image
+  Future<int> deleteImage(int id) async {
+    return await (delete(myImages)..where((tbl) => tbl.id.equals(id))).go();
   }
 
   //Remainder

@@ -261,7 +261,7 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
       'id', aliasedName, false,
       hasAutoIncrement: true,
       type: DriftSqlType.int,
-      requiredDuringInsert: false,
+      requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
@@ -279,6 +279,15 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
   late final GeneratedColumn<String> tag = GeneratedColumn<String>(
       'tag', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+      'user_id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -286,7 +295,8 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
       'created_at', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [id, title, body, tag, createdAt];
+  List<GeneratedColumn> get $columns =>
+      [id, title, body, tag, userId, createdAt];
   @override
   String get aliasedName => _alias ?? 'journals';
   @override
@@ -298,6 +308,8 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
     }
     if (data.containsKey('title')) {
       context.handle(
@@ -317,6 +329,12 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
     } else if (isInserting) {
       context.missing(_tagMeta);
     }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
           createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
@@ -327,7 +345,7 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {id, userId};
   @override
   Journal map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -340,6 +358,8 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
           .read(DriftSqlType.string, data['${effectivePrefix}body'])!,
       tag: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}tag'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
     );
@@ -356,12 +376,14 @@ class Journal extends DataClass implements Insertable<Journal> {
   final String title;
   final String body;
   final String tag;
+  final int userId;
   final DateTime createdAt;
   const Journal(
       {required this.id,
       required this.title,
       required this.body,
       required this.tag,
+      required this.userId,
       required this.createdAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -370,6 +392,7 @@ class Journal extends DataClass implements Insertable<Journal> {
     map['title'] = Variable<String>(title);
     map['body'] = Variable<String>(body);
     map['tag'] = Variable<String>(tag);
+    map['user_id'] = Variable<int>(userId);
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
@@ -380,6 +403,7 @@ class Journal extends DataClass implements Insertable<Journal> {
       title: Value(title),
       body: Value(body),
       tag: Value(tag),
+      userId: Value(userId),
       createdAt: Value(createdAt),
     );
   }
@@ -392,6 +416,7 @@ class Journal extends DataClass implements Insertable<Journal> {
       title: serializer.fromJson<String>(json['title']),
       body: serializer.fromJson<String>(json['body']),
       tag: serializer.fromJson<String>(json['tag']),
+      userId: serializer.fromJson<int>(json['userId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
@@ -403,6 +428,7 @@ class Journal extends DataClass implements Insertable<Journal> {
       'title': serializer.toJson<String>(title),
       'body': serializer.toJson<String>(body),
       'tag': serializer.toJson<String>(tag),
+      'userId': serializer.toJson<int>(userId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
@@ -412,12 +438,14 @@ class Journal extends DataClass implements Insertable<Journal> {
           String? title,
           String? body,
           String? tag,
+          int? userId,
           DateTime? createdAt}) =>
       Journal(
         id: id ?? this.id,
         title: title ?? this.title,
         body: body ?? this.body,
         tag: tag ?? this.tag,
+        userId: userId ?? this.userId,
         createdAt: createdAt ?? this.createdAt,
       );
   @override
@@ -427,13 +455,14 @@ class Journal extends DataClass implements Insertable<Journal> {
           ..write('title: $title, ')
           ..write('body: $body, ')
           ..write('tag: $tag, ')
+          ..write('userId: $userId, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, title, body, tag, createdAt);
+  int get hashCode => Object.hash(id, title, body, tag, userId, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -442,6 +471,7 @@ class Journal extends DataClass implements Insertable<Journal> {
           other.title == this.title &&
           other.body == this.body &&
           other.tag == this.tag &&
+          other.userId == this.userId &&
           other.createdAt == this.createdAt);
 }
 
@@ -450,29 +480,35 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
   final Value<String> title;
   final Value<String> body;
   final Value<String> tag;
+  final Value<int> userId;
   final Value<DateTime> createdAt;
   const JournalsCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.body = const Value.absent(),
     this.tag = const Value.absent(),
+    this.userId = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
   JournalsCompanion.insert({
-    this.id = const Value.absent(),
+    required int id,
     required String title,
     required String body,
     required String tag,
+    required int userId,
     required DateTime createdAt,
-  })  : title = Value(title),
+  })  : id = Value(id),
+        title = Value(title),
         body = Value(body),
         tag = Value(tag),
+        userId = Value(userId),
         createdAt = Value(createdAt);
   static Insertable<Journal> custom({
     Expression<int>? id,
     Expression<String>? title,
     Expression<String>? body,
     Expression<String>? tag,
+    Expression<int>? userId,
     Expression<DateTime>? createdAt,
   }) {
     return RawValuesInsertable({
@@ -480,6 +516,7 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
       if (title != null) 'title': title,
       if (body != null) 'body': body,
       if (tag != null) 'tag': tag,
+      if (userId != null) 'user_id': userId,
       if (createdAt != null) 'created_at': createdAt,
     });
   }
@@ -489,12 +526,14 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
       Value<String>? title,
       Value<String>? body,
       Value<String>? tag,
+      Value<int>? userId,
       Value<DateTime>? createdAt}) {
     return JournalsCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       body: body ?? this.body,
       tag: tag ?? this.tag,
+      userId: userId ?? this.userId,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -514,6 +553,9 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
     if (tag.present) {
       map['tag'] = Variable<String>(tag.value);
     }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -527,6 +569,7 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
           ..write('title: $title, ')
           ..write('body: $body, ')
           ..write('tag: $tag, ')
+          ..write('userId: $userId, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
@@ -558,8 +601,20 @@ class $AlbumsTable extends Albums with TableInfo<$AlbumsTable, Album> {
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
       'description', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
   @override
-  List<GeneratedColumn> get $columns => [id, name, description];
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+      'user_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, name, description, userId, createdAt];
   @override
   String get aliasedName => _alias ?? 'albums';
   @override
@@ -586,6 +641,18 @@ class $AlbumsTable extends Albums with TableInfo<$AlbumsTable, Album> {
     } else if (isInserting) {
       context.missing(_descriptionMeta);
     }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
     return context;
   }
 
@@ -601,6 +668,10 @@ class $AlbumsTable extends Albums with TableInfo<$AlbumsTable, Album> {
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
     );
   }
 
@@ -614,14 +685,22 @@ class Album extends DataClass implements Insertable<Album> {
   final int id;
   final String name;
   final String description;
+  final int userId;
+  final DateTime createdAt;
   const Album(
-      {required this.id, required this.name, required this.description});
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.userId,
+      required this.createdAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     map['description'] = Variable<String>(description);
+    map['user_id'] = Variable<int>(userId);
+    map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
 
@@ -630,6 +709,8 @@ class Album extends DataClass implements Insertable<Album> {
       id: Value(id),
       name: Value(name),
       description: Value(description),
+      userId: Value(userId),
+      createdAt: Value(createdAt),
     );
   }
 
@@ -640,6 +721,8 @@ class Album extends DataClass implements Insertable<Album> {
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       description: serializer.fromJson<String>(json['description']),
+      userId: serializer.fromJson<int>(json['userId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
   @override
@@ -649,68 +732,100 @@ class Album extends DataClass implements Insertable<Album> {
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'description': serializer.toJson<String>(description),
+      'userId': serializer.toJson<int>(userId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
 
-  Album copyWith({int? id, String? name, String? description}) => Album(
+  Album copyWith(
+          {int? id,
+          String? name,
+          String? description,
+          int? userId,
+          DateTime? createdAt}) =>
+      Album(
         id: id ?? this.id,
         name: name ?? this.name,
         description: description ?? this.description,
+        userId: userId ?? this.userId,
+        createdAt: createdAt ?? this.createdAt,
       );
   @override
   String toString() {
     return (StringBuffer('Album(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('description: $description')
+          ..write('description: $description, ')
+          ..write('userId: $userId, ')
+          ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, description);
+  int get hashCode => Object.hash(id, name, description, userId, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Album &&
           other.id == this.id &&
           other.name == this.name &&
-          other.description == this.description);
+          other.description == this.description &&
+          other.userId == this.userId &&
+          other.createdAt == this.createdAt);
 }
 
 class AlbumsCompanion extends UpdateCompanion<Album> {
   final Value<int> id;
   final Value<String> name;
   final Value<String> description;
+  final Value<int> userId;
+  final Value<DateTime> createdAt;
   const AlbumsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.description = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.createdAt = const Value.absent(),
   });
   AlbumsCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     required String description,
+    required int userId,
+    required DateTime createdAt,
   })  : name = Value(name),
-        description = Value(description);
+        description = Value(description),
+        userId = Value(userId),
+        createdAt = Value(createdAt);
   static Insertable<Album> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? description,
+    Expression<int>? userId,
+    Expression<DateTime>? createdAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (description != null) 'description': description,
+      if (userId != null) 'user_id': userId,
+      if (createdAt != null) 'created_at': createdAt,
     });
   }
 
   AlbumsCompanion copyWith(
-      {Value<int>? id, Value<String>? name, Value<String>? description}) {
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String>? description,
+      Value<int>? userId,
+      Value<DateTime>? createdAt}) {
     return AlbumsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      userId: userId ?? this.userId,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -726,6 +841,12 @@ class AlbumsCompanion extends UpdateCompanion<Album> {
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
     return map;
   }
 
@@ -734,7 +855,9 @@ class AlbumsCompanion extends UpdateCompanion<Album> {
     return (StringBuffer('AlbumsCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('description: $description')
+          ..write('description: $description, ')
+          ..write('userId: $userId, ')
+          ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
@@ -771,6 +894,17 @@ class $MyImagesTable extends MyImages with TableInfo<$MyImagesTable, MyImage> {
   late final GeneratedColumn<String> tag = GeneratedColumn<String>(
       'tag', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+      'user_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _albumIdMeta =
+      const VerificationMeta('albumId');
+  @override
+  late final GeneratedColumn<int> albumId = GeneratedColumn<int>(
+      'album_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -778,7 +912,8 @@ class $MyImagesTable extends MyImages with TableInfo<$MyImagesTable, MyImage> {
       'created_at', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [id, alttext, imageurl, tag, createdAt];
+  List<GeneratedColumn> get $columns =>
+      [id, alttext, imageurl, tag, userId, albumId, createdAt];
   @override
   String get aliasedName => _alias ?? 'my_images';
   @override
@@ -809,6 +944,18 @@ class $MyImagesTable extends MyImages with TableInfo<$MyImagesTable, MyImage> {
     } else if (isInserting) {
       context.missing(_tagMeta);
     }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('album_id')) {
+      context.handle(_albumIdMeta,
+          albumId.isAcceptableOrUnknown(data['album_id']!, _albumIdMeta));
+    } else if (isInserting) {
+      context.missing(_albumIdMeta);
+    }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
           createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
@@ -832,6 +979,10 @@ class $MyImagesTable extends MyImages with TableInfo<$MyImagesTable, MyImage> {
           .read(DriftSqlType.string, data['${effectivePrefix}imageurl'])!,
       tag: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}tag'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
+      albumId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}album_id'])!,
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
     );
@@ -848,12 +999,16 @@ class MyImage extends DataClass implements Insertable<MyImage> {
   final String alttext;
   final String imageurl;
   final String tag;
+  final int userId;
+  final int albumId;
   final DateTime createdAt;
   const MyImage(
       {required this.id,
       required this.alttext,
       required this.imageurl,
       required this.tag,
+      required this.userId,
+      required this.albumId,
       required this.createdAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -862,6 +1017,8 @@ class MyImage extends DataClass implements Insertable<MyImage> {
     map['alttext'] = Variable<String>(alttext);
     map['imageurl'] = Variable<String>(imageurl);
     map['tag'] = Variable<String>(tag);
+    map['user_id'] = Variable<int>(userId);
+    map['album_id'] = Variable<int>(albumId);
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
@@ -872,6 +1029,8 @@ class MyImage extends DataClass implements Insertable<MyImage> {
       alttext: Value(alttext),
       imageurl: Value(imageurl),
       tag: Value(tag),
+      userId: Value(userId),
+      albumId: Value(albumId),
       createdAt: Value(createdAt),
     );
   }
@@ -884,6 +1043,8 @@ class MyImage extends DataClass implements Insertable<MyImage> {
       alttext: serializer.fromJson<String>(json['alttext']),
       imageurl: serializer.fromJson<String>(json['imageurl']),
       tag: serializer.fromJson<String>(json['tag']),
+      userId: serializer.fromJson<int>(json['userId']),
+      albumId: serializer.fromJson<int>(json['albumId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
@@ -895,6 +1056,8 @@ class MyImage extends DataClass implements Insertable<MyImage> {
       'alttext': serializer.toJson<String>(alttext),
       'imageurl': serializer.toJson<String>(imageurl),
       'tag': serializer.toJson<String>(tag),
+      'userId': serializer.toJson<int>(userId),
+      'albumId': serializer.toJson<int>(albumId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
@@ -904,12 +1067,16 @@ class MyImage extends DataClass implements Insertable<MyImage> {
           String? alttext,
           String? imageurl,
           String? tag,
+          int? userId,
+          int? albumId,
           DateTime? createdAt}) =>
       MyImage(
         id: id ?? this.id,
         alttext: alttext ?? this.alttext,
         imageurl: imageurl ?? this.imageurl,
         tag: tag ?? this.tag,
+        userId: userId ?? this.userId,
+        albumId: albumId ?? this.albumId,
         createdAt: createdAt ?? this.createdAt,
       );
   @override
@@ -919,13 +1086,16 @@ class MyImage extends DataClass implements Insertable<MyImage> {
           ..write('alttext: $alttext, ')
           ..write('imageurl: $imageurl, ')
           ..write('tag: $tag, ')
+          ..write('userId: $userId, ')
+          ..write('albumId: $albumId, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, alttext, imageurl, tag, createdAt);
+  int get hashCode =>
+      Object.hash(id, alttext, imageurl, tag, userId, albumId, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -934,6 +1104,8 @@ class MyImage extends DataClass implements Insertable<MyImage> {
           other.alttext == this.alttext &&
           other.imageurl == this.imageurl &&
           other.tag == this.tag &&
+          other.userId == this.userId &&
+          other.albumId == this.albumId &&
           other.createdAt == this.createdAt);
 }
 
@@ -942,12 +1114,16 @@ class MyImagesCompanion extends UpdateCompanion<MyImage> {
   final Value<String> alttext;
   final Value<String> imageurl;
   final Value<String> tag;
+  final Value<int> userId;
+  final Value<int> albumId;
   final Value<DateTime> createdAt;
   const MyImagesCompanion({
     this.id = const Value.absent(),
     this.alttext = const Value.absent(),
     this.imageurl = const Value.absent(),
     this.tag = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.albumId = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
   MyImagesCompanion.insert({
@@ -955,16 +1131,22 @@ class MyImagesCompanion extends UpdateCompanion<MyImage> {
     required String alttext,
     required String imageurl,
     required String tag,
+    required int userId,
+    required int albumId,
     required DateTime createdAt,
   })  : alttext = Value(alttext),
         imageurl = Value(imageurl),
         tag = Value(tag),
+        userId = Value(userId),
+        albumId = Value(albumId),
         createdAt = Value(createdAt);
   static Insertable<MyImage> custom({
     Expression<int>? id,
     Expression<String>? alttext,
     Expression<String>? imageurl,
     Expression<String>? tag,
+    Expression<int>? userId,
+    Expression<int>? albumId,
     Expression<DateTime>? createdAt,
   }) {
     return RawValuesInsertable({
@@ -972,6 +1154,8 @@ class MyImagesCompanion extends UpdateCompanion<MyImage> {
       if (alttext != null) 'alttext': alttext,
       if (imageurl != null) 'imageurl': imageurl,
       if (tag != null) 'tag': tag,
+      if (userId != null) 'user_id': userId,
+      if (albumId != null) 'album_id': albumId,
       if (createdAt != null) 'created_at': createdAt,
     });
   }
@@ -981,12 +1165,16 @@ class MyImagesCompanion extends UpdateCompanion<MyImage> {
       Value<String>? alttext,
       Value<String>? imageurl,
       Value<String>? tag,
+      Value<int>? userId,
+      Value<int>? albumId,
       Value<DateTime>? createdAt}) {
     return MyImagesCompanion(
       id: id ?? this.id,
       alttext: alttext ?? this.alttext,
       imageurl: imageurl ?? this.imageurl,
       tag: tag ?? this.tag,
+      userId: userId ?? this.userId,
+      albumId: albumId ?? this.albumId,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -1006,6 +1194,12 @@ class MyImagesCompanion extends UpdateCompanion<MyImage> {
     if (tag.present) {
       map['tag'] = Variable<String>(tag.value);
     }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (albumId.present) {
+      map['album_id'] = Variable<int>(albumId.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -1019,6 +1213,8 @@ class MyImagesCompanion extends UpdateCompanion<MyImage> {
           ..write('alttext: $alttext, ')
           ..write('imageurl: $imageurl, ')
           ..write('tag: $tag, ')
+          ..write('userId: $userId, ')
+          ..write('albumId: $albumId, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
