@@ -23,9 +23,13 @@ class _DetailImageScreenState extends State<DetailImageScreen> {
     void _deleteImage() async {
       print("Image deleted..");
       final db = AppDb();
+      final album = await db.getAlbum(image.albumId);
       await db.deleteImage(image.id);
-      await db.close().whenComplete(() =>
-          {Navigator.of(context).pushReplacementNamed(ImageScreen.routeName)});
+      await db.close().whenComplete(() {
+        Navigator.of(context).pop();
+        Navigator.of(context)
+            .pushReplacementNamed(ImageScreen.routeName, arguments: album);
+      });
     }
 
     return Scaffold(
