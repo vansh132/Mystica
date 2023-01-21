@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/widgets/Items/add_reminder.dart';
@@ -110,7 +112,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                     width: MediaQuery.of(context).size.width * 0.12,
                     height: MediaQuery.of(context).size.height,
                     child: Column(
-                      children: const [
+                      children: [
                         SizedBox(
                           height: 16,
                         ),
@@ -131,7 +133,80 @@ class _ReminderScreenState extends State<ReminderScreen> {
                               color: Color(0xffedf6f9)),
                           textAlign: TextAlign.center,
                         ),
-                        NavigationRow()
+                        NavigationRow(),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(8),
+                                  // margin: EdgeInsets.all(8),
+
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(24),
+                                    ),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.black54,
+                                        offset: Offset(0.0, 2.0), //(x,y)
+                                        blurRadius: 6.0,
+                                      ),
+                                    ],
+                                  ),
+                                  // color: Colors.yellow,
+                                  height: 72,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Expanded(
+                                        child: CircleAvatar(
+                                          radius: 30,
+                                          // backgroundColor: Colors.white,
+                                          backgroundImage: FileImage(File(
+                                              "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_3.jpg")),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Vansh Shah",
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                // letterSpacing: 0.5,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(
+                                              "vansh132",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                letterSpacing: 0.5,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),

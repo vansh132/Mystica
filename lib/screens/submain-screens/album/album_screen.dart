@@ -148,12 +148,6 @@ class _AlbumScreenState extends State<AlbumScreen> {
                                           blurRadius: 6.0,
                                         ),
                                       ],
-                                      // gradient: LinearGradient(
-                                      //   colors: [
-                                      //     Color(0xffD6EFFF),
-                                      //     Color(0xff85D0FF)
-                                      //   ],
-                                      // ),
                                     ),
                                     // color: Colors.yellow,
                                     height: 72,
