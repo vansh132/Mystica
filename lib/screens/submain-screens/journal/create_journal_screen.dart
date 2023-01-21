@@ -14,33 +14,28 @@ class CreateJournalScreen extends StatefulWidget {
 class _CreateJournalScreenState extends State<CreateJournalScreen> {
   late AppDb _db;
 
+  int userId = 0;
+
+  void getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? id = prefs.getInt('userId');
+    if (id != null) {
+      userId = id;
+    }
+  }
+
   @override
   void initState() {
+    getUserId();
     super.initState();
-    _db = AppDb();
   }
 
   @override
   Widget build(BuildContext context) {
+    _db = AppDb();
     final _journalTitleController = TextEditingController();
     final _journalDescriptionController = TextEditingController();
     final _journalTagController = TextEditingController();
-
-    int userId = 0;
-
-    void getUserId() async {
-      final prefs = await SharedPreferences.getInstance();
-      final int? id = prefs.getInt('userId');
-      if (id != null) {
-        userId = id;
-      }
-    }
-
-    @override
-    void initState() {
-      getUserId();
-      super.initState();
-    }
 
     void _addJournal() async {
       final enteredJournalTitle = _journalTitleController.text;

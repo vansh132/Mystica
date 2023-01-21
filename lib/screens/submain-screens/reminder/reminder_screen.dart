@@ -19,29 +19,43 @@ class ReminderScreen extends StatefulWidget {
 
 class _ReminderScreenState extends State<ReminderScreen> {
   late AppDb _db;
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late Future<int> userId;
+  // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  // late Future<int> userId;
+
+  int userId = 0;
+
+  void getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? id = prefs.getInt('userId');
+    if (id != null) {
+      setState(() {
+        userId = id;
+      });
+    }
+  }
 
   @override
   void initState() {
+    getUserId();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     _db = AppDb();
-    userId = _prefs.then((SharedPreferences prefs) {
-      return prefs.getInt('userId') ?? 0;
-    });
+    // userId = _prefs.then((SharedPreferences prefs) {
+    //   return prefs.getInt('userId') ?? 0;
+    // });
     void _addNewTask(String task, DateTime deadline) async {
       print(task);
       _db = AppDb();
-      int id = await userId;
+      // int id = await userId;
 
       final remainderCompanion = RemaindersCompanion(
           title: drift.Value(task),
           isCompleted: drift.Value(0),
-          userId: drift.Value(id),
+          userId: drift.Value(
+              userId), // changed from id to userId after shared pref change
           deadline: drift.Value(deadline));
       print(remainderCompanion);
       int res = await _db.insertRemainder(remainderCompanion);
@@ -104,7 +118,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
         ],
       ),
       body: FutureBuilder<List<Remainder>>(
-        future: _db.getRemainders(),
+        future: _db.getRemaindersByUserId(userId),
         builder: ((context, snapshot) {
           final List<Remainder>? remainderList = snapshot.data;
           if (snapshot.connectionState != ConnectionState.done) {

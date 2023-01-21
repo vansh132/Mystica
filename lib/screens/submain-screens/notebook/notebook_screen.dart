@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/notebook/create_notebook_screen.dart';
-import 'package:mytica/widgets/Items/journal_item.dart';
 import 'package:mytica/widgets/Items/notebook_item.dart';
 import 'package:mytica/widgets/navigation.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -26,7 +23,9 @@ class _NotebookScreenState extends State<NotebookScreen> {
     final prefs = await SharedPreferences.getInstance();
     final int? id = prefs.getInt('userId');
     if (id != null) {
-      userId = id;
+      setState(() {
+        userId = id;
+      });
     }
   }
 
@@ -76,7 +75,7 @@ class _NotebookScreenState extends State<NotebookScreen> {
         ],
       ),
       body: FutureBuilder<List<Notebook>>(
-        future: _db.getNotebookByUserId(1),
+        future: _db.getNotebookByUserId(userId),
         builder: ((context, snapshot) {
           final List<Notebook>? notebooks = snapshot.data;
           if (snapshot.connectionState != ConnectionState.done) {

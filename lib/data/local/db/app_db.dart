@@ -62,6 +62,12 @@ class AppDb extends _$AppDb {
     return await select(journals).get();
   }
 
+  // Get Journals By UserId
+  Future<List<Journal>> getJournalsByUserId(int userId) async {
+    return await (select(journals)..where((tbl) => tbl.userId.equals(userId)))
+        .get();
+  }
+
   // Create Journal
   Future<int> insertJournal(JournalsCompanion entity) async {
     return await into(journals).insert(entity);
@@ -155,6 +161,12 @@ class AppDb extends _$AppDb {
     return await select(remainders).get();
   }
 
+  // Get Remainders By UserId
+  Future<List<Remainder>> getRemaindersByUserId(int userId) async {
+    return await (select(remainders)..where((tbl) => tbl.userId.equals(userId)))
+        .get();
+  }
+
   // Create Remainder
   Future<int> insertRemainder(RemaindersCompanion entity) async {
     return await into(remainders).insert(entity);
@@ -180,6 +192,12 @@ class AppDb extends _$AppDb {
   // Get all Todos
   Future<List<Todo>> getTodos() async {
     return await select(todos).get();
+  }
+
+  // Get Journals By UserId
+  Future<List<Todo>> getTodosByUserId(int userId) async {
+    return await (select(todos)..where((tbl) => tbl.userId.equals(userId)))
+        .get();
   }
 
   // Create Todo

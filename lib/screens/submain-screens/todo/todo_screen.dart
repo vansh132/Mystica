@@ -19,35 +19,43 @@ class TodoScreen extends StatefulWidget {
 
 class _TodoScreenState extends State<TodoScreen> {
   late AppDb _db;
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late Future<int> userId;
+  // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  // late Future<int> userId;
 
   @override
   void initState() {
+    getUserId();
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   _db.close();
-  //   super.dispose();
-  // }
+  int userId = 0;
+
+  void getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? id = prefs.getInt('userId');
+    if (id != null) {
+      setState(() {
+        userId = id;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _db = AppDb();
-    userId = _prefs.then((SharedPreferences prefs) {
-      return prefs.getInt('userId') ?? 0;
-    });
+    // userId = _prefs.then((SharedPreferences prefs) {
+    //   return prefs.getInt('userId') ?? 0;
+    // });
 
     //To-do: Add new task
     void _addNewTask(String task) async {
       _db = AppDb();
-      int id = await userId;
+      // int id = userId;
 
       final todoEntity = TodosCompanion(
           title: drift.Value(task),
           isCompleted: drift.Value(0),
-          userId: drift.Value(id));
+          userId: drift.Value(userId));
       print(todoEntity);
       int res = await _db.insertTodo(todoEntity);
       if (res != 0) {
@@ -58,7 +66,7 @@ class _TodoScreenState extends State<TodoScreen> {
     }
 
     void _startAddTaskTransaction(BuildContext ctx) {
-      print("inside _startAddTaskTransaction...");
+      // print("inside _startAddTaskTransaction...");
       showModalBottomSheet(
           context: ctx,
           builder: (_) {
@@ -107,7 +115,7 @@ class _TodoScreenState extends State<TodoScreen> {
         ],
       ),
       body: FutureBuilder<List<Todo>>(
-        future: _db.getTodos(),
+        future: _db.getTodosByUserId(userId),
         builder: ((context, snapshot) {
           final List<Todo>? todos = snapshot.data;
           if (snapshot.connectionState != ConnectionState.done) {

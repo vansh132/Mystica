@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/journal/create_journal_screen.dart';
 import 'package:mytica/widgets/Items/journal_item.dart';
 import 'package:mytica/widgets/navigation.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class JournalScreen extends StatefulWidget {
   static const String routeName = '/journal-screen';
@@ -17,19 +16,23 @@ class JournalScreen extends StatefulWidget {
 
 class _JournalScreenState extends State<JournalScreen> {
   late AppDb _db;
+  int userId = 0;
+
+  void getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? id = prefs.getInt('userId');
+    if (id != null) {
+      setState(() {
+        userId = id;
+      });
+    }
+  }
 
   @override
   void initState() {
+    getUserId();
     super.initState();
-
-    // _db = AppDb();
   }
-
-  // @override
-  // void dispose() {
-  //   _db.close();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +44,8 @@ class _JournalScreenState extends State<JournalScreen> {
       "July-Sept": 2,
       "Oct-Dec": 6,
     };
+
+    print("******************userId: $userId");
 
     return Scaffold(
       appBar: AppBar(
@@ -73,7 +78,7 @@ class _JournalScreenState extends State<JournalScreen> {
         ],
       ),
       body: FutureBuilder<List<Journal>>(
-        future: _db.getJournals(),
+        future: _db.getJournalsByUserId(userId),
         builder: ((context, snapshot) {
           final List<Journal>? journals = snapshot.data;
           if (snapshot.connectionState != ConnectionState.done) {
@@ -89,6 +94,7 @@ class _JournalScreenState extends State<JournalScreen> {
           }
 
           if (journals != null) {
+            print(journals);
             return Container(
               width: double.infinity,
               height: double.infinity,

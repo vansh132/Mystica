@@ -23,7 +23,9 @@ class _AlbumScreenState extends State<AlbumScreen> {
     final prefs = await SharedPreferences.getInstance();
     final int? id = prefs.getInt('userId');
     if (id != null) {
-      userId = id;
+      setState(() {
+        userId = id;
+      });
     }
   }
 
@@ -67,7 +69,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
         ],
       ),
       body: FutureBuilder<List<Album>>(
-        future: _db.getAlbumByUserId(1),
+        future: _db.getAlbumByUserId(userId),
         builder: ((context, snapshot) {
           final List<Album>? albums = snapshot.data;
           if (snapshot.connectionState != ConnectionState.done) {
