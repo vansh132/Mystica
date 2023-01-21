@@ -1,5 +1,4 @@
 class ImageAttr {
-  final int albumId;
   final String id;
   final String imagePath;
   final String tag;
@@ -7,7 +6,6 @@ class ImageAttr {
   final DateTime createdAt;
 
   ImageAttr({
-    required this.albumId,
     required this.id,
     required this.imagePath,
     required this.tag,

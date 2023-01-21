@@ -156,8 +156,8 @@ class _JournalScreenState extends State<JournalScreen> {
                   ),
                 Container(
                   // color: Colors.white,
-                  padding: const EdgeInsets.all(16),
-                  width: MediaQuery.of(context).size.width * 0.1745,
+                    padding: const EdgeInsets.all(16),
+                    width: MediaQuery.of(context).size.width * 0.1745,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     // ignore: prefer_const_literals_to_create_immutables
@@ -252,7 +252,7 @@ class _JournalScreenState extends State<JournalScreen> {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           );

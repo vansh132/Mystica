@@ -1,11 +1,16 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:fluttericon/linecons_icons.dart';
+import 'package:intl/intl.dart';
+import 'package:mytica/main.dart';
+import 'package:mytica/models/Gallery/Album.dart';
 import 'package:mytica/models/Gallery/ImageAttr.dart';
 import 'package:mytica/screens/submain-screens/album/image/add_image_screen.dart';
 import 'package:mytica/widgets/Items/image_item.dart';
-import 'package:mytica/widgets/Items/new_image.dart';
 import 'package:mytica/widgets/navigation.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 class ImageScreen extends StatefulWidget {
   static const String routeName = '/image-screen';
@@ -18,49 +23,50 @@ class _ImageScreenState extends State<ImageScreen> {
   @override
   Widget build(BuildContext context) {
     //Remark: stored albumId through navigation
-    final albumId = ModalRoute.of(context)!.settings.arguments as int;
-    print(albumId);
+    final album = ModalRoute.of(context)!.settings.arguments as Album;
+    print(album);
     //To-do: Retrieve the album name
     //To-do: Retrieve the images of an album
 
+    Map<String, double> dataMap = {
+      "Jan-Mar": 5,
+      "Apr-Jun": 3,
+      "July-Sept": 2,
+      "Oct-Dec": 6,
+    };
+
     final List<ImageAttr> images = [
       ImageAttr(
-          albumId: albumId,
           id: "id1",
           imagePath:
               "C:/Users/hpCND/OneDrive/Desktop/Mini Project/images/1.jpg",
           tag: "#day1",
           createdAt: DateTime.now()),
       ImageAttr(
-          albumId: albumId,
           id: "id1",
           tag: "#day1",
           imagePath:
               "C:/Users/hpCND/OneDrive/Desktop/Mini Project/images/1.jpg",
           createdAt: DateTime.now()),
       ImageAttr(
-          albumId: albumId,
           tag: "#day1",
           id: "id1",
           imagePath:
               "C:/Users/hpCND/OneDrive/Desktop/Mini Project/images/2.jpg",
           createdAt: DateTime.now()),
       ImageAttr(
-          albumId: albumId,
           tag: "#day1",
           id: "id1",
           imagePath:
               "C:/Users/hpCND/OneDrive/Desktop/Mini Project/images/3.jpeg",
           createdAt: DateTime.now()),
       ImageAttr(
-          albumId: albumId,
           tag: "#day1",
           id: "id1",
           imagePath:
               "C:/Users/hpCND/OneDrive/Desktop/Mini Project/images/fe.jpg",
           createdAt: DateTime.now()),
       ImageAttr(
-          albumId: albumId,
           tag: "#day1",
           id: "id1",
           imagePath:
@@ -99,90 +105,234 @@ class _ImageScreenState extends State<ImageScreen> {
         ],
       ),
       body: Container(
-          // padding: EdgeInsets.all(16),
-          width: double.infinity,
-          height: double.infinity,
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
-                  stops: [0.4, 0.7],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight)),
-          child: Row(
-            children: [
-              Container(
-                color: const Color(0xff001427),
-                width: MediaQuery.of(context).size.width * 0.12,
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  children: const [
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      "Quote of the Day",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xffCAF0F8)),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "\" Life is either a daring adventure or nothing at all \"",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w300,
-                          color: Color(0xffedf6f9)),
-                      textAlign: TextAlign.center,
-                    ),
-                    NavigationRow()
-                  ],
+        // padding: EdgeInsets.all(16),
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
+                stops: [0.4, 0.7],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight)),
+        child: Row(
+          children: [
+            Container(
+              color: const Color(0xff001427),
+              width: MediaQuery.of(context).size.width * 0.12,
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                children: const [
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    "Quote of the Day",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, color: Color(0xffCAF0F8)),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    "\" Life is either a daring adventure or nothing at all \"",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w300, color: Color(0xffedf6f9)),
+                    textAlign: TextAlign.center,
+                  ),
+                  NavigationRow()
+                ],
+              ),
+            ),
+            const VerticalDivider(
+              width: 4,
+              color: Colors.grey,
+            ),
+            Container(
+              // color: Colors.red,
+              padding: const EdgeInsets.all(32),
+              width: MediaQuery.of(context).size.width * 0.7,
+              child: GridView.builder(
+                itemCount: images.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  childAspectRatio: 1 / 1,
+                  crossAxisSpacing: 40,
+                  mainAxisSpacing: 36,
                 ),
+                itemBuilder: (context, index) => ImageItem(images[index]),
               ),
-              const VerticalDivider(
-                width: 4,
-                color: Colors.grey,
-              ),
-              SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  width: MediaQuery.of(context).size.width * 0.72,
-                  // color: Colors.red,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+            ),
+            const VerticalDivider(
+              width: 4,
+              color: Colors.grey,
+            ),
+            Container(
+              // color: Colors.white,
+              padding: const EdgeInsets.all(16),
+              width: MediaQuery.of(context).size.width * 0.1745,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                // ignore: prefer_const_literals_to_create_immutables
+                children: [
+                  const Text(
+                    "Album   Overview:",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const Divider(
+                    height: 2,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    album.title,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    album.desription,
+                    style: TextStyle(
+                      fontSize: 18,
+                      letterSpacing: 0.75,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(16),
-                        height: MediaQuery.of(context).size.height * 0.9,
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        child: ListView.builder(
-                          itemBuilder: (context, index) =>
-                              ImageItem(images[index]),
-                          itemCount: images.length,
+                      Icon(Icons.calendar_month_rounded),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        DateFormat.yMMMMd().format(album.createdAt),
+                        style: TextStyle(
+                          fontSize: 16,
+                          letterSpacing: 0.75,
+                          fontWeight: FontWeight.w700,
+                          // color: Colors.black54,
                         ),
-                      )
+                      ),
                     ],
                   ),
-                ),
-              ),
-              const VerticalDivider(
-                width: 4,
-                color: Colors.grey,
-              ),
-              Column(
-                children: [
-                  Text("Tag:"),
-                  Text("#day1"),
-                  Text("#day2"),
-                  Text("#day3"),
-                  Text("no of images"),
-                  Text("no of tags"),
-                  Text("fav"),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const Divider(
+                    height: 2,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const Text(
+                    "Image  Overview:",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const Divider(
+                    height: 2,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    // color: Colors.amber,
+                    padding: const EdgeInsets.all(8),
+                    width: 250,
+                    height: 250,
+                    child: PieChart(
+                      dataMap: dataMap,
+                      animationDuration: const Duration(milliseconds: 1000),
+                      chartLegendSpacing: 32,
+                      chartRadius: MediaQuery.of(context).size.width / 3.2,
+                      initialAngleInDegree: 0,
+                      chartType: ChartType.ring,
+                      ringStrokeWidth: 32,
+                      centerText: "",
+                      // colorList: colorList,
+                      legendOptions: const LegendOptions(
+                        showLegendsInRow: false,
+                        legendPosition: LegendPosition.bottom,
+                        showLegends: true,
+                        // legendShape: BoxShape.rectangle,
+                        legendTextStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      chartValuesOptions: const ChartValuesOptions(
+                        showChartValueBackground: true,
+                        showChartValues: true,
+                        showChartValuesInPercentage: false,
+                        showChartValuesOutside: false,
+                        decimalPlaces: 0,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    height: 48,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0.0, 1.0), //(x,y)
+                          blurRadius: 6.0,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      // crossAxisAlignment: C,
+                      children: [
+                        const Text(
+                          "Images: ",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          "10",
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
-              )
-            ],
-          )),
+              ),
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed(AddImageScreen.routeName);

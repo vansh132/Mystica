@@ -53,7 +53,7 @@ class _AlbumItemState extends State<AlbumItem> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
-            .pushNamed(ImageScreen.routeName, arguments: widget.album.id);
+            .pushNamed(ImageScreen.routeName, arguments: widget.album);
       },
       child: Container(
         // color: Colors.amber,
