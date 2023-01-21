@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/screens/submain-screens/album/album_screen.dart';
+import 'package:file_picker/file_picker.dart';
+
+String? pathImage;
 
 class CreateAlbum extends StatefulWidget {
   static const routeName = "/create-album";
@@ -31,7 +34,7 @@ class _CreateAlbumState extends State<CreateAlbum> {
     //To-do: add album
     print(enteredAlbumTitle);
     print(enteredAlbumDescription);
-
+    print(pathImage);
     // Navigator.of(context).pop();
   }
 
@@ -75,6 +78,28 @@ class _CreateAlbumState extends State<CreateAlbum> {
                     controller: _albumDescriptionController,
                     onSubmitted: (_) => _addAlbumData(),
                   ),
+                  const SizedBox(
+                    height: 55,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextButton(
+                      onPressed: () async {
+                        FilePickerResult? result =
+                            await FilePicker.platform.pickFiles();
+
+                        if (result != null) {
+                          PlatformFile file = result.files.first;
+                          String editedPath = file.path.toString();
+                          editedPath = editedPath.replaceAll('\\', '/').trim();
+                          pathImage = editedPath;
+                          // print(file.path);
+                        } else {
+                          // User canceled the picker
+                        }
+                      },
+                      child: Text("Pick a cover image")),
                   const SizedBox(
                     height: 55,
                   ),

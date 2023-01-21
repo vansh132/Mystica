@@ -19,37 +19,7 @@ class AlbumItem extends StatefulWidget {
 
 class _AlbumItemState extends State<AlbumItem> {
   @override
-  Widget build(BuildContext context) {
-    //To-do (Vansh): Change the colors
-    File coverImage() {
-      final coverImageFiles = [
-        File(
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_1.jpg"),
-        File(
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_2.jpg"),
-        File(
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_3.jpg"),
-        File(
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_4.jpg"),
-        File(
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_5.jpg"),
-        File(
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_6.jpg"),
-        File(
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_1.jpg"),
-        File(
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_2.jpg"),
-        File(
-            "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_3.jpg"),
-      ];
-
-      if (widget.album.id >= 9) {
-        var n = widget.album.id % 10;
-        return coverImageFiles[n - 1];
-      }
-      return coverImageFiles[widget.album.id - 1];
-    }
-
+  Widget build(BuildContext context) {  
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
@@ -57,7 +27,7 @@ class _AlbumItemState extends State<AlbumItem> {
       },
       child: Container(
         // color: Colors.amber,
-        
+
         child: Column(
           children: [
             Container(
@@ -76,7 +46,7 @@ class _AlbumItemState extends State<AlbumItem> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Image(
-                  image: FileImage(coverImage()),
+                  image: FileImage(File(widget.album.coverImagePath)),
                   fit: BoxFit.cover,
                   height: 296,
                   width: 296, //492
