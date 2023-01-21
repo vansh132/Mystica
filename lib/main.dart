@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/screens/main-screen/profile_screen.dart';
 import 'package:mytica/screens/submain-screens/album/image/add_image_screen.dart';
+import 'package:mytica/screens/submain-screens/album/image/detail_image_screen.dart';
 import 'package:mytica/screens/submain-screens/album/image/image_screen.dart';
 import 'package:mytica/screens/submain-screens/album/create_album_screen.dart';
 import 'package:mytica/screens/submain-screens/album/edit_album_screen.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
         ReminderScreen.routeName: (ctx) => const ReminderScreen(),
         //image-screens
         ImageScreen.routeName: (ctx) => const ImageScreen(),
+        DetailImageScreen.routeName:(ctx) => const DetailImageScreen(),
         AddImageScreen.routeName: (ctx) => const AddImageScreen(),
         //testing-screen
         TestingScreen.routeName: (ctx) => TestingScreen()

@@ -62,6 +62,7 @@ class _NavigationRowState extends State<NavigationRow> {
           ),
           Divider(
             height: 8,
+            color: Colors.transparent,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -89,13 +90,17 @@ class _NavigationRowState extends State<NavigationRow> {
           ),
           Divider(
             height: 7,
+            color: Colors.transparent,
           ),
           Divider(
             height: 2,
+            color: Colors.transparent,
+
             // color: Color(0xff6c757d),
           ),
           Divider(
             height: 14,
+            color: Colors.transparent,
           ),
           Text(
             "Screens",
@@ -131,6 +136,7 @@ class _NavigationRowState extends State<NavigationRow> {
             ],
           ),
           Divider(
+            color: Colors.transparent,
             height: 16,
           ),
           Row(
@@ -157,6 +163,7 @@ class _NavigationRowState extends State<NavigationRow> {
             ],
           ),
           Divider(
+            color: Colors.transparent,
             height: 16,
           ),
           Row(
@@ -184,6 +191,7 @@ class _NavigationRowState extends State<NavigationRow> {
           ),
           Divider(
             height: 16,
+            color: Colors.transparent,
           ),
           Row(
             children: [
@@ -210,6 +218,7 @@ class _NavigationRowState extends State<NavigationRow> {
           ),
           Divider(
             height: 16,
+            color: Colors.transparent,
           ),
           Row(
             children: [
@@ -236,6 +245,7 @@ class _NavigationRowState extends State<NavigationRow> {
           ),
           Divider(
             height: 16,
+            color: Colors.transparent,
           ),
         ],
       ),
