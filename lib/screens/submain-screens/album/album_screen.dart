@@ -118,7 +118,10 @@ class AlbumScreen extends StatelessWidget {
                           color: Color(0xffedf6f9)),
                       textAlign: TextAlign.center,
                     ),
-                    NavigationRow()
+                    NavigationRow(),
+                    SizedBox(
+                      height: 48,
+                    ),
                   ],
                 ),
               ),
