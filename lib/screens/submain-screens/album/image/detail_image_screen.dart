@@ -5,17 +5,27 @@ import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttericon/linecons_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:mytica/data/local/db/app_db.dart';
+import 'package:mytica/screens/submain-screens/album/image/image_screen.dart';
 
-class DetailImageScreen extends StatelessWidget {
+class DetailImageScreen extends StatefulWidget {
   static const routeName = '/detail-image-screen';
   const DetailImageScreen({super.key});
 
   @override
+  State<DetailImageScreen> createState() => _DetailImageScreenState();
+}
+
+class _DetailImageScreenState extends State<DetailImageScreen> {
+  @override
   Widget build(BuildContext context) {
     final image = ModalRoute.of(context)?.settings.arguments as MyImage;
 
-    void _deleteImage() {
-      print("Image deleted...");
+    void _deleteImage() async {
+      print("Image deleted..");
+      final db = AppDb();
+      await db.deleteImage(image.id);
+      await db.close().whenComplete(() =>
+          {Navigator.of(context).pushReplacementNamed(ImageScreen.routeName)});
     }
 
     return Scaffold(
