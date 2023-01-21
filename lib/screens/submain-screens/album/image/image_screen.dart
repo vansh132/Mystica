@@ -18,7 +18,7 @@ class _ImageScreenState extends State<ImageScreen> {
   @override
   Widget build(BuildContext context) {
     //Remark: stored albumId through navigation
-    final albumId = ModalRoute.of(context)!.settings.arguments as String;
+    final albumId = ModalRoute.of(context)!.settings.arguments as int;
     print(albumId);
     //To-do: Retrieve the album name
     //To-do: Retrieve the images of an album

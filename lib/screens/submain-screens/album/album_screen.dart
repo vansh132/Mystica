@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mytica/models/Gallery/Album.dart';
 import 'package:mytica/screens/submain-screens/album/create_album_screen.dart';
@@ -13,19 +14,37 @@ class AlbumScreen extends StatelessWidget {
     //To-do: Retrieve Albums from database and convert it into List<Album>.
     final List<Album> albums = [
       Album(
-        id: '1',
+        id: 1,
         title: "Goa Trip",
-        desription: "Final semester trip with Juniors",
+        desription: "Family Vacation",
         createdAt: DateTime.now(),
       ),
       Album(
-        id: '2',
+        id: 2,
         title: "Gujarat Trip",
         desription: "Final semester trip with Juniors",
         createdAt: DateTime.now(),
       ),
       Album(
-        id: '3',
+        id: 3,
+        title: "Bangalore Trip",
+        desription: "College Track",
+        createdAt: DateTime.now(),
+      ),
+      Album(
+        id: 4,
+        title: "Goa Trip",
+        desription: "Final semester trip with Juniors",
+        createdAt: DateTime.now(),
+      ),
+      Album(
+        id: 5,
+        title: "Gujarat Trip",
+        desription: "Final semester trip with Juniors",
+        createdAt: DateTime.now(),
+      ),
+      Album(
+        id: 11,
         title: "Bangalore Trip",
         desription: "Final semester trip with Juniors",
         createdAt: DateTime.now(),
@@ -108,21 +127,19 @@ class AlbumScreen extends StatelessWidget {
                 color: Colors.grey,
               ),
               Container(
+                // color: Colors.red,
                 padding: const EdgeInsets.all(32),
-                width: MediaQuery.of(context).size.width * 0.7,
+                width: MediaQuery.of(context).size.width * 0.8773,
                 child: GridView.builder(
                   itemCount: albums.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 3 / 2,
-                      crossAxisSpacing: 45,
-                      mainAxisSpacing: 35),
+                    crossAxisCount: 3,
+                    childAspectRatio: 1 / 1,
+                    crossAxisSpacing: 40,
+                    mainAxisSpacing: 48,
+                  ),
                   itemBuilder: (context, index) => AlbumItem(albums[index]),
                 ),
-              ),
-              const VerticalDivider(
-                width: 4,
-                color: Colors.grey,
               ),
             ],
           )),

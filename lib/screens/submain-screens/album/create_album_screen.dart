@@ -17,6 +17,7 @@ class _CreateAlbumState extends State<CreateAlbum> {
     final enteredAlbumTitle = _albumTitleController.text;
     final enteredAlbumDescription = _albumDescriptionController.text;
 
+    //To-DO: Maximum characters for description - 24
     if (enteredAlbumTitle.isEmpty || enteredAlbumDescription.length < 10) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(

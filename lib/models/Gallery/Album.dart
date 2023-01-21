@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Album {
-  final String id;
+  final int id;
   final String title;
   final String desription;
   final DateTime createdAt;

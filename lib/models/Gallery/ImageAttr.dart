@@ -1,5 +1,5 @@
 class ImageAttr {
-  final String albumId;
+  final int albumId;
   final String id;
   final String imagePath;
   final String tag;
