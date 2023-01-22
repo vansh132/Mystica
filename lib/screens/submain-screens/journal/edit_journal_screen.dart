@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 import 'package:drift/drift.dart' as drift;
@@ -46,6 +45,7 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
           title: drift.Value(_journalTitleController.text),
           body: drift.Value(_journalDescriptionController.text),
           tag: drift.Value(_journalTagController.text),
+          userId: drift.Value(journal.userId),
           createdAt: drift.Value(journal.createdAt));
 
       bool isUpdated = await _db.updateJournal(journalEntity);
