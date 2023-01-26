@@ -58,10 +58,15 @@ class _todo_itemState extends State<todo_item> {
                     children: [
                       Text(
                         widget.todoListItem.title,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: widget.todoListItem.isCompleted == 1
+                            ? TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.lineThrough)
+                            : TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
                       ),
                       // Text(
                       //   DateFormat.yMMMd()

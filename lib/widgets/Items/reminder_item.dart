@@ -59,10 +59,15 @@ class _reminder_itemState extends State<reminder_item> {
                     children: [
                       Text(
                         widget.reminderItem.title,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: widget.reminderItem.isCompleted == 1
+                            ? TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.lineThrough)
+                            : TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
                       ),
                       const SizedBox(
                         height: 4,
