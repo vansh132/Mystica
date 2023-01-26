@@ -128,11 +128,7 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
-                child: Container(
-                  color: Colors.red,
-                  padding: const EdgeInsets.all(14),
-                  child: const Text("Okay"),
-                ),
+                child: const Text("Okay"),
               ),
             ],
           ),
@@ -143,32 +139,6 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Create Journal")),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: Row(
-                  children: [
-                    TextButton(
-                      child: const Text(
-                        "Log out",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        print("Log out ");
-                      },
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    const Icon(Icons.logout_rounded),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                  ],
-                ),
-              )),
-        ],
       ),
       body: Container(
           decoration: const BoxDecoration(

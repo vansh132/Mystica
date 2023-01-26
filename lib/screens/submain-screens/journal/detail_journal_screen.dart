@@ -30,7 +30,7 @@ class _DetailJournalScreenState extends State<DetailJournalScreen> {
               Container(
                   decoration: const BoxDecoration(
                     //color: Color(0xffdee2e6),
-                    color: Colors.white70,
+                    color: Color(0xffcaf0f8),
                     borderRadius: BorderRadius.all(Radius.circular(25)),
                     boxShadow: [
                       BoxShadow(

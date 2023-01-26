@@ -4,8 +4,6 @@ import 'package:drift/drift.dart' as drift;
 import 'package:mytica/screens/submain-screens/notebook/notebook_screen.dart';
 
 class EditNotebookScreen extends StatefulWidget {
-  // Notebook notebook;
-  // EditNotebookScreen(this.notebook);
   static const routeName = 'edit-notebook-screen';
 
   const EditNotebookScreen({super.key});
@@ -28,7 +26,6 @@ class _EditNotebookScreenState extends State<EditNotebookScreen> {
 
   void _updateNotebook() async {
     final notebook = ModalRoute.of(context)?.settings.arguments as Notebook;
-    // final notebook = args as Notebook;
     final name = _nameController.text;
     final description = _descriptionController.text;
     final tag = _tagController.text;
@@ -60,18 +57,14 @@ class _EditNotebookScreenState extends State<EditNotebookScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Failed"),
-        content: const Text("Notebook Not Updated. Please try again later."),
+        title: const Text("Fields Empty!"),
+        content: const Text("Fields cannot be empty."),
         actions: <Widget>[
-          TextButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.of(ctx).pop();
             },
-            child: Container(
-              color: Colors.red,
-              padding: const EdgeInsets.all(14),
-              child: const Text("Okay"),
-            ),
+            child: const Text("Okay", style: TextStyle(fontSize: 16)),
           ),
         ],
       ),
@@ -89,11 +82,7 @@ class _EditNotebookScreenState extends State<EditNotebookScreen> {
             onPressed: () {
               Navigator.of(ctx).pop();
             },
-            child: Container(
-              color: Colors.red,
-              padding: const EdgeInsets.all(14),
-              child: const Text("Okay"),
-            ),
+            child: const Text("Okay"),
           ),
         ],
       ),
@@ -112,87 +101,97 @@ class _EditNotebookScreenState extends State<EditNotebookScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Edit Notebook")),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: Row(
-                  children: [
-                    TextButton(
-                      child: const Text(
-                        "Log out",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        print("Log out ");
-                      },
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    const Icon(Icons.logout_rounded),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                  ],
-                ),
-              )),
-        ],
       ),
       body: Container(
-        decoration: const BoxDecoration(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
-                colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
+                colors: [Color(0xffADD8FF), Color(0xffEBF5FF)],
                 stops: [0.4, 0.7],
                 begin: Alignment.topLeft,
-                end: Alignment.bottomRight)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(
-                width: MediaQuery.of(context).size.width * 0.5,
-                height: MediaQuery.of(context).size.height,
-                // color: Colors.yellow,
-                child: Container(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    padding: EdgeInsets.only(
-                        top: 10,
-                        left: 20,
-                        right: 20,
-                        bottom: MediaQuery.of(context).viewInsets.bottom + 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextFormField(
-                          controller: _nameController,
-                          decoration: const InputDecoration(labelText: 'Name'),
+                end: Alignment.bottomRight),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  width: 500,
+                  height: 500,
+                  padding: const EdgeInsets.all(32),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      Color(0xffEBF5FF),
+                      Color(0xffADD8FF),
+                    ], stops: [
+                      0.4,
+                      0.7
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
+                        bottomLeft: Radius.circular(24),
+                        bottomRight: Radius.circular(24)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        offset: Offset(0.0, 1.0),
+                        blurRadius: 4.0,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextFormField(
+                        controller: _nameController,
+                        decoration: const InputDecoration(
+                          labelText: 'Name',
+                          labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 0.24,
+                          ),
                         ),
-                        const SizedBox(
-                          height: 15,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        controller: _descriptionController,
+                        decoration: const InputDecoration(
+                          labelText: 'Description',
+                          labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 0.24,
+                          ),
                         ),
-                        TextFormField(
-                          controller: _descriptionController,
-                          decoration:
-                              const InputDecoration(labelText: 'Description'),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        controller: _tagController,
+                        decoration: const InputDecoration(
+                          labelText: 'Tag',
+                          labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 0.24,
+                          ),
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextFormField(
-                          controller: _tagController,
-                          decoration: const InputDecoration(labelText: 'Tag'),
-                        ),
-                        const SizedBox(
-                          height: 55,
-                        ),
-                        ElevatedButton(
-                            onPressed: _updateNotebook,
-                            child: const Text("Update Notebook"))
-                      ],
-                    ))),
-          ],
-        ),
-      ),
+                      ),
+                      const SizedBox(
+                        height: 55,
+                      ),
+                      ElevatedButton(
+                          onPressed: _updateNotebook,
+                          child: const Text("Update Notebook"))
+                    ],
+                  )),
+            ],
+          )),
     );
   }
 }

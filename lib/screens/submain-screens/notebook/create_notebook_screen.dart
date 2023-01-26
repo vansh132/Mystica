@@ -42,7 +42,7 @@ class _CreateNotebookScreenState extends State<CreateNotebookScreen> {
       final description = _descriptionController.text;
       final tag = _tagController.text;
 
-      if (name.isNotEmpty && description.isNotEmpty && tag.isNotEmpty) {
+      if (name.isNotEmpty && description.isNotEmpty && tag.startsWith("#", 0)) {
         final notebookEntity = NotebooksCompanion(
             name: drift.Value(name),
             description: drift.Value(description),
@@ -59,39 +59,44 @@ class _CreateNotebookScreenState extends State<CreateNotebookScreen> {
           showNotebookNotAddedDialogBox(context);
         }
       } else {
-        showFieldCannotBeEmptyDialogBox(context);
+        if (name.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+              "Enter Notebook Name",
+            ),
+            duration: Duration(seconds: 4),
+          ));
+          return;
+          // Navigator.of(context).pushReplacementNamed(AlbumScreen.routeName);
+        }
+
+        if (description.length < 10) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+              "Minimum 10 characters of description",
+            ),
+            duration: Duration(seconds: 4),
+          ));
+          return;
+          // Navigator.of(context).pushReplacementNamed(AlbumScreen.routeName);
+        }
+        print("vansh =" + tag.startsWith("#", 0).toString());
+        if (!tag.startsWith("#", 0)) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+              "Tag must start with #",
+            ),
+            duration: Duration(seconds: 4),
+          ));
+          return;
+          // Navigator.of(context).pushReplacementNamed(AlbumScreen.routeName);
+        }
       }
     }
 
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Create Notebook")),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: Row(
-                  children: [
-                    TextButton(
-                      child: const Text(
-                        "Log out",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        print("Log out ");
-                      },
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    const Icon(Icons.logout_rounded),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                  ],
-                ),
-              )),
-        ],
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -112,42 +117,96 @@ class _CreateNotebookScreenState extends State<CreateNotebookScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 550,
-              child: TextField(
-                decoration: const InputDecoration(labelText: 'Name'),
-                controller: _nameController,
-                onSubmitted: (_) => _addNotebook(),
+            Container(
+              width: 500,
+              height: 500,
+              padding: const EdgeInsets.all(32),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  Color(0xffEBF5FF),
+                  Color(0xffADD8FF),
+                ], //final - 1
+                    stops: [
+                      0.4,
+                      0.7
+                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                // color: Colors.black45,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    offset: Offset(0.0, 1.0),
+                    blurRadius: 4.0,
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 550,
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                        labelStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          letterSpacing: 0.24,
+                        ),
+                      ),
+                      controller: _nameController,
+                      onSubmitted: (_) => _addNotebook(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(
+                    width: 550,
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        labelText: 'Description',
+                        labelStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          letterSpacing: 0.24,
+                        ),
+                      ),
+                      maxLines: 4,
+                      controller: _descriptionController,
+                      onSubmitted: (_) => _addNotebook(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  SizedBox(
+                    width: 550,
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        labelText: 'Tag',
+                        labelStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          letterSpacing: 0.24,
+                        ),
+                      ),
+                      controller: _tagController,
+                      onSubmitted: (_) => _addNotebook(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  ElevatedButton(
+                      onPressed: _addNotebook,
+                      child: const Text("Add Notebook"))
+                ],
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            SizedBox(
-              width: 550,
-              child: TextField(
-                decoration: const InputDecoration(labelText: 'Description'),
-                maxLines: 4,
-                controller: _descriptionController,
-                onSubmitted: (_) => _addNotebook(),
-              ),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            SizedBox(
-              width: 550,
-              child: TextField(
-                decoration: const InputDecoration(labelText: 'Tag'),
-                controller: _tagController,
-                onSubmitted: (_) => _addNotebook(),
-              ),
-            ),
-            const SizedBox(
-              height: 35,
-            ),
-            ElevatedButton(
-                onPressed: _addNotebook, child: const Text("Add Notebook"))
           ],
         ),
       ),
@@ -161,15 +220,11 @@ class _CreateNotebookScreenState extends State<CreateNotebookScreen> {
         title: const Text("Fields Empty!"),
         content: const Text("Fields cannot be empty."),
         actions: <Widget>[
-          TextButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.of(ctx).pop();
             },
-            child: Container(
-              color: Colors.red,
-              padding: const EdgeInsets.all(14),
-              child: const Text("Okay"),
-            ),
+            child: Text("Okay"),
           ),
         ],
       ),
@@ -183,15 +238,11 @@ class _CreateNotebookScreenState extends State<CreateNotebookScreen> {
         title: const Text("Failed"),
         content: const Text("Notebook Not Added. Please try again later."),
         actions: <Widget>[
-          TextButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.of(ctx).pop();
             },
-            child: Container(
-              color: Colors.red,
-              padding: const EdgeInsets.all(14),
-              child: const Text("Okay"),
-            ),
+            child: Text("Okay"),
           ),
         ],
       ),
