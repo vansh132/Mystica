@@ -18,13 +18,22 @@ class JournalScreen extends StatefulWidget {
 class _JournalScreenState extends State<JournalScreen> {
   late AppDb _db;
   int userId = 0;
+  String username = "";
+  String userProfileUrl = "assets/profile.png";
+  String fullName = "";
 
   void getUserId() async {
     final prefs = await SharedPreferences.getInstance();
     final int? id = prefs.getInt('userId');
-    if (id != null) {
+    final uname = prefs.getString('username');
+    final fName = prefs.getString('fullName');
+    final url = prefs.getString('userProfileUrl');
+    if (id != null && uname != null && url != null && fName != null) {
       setState(() {
         userId = id;
+        username = uname;
+        userProfileUrl = url;
+        fullName = fName;
       });
     }
   }
@@ -199,7 +208,7 @@ class _JournalScreenState extends State<JournalScreen> {
                                           radius: 30,
                                           // backgroundColor: Colors.white,
                                           backgroundImage:
-                                              AssetImage("assets/profile.png"),
+                                              AssetImage(userProfileUrl),
                                         ),
                                       ),
                                       Expanded(
@@ -210,7 +219,7 @@ class _JournalScreenState extends State<JournalScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "Vansh Shah",
+                                              fullName,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -222,7 +231,7 @@ class _JournalScreenState extends State<JournalScreen> {
                                               height: 8,
                                             ),
                                             Text(
-                                              "vansh132",
+                                              username,
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 letterSpacing: 0.5,
