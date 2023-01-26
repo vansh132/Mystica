@@ -9,25 +9,308 @@ import 'package:mytica/screens/submain-screens/reminder/reminder_screen.dart';
 import 'package:mytica/screens/submain-screens/todo/todo_screen.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/linecons_icons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const String routeName = '/home-screen';
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  // int userId = 0;
+  late AppDb _db;
+
+  void buildChart() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? id = await prefs.getInt('userId');
+    if (id != null) {
+      // setState(() {
+      //   userId = id;
+      // });
+      // userId = id;
+      print("****** userId: $id");
+      List<Journal> journals = await _db.getJournalsByUserId(id);
+      List<MyImage> myImages = await _db.getImageByUserId(id);
+      List<Notebook> notebooks = await _db.getNotebookByUserId(id);
+      List<Remainder> remainders = await _db.getRemaindersByUserId(id);
+
+      journals.forEach((element) {
+        if (element.createdAt.month == 1) {
+          journalsCount[0]++;
+        } else if (element.createdAt.month == 2) {
+          journalsCount[1]++;
+        } else if (element.createdAt.month == 3) {
+          journalsCount[2]++;
+        } else if (element.createdAt.month == 4) {
+          journalsCount[3]++;
+        } else if (element.createdAt.month == 5) {
+          journalsCount[4]++;
+        } else if (element.createdAt.month == 6) {
+          journalsCount[5]++;
+        } else if (element.createdAt.month == 7) {
+          journalsCount[6]++;
+        } else if (element.createdAt.month == 8) {
+          journalsCount[7]++;
+        } else if (element.createdAt.month == 9) {
+          journalsCount[8]++;
+        } else if (element.createdAt.month == 10) {
+          journalsCount[9]++;
+        } else if (element.createdAt.month == 11) {
+          journalsCount[10]++;
+        } else if (element.createdAt.month == 12) {
+          journalsCount[11]++;
+        }
+      });
+
+      remainders.forEach((element) {
+        if (element.deadline.month == 1) {
+          remaindersCount[0]++;
+        } else if (element.deadline.month == 2) {
+          remaindersCount[1]++;
+        } else if (element.deadline.month == 3) {
+          remaindersCount[2]++;
+        } else if (element.deadline.month == 4) {
+          remaindersCount[3]++;
+        } else if (element.deadline.month == 5) {
+          remaindersCount[4]++;
+        } else if (element.deadline.month == 6) {
+          remaindersCount[5]++;
+        } else if (element.deadline.month == 7) {
+          remaindersCount[6]++;
+        } else if (element.deadline.month == 8) {
+          remaindersCount[7]++;
+        } else if (element.deadline.month == 9) {
+          remaindersCount[8]++;
+        } else if (element.deadline.month == 10) {
+          remaindersCount[9]++;
+        } else if (element.deadline.month == 11) {
+          remaindersCount[10]++;
+        } else if (element.deadline.month == 12) {
+          remaindersCount[11]++;
+        }
+      });
+
+      notebooks.forEach((element) {
+        if (element.createdAt.month == 1) {
+          notebooksCount[0]++;
+        } else if (element.createdAt.month == 2) {
+          notebooksCount[1]++;
+        } else if (element.createdAt.month == 3) {
+          notebooksCount[2]++;
+        } else if (element.createdAt.month == 4) {
+          notebooksCount[3]++;
+        } else if (element.createdAt.month == 5) {
+          notebooksCount[4]++;
+        } else if (element.createdAt.month == 6) {
+          notebooksCount[5]++;
+        } else if (element.createdAt.month == 7) {
+          notebooksCount[6]++;
+        } else if (element.createdAt.month == 8) {
+          notebooksCount[7]++;
+        } else if (element.createdAt.month == 9) {
+          notebooksCount[8]++;
+        } else if (element.createdAt.month == 10) {
+          notebooksCount[9]++;
+        } else if (element.createdAt.month == 11) {
+          notebooksCount[10]++;
+        } else if (element.createdAt.month == 12) {
+          notebooksCount[11]++;
+        }
+      });
+
+      myImages.forEach((element) {
+        if (element.createdAt.month == 1) {
+          imagesCount[0]++;
+        } else if (element.createdAt.month == 2) {
+          imagesCount[1]++;
+        } else if (element.createdAt.month == 3) {
+          imagesCount[2]++;
+        } else if (element.createdAt.month == 4) {
+          imagesCount[3]++;
+        } else if (element.createdAt.month == 5) {
+          imagesCount[4]++;
+        } else if (element.createdAt.month == 6) {
+          imagesCount[5]++;
+        } else if (element.createdAt.month == 7) {
+          imagesCount[6]++;
+        } else if (element.createdAt.month == 8) {
+          imagesCount[7]++;
+        } else if (element.createdAt.month == 9) {
+          imagesCount[8]++;
+        } else if (element.createdAt.month == 10) {
+          imagesCount[9]++;
+        } else if (element.createdAt.month == 11) {
+          imagesCount[10]++;
+        } else if (element.createdAt.month == 12) {
+          imagesCount[11]++;
+        }
+      });
+      setState(() {
+        chartData = <ChartData>[
+          ChartData("January", journalsCount[0], notebooksCount[0],
+              imagesCount[0], todosCount[0], remaindersCount[0]),
+          ChartData("February", journalsCount[1], notebooksCount[1],
+              imagesCount[1], todosCount[1], remaindersCount[1]),
+          ChartData("March", journalsCount[2], notebooksCount[2],
+              imagesCount[2], todosCount[2], remaindersCount[2]),
+          ChartData("April", journalsCount[3], notebooksCount[3],
+              imagesCount[3], todosCount[3], remaindersCount[3]),
+          ChartData("May", journalsCount[4], notebooksCount[4], imagesCount[4],
+              todosCount[4], remaindersCount[4]),
+          ChartData("June", journalsCount[5], notebooksCount[5], imagesCount[5],
+              todosCount[5], remaindersCount[5]),
+          ChartData("July", journalsCount[6], notebooksCount[6], imagesCount[6],
+              todosCount[6], remaindersCount[6]),
+          ChartData("August", journalsCount[7], notebooksCount[7],
+              imagesCount[7], todosCount[7], remaindersCount[7]),
+          ChartData("Sept", journalsCount[8], notebooksCount[8], imagesCount[8],
+              todosCount[8], remaindersCount[8]),
+          ChartData("October", journalsCount[9], notebooksCount[9],
+              imagesCount[9], todosCount[9], remaindersCount[9]),
+          ChartData("November", journalsCount[10], notebooksCount[10],
+              imagesCount[10], todosCount[10], remaindersCount[10]),
+          ChartData("December", journalsCount[11], notebooksCount[11],
+              imagesCount[11], todosCount[11], remaindersCount[11]),
+        ];
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    _db = AppDb();
+    buildChart();
+    super.initState();
+  }
+
+  List<int> journalsCount = [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ];
+  List<int> notebooksCount = [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ];
+  List<int> imagesCount = [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ];
+  List<int> todosCount = [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ];
+  List<int> remaindersCount = [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ];
+
+  List<ChartData> chartData = <ChartData>[
+    // ChartData("January", journalsCount[0], notebooksCount[0], imagesCount[0],
+    //     todosCount[0], remaindersCount[0]),
+    // ChartData("February", journalsCount[1], notebooksCount[1], imagesCount[1],
+    //     todosCount[1], remaindersCount[1]),
+    // ChartData("March", journalsCount[2], notebooksCount[2], imagesCount[2],
+    //     todosCount[2], remaindersCount[2]),
+    // ChartData("April", journalsCount[3], notebooksCount[3], imagesCount[3],
+    //     todosCount[3], remaindersCount[3]),
+    // ChartData("May", journalsCount[4], notebooksCount[4], imagesCount[4],
+    //     todosCount[4], remaindersCount[4]),
+    // ChartData("June", journalsCount[5], notebooksCount[5], imagesCount[5],
+    //     todosCount[5], remaindersCount[5]),
+    // ChartData("July", journalsCount[6], notebooksCount[6], imagesCount[6],
+    //     todosCount[6], remaindersCount[6]),
+    // ChartData("August", journalsCount[7], notebooksCount[7], imagesCount[7],
+    //     todosCount[7], remaindersCount[7]),
+    // ChartData("Sept", journalsCount[8], notebooksCount[8], imagesCount[8],
+    //     todosCount[8], remaindersCount[8]),
+    // ChartData("October", journalsCount[9], notebooksCount[9], imagesCount[9],
+    //     todosCount[9], remaindersCount[9]),
+    // ChartData("November", journalsCount[10], notebooksCount[10],
+    //     imagesCount[10], todosCount[10], remaindersCount[10]),
+    // ChartData("December", journalsCount[11], notebooksCount[11],
+    //     imagesCount[11], todosCount[11], remaindersCount[11]),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    final List<ChartData> chartData = <ChartData>[
-      ChartData("January", 10, 5, 3, 12, 2),
-      ChartData("February", 0, 1, 3, 1, 2),
-      ChartData("March", 10, 5, 3, 12, 2),
-      ChartData("April", 5, 2, 1, 0, 1),
-      ChartData("May", 10, 5, 3, 12, 2),
-      ChartData("June", 10, 5, 3, 12, 2),
-      ChartData("July", 3, 6, 3, 4, 6),
-      ChartData("August", 3, 6, 3, 4, 6),
-      ChartData("Sept", 3, 6, 3, 4, 6),
-      ChartData("October", 2, 2, 2, 2, 2),
-      ChartData("November", 15, 12, 9, 11, 8),
-      ChartData("December", 15, 12, 9, 11, 8),
-    ];
+    // List<ChartData> chartData = <ChartData>[
+    //   ChartData("January", journalsCount[0], notebooksCount[0], imagesCount[0],
+    //       todosCount[0], remaindersCount[0]),
+    //   ChartData("February", journalsCount[1], notebooksCount[1], imagesCount[1],
+    //       todosCount[1], remaindersCount[1]),
+    //   ChartData("March", journalsCount[2], notebooksCount[2], imagesCount[2],
+    //       todosCount[2], remaindersCount[2]),
+    //   ChartData("April", journalsCount[3], notebooksCount[3], imagesCount[3],
+    //       todosCount[3], remaindersCount[3]),
+    //   ChartData("May", journalsCount[4], notebooksCount[4], imagesCount[4],
+    //       todosCount[4], remaindersCount[4]),
+    //   ChartData("June", journalsCount[5], notebooksCount[5], imagesCount[5],
+    //       todosCount[5], remaindersCount[5]),
+    //   ChartData("July", journalsCount[6], notebooksCount[6], imagesCount[6],
+    //       todosCount[6], remaindersCount[6]),
+    //   ChartData("August", journalsCount[7], notebooksCount[7], imagesCount[7],
+    //       todosCount[7], remaindersCount[7]),
+    //   ChartData("Sept", journalsCount[8], notebooksCount[8], imagesCount[8],
+    //       todosCount[8], remaindersCount[8]),
+    //   ChartData("October", journalsCount[9], notebooksCount[9], imagesCount[9],
+    //       todosCount[9], remaindersCount[9]),
+    //   ChartData("November", journalsCount[10], notebooksCount[10],
+    //       imagesCount[10], todosCount[10], remaindersCount[10]),
+    //   ChartData("December", journalsCount[11], notebooksCount[11],
+    //       imagesCount[11], todosCount[11], remaindersCount[11]),
+    // ];
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home screen"),
@@ -47,10 +330,10 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             height: MediaQuery.of(context).size.height * 0.42,
             width: MediaQuery.of(context).size.width * 0.9,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color(0xff000814),
-              borderRadius: const BorderRadius.all(Radius.circular(25)),
-              boxShadow: const [
+              borderRadius: BorderRadius.all(Radius.circular(25)),
+              boxShadow: [
                 BoxShadow(
                   color: Colors.grey,
                   offset: Offset(0.0, 1.0), //(x,y)
@@ -61,9 +344,9 @@ class HomeScreen extends StatelessWidget {
             child: SfCartesianChart(
                 plotAreaBorderWidth: 0,
                 enableAxisAnimation: true,
-                margin: EdgeInsets.all(16),
+                margin: const EdgeInsets.all(16),
                 primaryXAxis: CategoryAxis(
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     color: Color(0xffc7f9cc),
                     letterSpacing: 0.75,
                   ),
@@ -80,7 +363,7 @@ class HomeScreen extends StatelessWidget {
                   Color(0xffffccd5), //3
                 ],
                 primaryYAxis: NumericAxis(
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       color: Color(0xffc7f9cc),
                       letterSpacing: 0.75,
                     ),
@@ -89,14 +372,14 @@ class HomeScreen extends StatelessWidget {
                 legend: Legend(
                     isVisible: true,
                     position: LegendPosition.bottom,
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     )),
                 title: ChartTitle(
                     text: "Overview",
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                       color: Colors.white,
                     )),
                 series: <ChartSeries>[

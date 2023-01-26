@@ -134,6 +134,11 @@ class AppDb extends _$AppDb {
         .get();
   }
 
+  Future<List<MyImage>> getImageByUserId(int userId) async {
+    return await (select(myImages)..where((tbl) => tbl.userId.equals(userId)))
+        .get();
+  }
+
   // Create MyImage
   Future<int> insertImage(MyImagesCompanion entity) async {
     return await into(myImages).insert(entity);
