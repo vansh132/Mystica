@@ -58,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 'assets/images/image2.jpg',
               ),
               fit: BoxFit.cover,
+              filterQuality: FilterQuality.high,
             ),
           ),
           padding: const EdgeInsets.all(24),
@@ -284,10 +285,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 150,
                         height: 100,
                         decoration: const BoxDecoration(
-                            image: DecorationImage(
-                          image: AssetImage('assets/icons.png'),
-                          fit: BoxFit.cover,
-                        )),
+                          // color: Colors.red,
+                          image: DecorationImage(
+                            image: AssetImage('assets/icons.png'),
+                            // fit: BoxFit.cover,
+                            filterQuality: FilterQuality.high,
+                          ),
+                        ),
+                        // child: Image.asset(
+                        //   "assets/icons.png",
+                        //   fit: BoxFit.cover,
+                        // ),
                       ),
                       const SizedBox(
                         height: 16,

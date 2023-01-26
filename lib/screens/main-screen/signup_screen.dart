@@ -257,13 +257,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Container(
                         width: 150,
                         height: 100,
-                        color: Colors.white,
-                        child: Text("Camera image"),
-                        /* decoration: const BoxDecoration(
+                        // color: Colors.white,
+                        // child: Text("Camera image"),
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage("assets/camera.png"),
                           ),
-                        ), */
+                        ),
                       ),
                       const SizedBox(
                         height: 16,
