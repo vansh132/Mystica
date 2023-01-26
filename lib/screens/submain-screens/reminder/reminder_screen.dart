@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
+import 'package:mytica/screens/main-screen/login_screen.dart';
 import 'package:mytica/widgets/Items/add_reminder.dart';
 import 'package:mytica/widgets/Items/reminder_item.dart';
 import 'package:mytica/widgets/navigation.dart';
@@ -101,8 +102,17 @@ class _ReminderScreenState extends State<ReminderScreen> {
                         "Log out",
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: () {
-                        print("Log out ");
+                      onPressed: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        final isUsernameRemoved =
+                            await prefs.remove('username');
+                        final isUserIdRemoved = await prefs.remove('userId');
+                        final isUserProfileUrlRemoved =
+                            await prefs.remove('userProfileUrl');
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        Navigator.of(context)
+                            .pushReplacementNamed(LoginScreen.routeName);
                       },
                     ),
                     const SizedBox(

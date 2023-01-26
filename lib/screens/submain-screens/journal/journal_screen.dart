@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
+import 'package:mytica/screens/main-screen/login_screen.dart';
 import 'package:mytica/screens/submain-screens/journal/create_journal_screen.dart';
 import 'package:mytica/widgets/Items/journal_item.dart';
 import 'package:mytica/widgets/navigation.dart';
@@ -61,8 +62,17 @@ class _JournalScreenState extends State<JournalScreen> {
                         "Log out",
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: () {
-                        print("Log out ");
+                      onPressed: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        final isUsernameRemoved =
+                            await prefs.remove('username');
+                        final isUserIdRemoved = await prefs.remove('userId');
+                        final isUserProfileUrlRemoved =
+                            await prefs.remove('userProfileUrl');
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        Navigator.of(context)
+                            .pushReplacementNamed(LoginScreen.routeName);
                       },
                     ),
                     const SizedBox(
@@ -94,7 +104,7 @@ class _JournalScreenState extends State<JournalScreen> {
           }
 
           if (journals != null) {
-            print(journals);
+            // print(journals);
             return Container(
               width: double.infinity,
               height: double.infinity,
