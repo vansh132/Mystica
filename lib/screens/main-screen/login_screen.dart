@@ -197,8 +197,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                             // print(user);
                                             // print(username + " " + password);
                                             _db.close();
-                                            Navigator.of(context).pushNamed(
-                                                HomeScreen.routeName);
+                                            Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    HomeScreen.routeName);
                                           } else {
                                             showPasswordIncorrectDialogBox(
                                                 context);
