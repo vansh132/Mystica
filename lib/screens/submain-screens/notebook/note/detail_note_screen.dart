@@ -14,8 +14,10 @@ class DetailNoteScreen extends StatefulWidget {
 class _DetailNoteScreenState extends State<DetailNoteScreen> {
   @override
   Widget build(BuildContext context) {
-    final note = ModalRoute.of(context)?.settings.arguments as Note;
-
+    final arguments =
+        ModalRoute.of(context)?.settings.arguments as List<Object>;
+    final note = arguments[0] as Note;
+    final color = arguments[1] as Color;
     return Scaffold(
         appBar: AppBar(
           title: const Center(child: Text("Detail Note")),
@@ -49,7 +51,7 @@ class _DetailNoteScreenState extends State<DetailNoteScreen> {
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          color: Colors.white,
+          color: color,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
