@@ -73,68 +73,93 @@ class _Edit_NoteScreenState extends State<Edit_NoteScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Edit Note")),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: Row(
-                  children: [
-                    TextButton(
-                      child: const Text(
-                        "Log out",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        print("Log out ");
-                      },
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    const Icon(Icons.logout_rounded),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                  ],
-                ),
-              )),
-        ],
       ),
-      body: Center(
-        child: Container(
-          width: 500,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextFormField(
-                  controller: _titleController,
-                  decoration: InputDecoration(
-                    label: Text("Title"),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              colors: [Color(0xffADD8FF), Color(0xffEBF5FF)],
+              stops: [0.4, 0.7],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 500,
+              height: 500,
+              padding: const EdgeInsets.all(32),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  Color(0xffEBF5FF),
+                  Color(0xffADD8FF),
+                ], stops: [
+                  0.4,
+                  0.7
+                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    offset: Offset(0.0, 1.0),
+                    blurRadius: 4.0,
                   ),
-                ),
-                TextFormField(
-                  controller: _descriptionController,
-                  decoration: InputDecoration(
-                    label: Text("Description"),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextFormField(
+                    controller: _titleController,
+                    decoration: InputDecoration(
+                      label: Text("Title"),
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        letterSpacing: 0.24,
+                      ),
+                    ),
                   ),
-                ),
-                TextFormField(
-                  controller: _tagController,
-                  decoration: InputDecoration(
-                    label: Text("Tag"),
+                  TextFormField(
+                    controller: _descriptionController,
+                    decoration: InputDecoration(
+                      label: Text("Description"),
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        letterSpacing: 0.24,
+                      ),
+                    ),
+                    maxLines: 4,
                   ),
-                ),
-                SizedBox(
-                  height: 24,
-                ),
-                ElevatedButton(
-                  onPressed: _update,
-                  child: Text("Update"),
-                )
-              ],
+                  TextFormField(
+                    controller: _tagController,
+                    decoration: InputDecoration(
+                      label: Text("Tag"),
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        letterSpacing: 0.24,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  ElevatedButton(
+                    onPressed: _update,
+                    child: Text("Update"),
+                  )
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

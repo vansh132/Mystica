@@ -141,7 +141,7 @@ class _EditNotebookScreenState extends State<EditNotebookScreen> {
                     ],
                   ),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextFormField(
                         controller: _nameController,
@@ -167,6 +167,7 @@ class _EditNotebookScreenState extends State<EditNotebookScreen> {
                             letterSpacing: 0.24,
                           ),
                         ),
+                        maxLines: 4,
                       ),
                       const SizedBox(
                         height: 15,

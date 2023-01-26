@@ -61,9 +61,12 @@ class _NoteItemState extends State<NoteItem> {
                     child: Text(
                       widget.note.title,
                       style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+                          fontSize: 24,
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.bold,
+                          // fontFamily: 'PatrickHand',
+                          fontFamily: 'NotoSerifGeorgian',
+                          color: Color(0xff001524)),
                     ),
                   ),
                 ),
@@ -110,9 +113,11 @@ class _NoteItemState extends State<NoteItem> {
             ),
             Text(
               widget.note.body,
+              overflow: TextOverflow.fade,
               style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
+                fontSize: 20,
+                letterSpacing: 1,
+                // fontFamily: 'NotoSerifGeorgian',
               ),
             ),
             Expanded(

@@ -69,32 +69,6 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Create Note")),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: Row(
-                  children: [
-                    TextButton(
-                      child: const Text(
-                        "Log out",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        print("Log out ");
-                      },
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    const Icon(Icons.logout_rounded),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                  ],
-                ),
-              )),
-        ],
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -115,44 +89,87 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 550,
-              child: TextField(
-                decoration: const InputDecoration(labelText: 'Name'),
-                controller: _nameController,
-                onSubmitted: (_) => _addNote(),
+            Container(
+              width: 500,
+              height: 500,
+              padding: const EdgeInsets.all(32),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  Color(0xffEBF5FF),
+                  Color(0xffADD8FF),
+                ], stops: [
+                  0.4,
+                  0.7
+                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                    bottomLeft: Radius.circular(24),
+                    bottomRight: Radius.circular(24)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    offset: Offset(0.0, 1.0),
+                    blurRadius: 4.0,
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                    decoration: const InputDecoration(
+                      labelText: 'Name',
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        letterSpacing: 0.24,
+                      ),
+                    ),
+                    controller: _nameController,
+                    onSubmitted: (_) => _addNote(),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextField(
+                    decoration: const InputDecoration(
+                      labelText: 'Description',
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        letterSpacing: 0.24,
+                      ),
+                    ),
+                    maxLines: 4,
+                    controller: _descriptionController,
+                    onSubmitted: (_) => _addNote(),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  TextField(
+                    decoration: const InputDecoration(
+                      labelText: 'Tag',
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        letterSpacing: 0.24,
+                      ),
+                    ),
+                    controller: _tagController,
+                    onSubmitted: (_) => _addNote(),
+                  ),
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  ElevatedButton(
+                    onPressed: _addNote,
+                    child: const Text("Add Note"),
+                  )
+                ],
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            SizedBox(
-              width: 550,
-              child: TextField(
-                decoration: const InputDecoration(labelText: 'Description'),
-                maxLines: 4,
-                controller: _descriptionController,
-                onSubmitted: (_) => _addNote(),
-              ),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            SizedBox(
-              width: 550,
-              child: TextField(
-                decoration: const InputDecoration(labelText: 'Tag'),
-                controller: _tagController,
-                onSubmitted: (_) => _addNote(),
-              ),
-            ),
-            const SizedBox(
-              height: 35,
-            ),
-            ElevatedButton(
-              onPressed: _addNote,
-              child: const Text("Add Note"),
-            )
           ],
         ),
       ),

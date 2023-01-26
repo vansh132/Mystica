@@ -90,8 +90,8 @@ class _NoteScreenState extends State<NoteScreen> {
                       itemCount: notes.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 10 / 9,
+                              crossAxisCount: 4,
+                              childAspectRatio: 6 / 6,
                               crossAxisSpacing: 45,
                               mainAxisSpacing: 35),
                       itemBuilder: (context, index) =>
