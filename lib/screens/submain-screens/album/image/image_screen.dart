@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mytica/data/local/db/app_db.dart';
@@ -19,12 +18,39 @@ class ImageScreen extends StatefulWidget {
 class _ImageScreenState extends State<ImageScreen> {
   late AppDb _db;
 
+  int userId = 0;
+  String username = "";
+  String userProfileUrl = "assets/profile.png";
+  String fullName = "";
+
+  void getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? id = prefs.getInt('userId');
+    final uname = prefs.getString('username');
+    final fName = prefs.getString('fullName');
+    final url = prefs.getString('userProfileUrl');
+    if (id != null && uname != null && url != null && fName != null) {
+      setState(() {
+        userId = id;
+        username = uname;
+        userProfileUrl = url;
+        fullName = fName;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getUserId();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     _db = AppDb();
     //Remark: stored albumId through navigation
     final album = ModalRoute.of(context)!.settings.arguments as Album;
-    print(album);
+    // print(album);
     //To-do: Retrieve the album name
     //To-do: Retrieve the images of an album
 
@@ -38,32 +64,6 @@ class _ImageScreenState extends State<ImageScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Images")),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: Row(
-                  children: [
-                    TextButton(
-                      child: const Text(
-                        "Log out",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        print("Log out ");
-                      },
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    const Icon(Icons.logout_rounded),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                  ],
-                ),
-              )),
-        ],
       ),
       body: FutureBuilder<List<MyImage>>(
         future: _db.getImageByAlbumId(album.id),
@@ -178,8 +178,8 @@ class _ImageScreenState extends State<ImageScreen> {
                                         child: CircleAvatar(
                                           radius: 30,
                                           // backgroundColor: Colors.white,
-                                          // backgroundImage: FileImage(File(
-                                          //     "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_3.jpg")),
+                                          backgroundImage:
+                                              AssetImage(userProfileUrl),
                                         ),
                                       ),
                                       Expanded(
@@ -190,7 +190,7 @@ class _ImageScreenState extends State<ImageScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "Vansh Shah",
+                                              fullName,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -202,7 +202,7 @@ class _ImageScreenState extends State<ImageScreen> {
                                               height: 8,
                                             ),
                                             Text(
-                                              "vansh132",
+                                              username,
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 letterSpacing: 0.5,

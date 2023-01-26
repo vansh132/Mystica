@@ -41,8 +41,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Future<bool> checkIfUserExistByUsername(String username) async {
     bool userExists = false;
-    //To-DO (Profile - image path)
-    String profileImagePath = "assets/profile.png";
     final users = await _db.getUsers();
     users.forEach((user) {
       if (user.username == username) {
@@ -190,14 +188,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   } else {
                                     // User Does Not Exist. So proceed with the user creation
                                     final userEntity = UsersCompanion(
-                                        username: drift.Value(
-                                            _usernameSignupEditController.text
-                                                .toLowerCase()),
-                                        fullname: drift.Value(
-                                            _fullnameSignupEditController.text),
-                                        password: drift.Value(
-                                            _passwrodSignupEditController
-                                                .text));
+                                      username: drift.Value(
+                                          _usernameSignupEditController.text
+                                              .toLowerCase()),
+                                      fullname: drift.Value(
+                                          _fullnameSignupEditController.text),
+                                      password: drift.Value(
+                                          _passwrodSignupEditController.text),
+                                      userProfileUrl:
+                                          drift.Value("assets/profile.png"),
+                                    );
                                     _db.insertUser(userEntity).then((value) => {
                                           value != 0
                                               ? Navigator.of(context)
