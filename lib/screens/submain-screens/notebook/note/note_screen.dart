@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/notebook/note/create_note.dart';
 import 'package:mytica/widgets/Items/note_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NoteScreen extends StatefulWidget {
   static const routeName = '/note-screen';
@@ -25,32 +26,6 @@ class _NoteScreenState extends State<NoteScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Notes")),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: Row(
-                  children: [
-                    TextButton(
-                      child: const Text(
-                        "Log out",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        print("Log out ");
-                      },
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    const Icon(Icons.logout_rounded),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                  ],
-                ),
-              )),
-        ],
       ),
       body: FutureBuilder<List<Note>>(
         future: _db.getNoteByNotebookId(notebookId),
