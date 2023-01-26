@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/linearicons_free_icons.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:mytica/screens/submain-screens/album/album_screen.dart';
@@ -8,7 +7,6 @@ import 'package:mytica/screens/submain-screens/notebook/notebook_screen.dart';
 import 'package:mytica/screens/submain-screens/reminder/reminder_screen.dart';
 import 'package:mytica/screens/submain-screens/todo/todo_screen.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/linecons_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -150,29 +148,29 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         chartData = <ChartData>[
           ChartData("January", journalsCount[0], notebooksCount[0],
-              imagesCount[0], todosCount[0], remaindersCount[0]),
+              imagesCount[0], remaindersCount[0]),
           ChartData("February", journalsCount[1], notebooksCount[1],
-              imagesCount[1], todosCount[1], remaindersCount[1]),
+              imagesCount[1], remaindersCount[1]),
           ChartData("March", journalsCount[2], notebooksCount[2],
-              imagesCount[2], todosCount[2], remaindersCount[2]),
+              imagesCount[2], remaindersCount[2]),
           ChartData("April", journalsCount[3], notebooksCount[3],
-              imagesCount[3], todosCount[3], remaindersCount[3]),
+              imagesCount[3], remaindersCount[3]),
           ChartData("May", journalsCount[4], notebooksCount[4], imagesCount[4],
-              todosCount[4], remaindersCount[4]),
+              remaindersCount[4]),
           ChartData("June", journalsCount[5], notebooksCount[5], imagesCount[5],
-              todosCount[5], remaindersCount[5]),
+              remaindersCount[5]),
           ChartData("July", journalsCount[6], notebooksCount[6], imagesCount[6],
-              todosCount[6], remaindersCount[6]),
+              remaindersCount[6]),
           ChartData("August", journalsCount[7], notebooksCount[7],
-              imagesCount[7], todosCount[7], remaindersCount[7]),
+              imagesCount[7], remaindersCount[7]),
           ChartData("Sept", journalsCount[8], notebooksCount[8], imagesCount[8],
-              todosCount[8], remaindersCount[8]),
+              remaindersCount[8]),
           ChartData("October", journalsCount[9], notebooksCount[9],
-              imagesCount[9], todosCount[9], remaindersCount[9]),
+              imagesCount[9], remaindersCount[9]),
           ChartData("November", journalsCount[10], notebooksCount[10],
-              imagesCount[10], todosCount[10], remaindersCount[10]),
+              imagesCount[10], remaindersCount[10]),
           ChartData("December", journalsCount[11], notebooksCount[11],
-              imagesCount[11], todosCount[11], remaindersCount[11]),
+              imagesCount[11], remaindersCount[11]),
         ];
       });
     }
@@ -227,20 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
     0,
     0,
   ];
-  List<int> todosCount = [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-  ];
+
   List<int> remaindersCount = [
     0,
     0,
@@ -256,61 +241,10 @@ class _HomeScreenState extends State<HomeScreen> {
     0,
   ];
 
-  List<ChartData> chartData = <ChartData>[
-    // ChartData("January", journalsCount[0], notebooksCount[0], imagesCount[0],
-    //     todosCount[0], remaindersCount[0]),
-    // ChartData("February", journalsCount[1], notebooksCount[1], imagesCount[1],
-    //     todosCount[1], remaindersCount[1]),
-    // ChartData("March", journalsCount[2], notebooksCount[2], imagesCount[2],
-    //     todosCount[2], remaindersCount[2]),
-    // ChartData("April", journalsCount[3], notebooksCount[3], imagesCount[3],
-    //     todosCount[3], remaindersCount[3]),
-    // ChartData("May", journalsCount[4], notebooksCount[4], imagesCount[4],
-    //     todosCount[4], remaindersCount[4]),
-    // ChartData("June", journalsCount[5], notebooksCount[5], imagesCount[5],
-    //     todosCount[5], remaindersCount[5]),
-    // ChartData("July", journalsCount[6], notebooksCount[6], imagesCount[6],
-    //     todosCount[6], remaindersCount[6]),
-    // ChartData("August", journalsCount[7], notebooksCount[7], imagesCount[7],
-    //     todosCount[7], remaindersCount[7]),
-    // ChartData("Sept", journalsCount[8], notebooksCount[8], imagesCount[8],
-    //     todosCount[8], remaindersCount[8]),
-    // ChartData("October", journalsCount[9], notebooksCount[9], imagesCount[9],
-    //     todosCount[9], remaindersCount[9]),
-    // ChartData("November", journalsCount[10], notebooksCount[10],
-    //     imagesCount[10], todosCount[10], remaindersCount[10]),
-    // ChartData("December", journalsCount[11], notebooksCount[11],
-    //     imagesCount[11], todosCount[11], remaindersCount[11]),
-  ];
+  List<ChartData> chartData = <ChartData>[];
 
   @override
   Widget build(BuildContext context) {
-    // List<ChartData> chartData = <ChartData>[
-    //   ChartData("January", journalsCount[0], notebooksCount[0], imagesCount[0],
-    //       todosCount[0], remaindersCount[0]),
-    //   ChartData("February", journalsCount[1], notebooksCount[1], imagesCount[1],
-    //       todosCount[1], remaindersCount[1]),
-    //   ChartData("March", journalsCount[2], notebooksCount[2], imagesCount[2],
-    //       todosCount[2], remaindersCount[2]),
-    //   ChartData("April", journalsCount[3], notebooksCount[3], imagesCount[3],
-    //       todosCount[3], remaindersCount[3]),
-    //   ChartData("May", journalsCount[4], notebooksCount[4], imagesCount[4],
-    //       todosCount[4], remaindersCount[4]),
-    //   ChartData("June", journalsCount[5], notebooksCount[5], imagesCount[5],
-    //       todosCount[5], remaindersCount[5]),
-    //   ChartData("July", journalsCount[6], notebooksCount[6], imagesCount[6],
-    //       todosCount[6], remaindersCount[6]),
-    //   ChartData("August", journalsCount[7], notebooksCount[7], imagesCount[7],
-    //       todosCount[7], remaindersCount[7]),
-    //   ChartData("Sept", journalsCount[8], notebooksCount[8], imagesCount[8],
-    //       todosCount[8], remaindersCount[8]),
-    //   ChartData("October", journalsCount[9], notebooksCount[9], imagesCount[9],
-    //       todosCount[9], remaindersCount[9]),
-    //   ChartData("November", journalsCount[10], notebooksCount[10],
-    //       imagesCount[10], todosCount[10], remaindersCount[10]),
-    //   ChartData("December", journalsCount[11], notebooksCount[11],
-    //       imagesCount[11], todosCount[11], remaindersCount[11]),
-    // ];
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home screen"),
@@ -398,11 +332,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       name: "Album",
                       xValueMapper: (ChartData data, _) => data.year,
                       yValueMapper: (ChartData data, _) => data.album),
-                  StackedColumn100Series<ChartData, String>(
-                      dataSource: chartData,
-                      name: "To-Do",
-                      xValueMapper: (ChartData data, _) => data.year,
-                      yValueMapper: (ChartData data, _) => data.todo),
                   StackedColumn100Series<ChartData, String>(
                       dataSource: chartData,
                       name: "Reminder",
@@ -654,13 +583,11 @@ class ChartData {
     this.journals,
     this.notebook,
     this.album,
-    this.todo,
     this.reminder,
   );
   final String year;
   final int journals;
   final int notebook;
   final int album;
-  final int todo;
   final int reminder;
 }

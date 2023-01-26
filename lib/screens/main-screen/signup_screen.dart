@@ -41,6 +41,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Future<bool> checkIfUserExistByUsername(String username) async {
     bool userExists = false;
+    //To-DO (Profile - image path)
+    String profileImagePath = "assets/profile.png";
     final users = await _db.getUsers();
     users.forEach((user) {
       if (user.username == username) {
