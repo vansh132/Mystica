@@ -145,6 +145,27 @@ class _ReminderScreenState extends State<ReminderScreen> {
 
           if (remainderList != null) {
             _db.close();
+
+            double janToMarch = 0, aprToJune = 0, julyToSept = 0, octToDec = 0;
+            remainderList.forEach((r) {
+              if (r.deadline.month <= 3) {
+                janToMarch = janToMarch + 1;
+              } else if (r.deadline.month <= 6) {
+                aprToJune = aprToJune + 1;
+              } else if (r.deadline.month <= 9) {
+                julyToSept = julyToSept + 1;
+              } else if (r.deadline.month <= 12) {
+                octToDec = octToDec + 1;
+              }
+            });
+
+            dataMap = {
+              "Jan-Mar": janToMarch,
+              "Apr-Jun": aprToJune,
+              "July-Sept": julyToSept,
+              "Oct-Dec": octToDec,
+            };
+
             return Container(
               width: double.infinity,
               height: double.infinity,

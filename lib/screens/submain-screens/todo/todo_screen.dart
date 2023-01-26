@@ -41,6 +41,11 @@ class _TodoScreenState extends State<TodoScreen> {
     }
   }
 
+  Map<String, double> dataMap = {
+    "Completed": 5,
+    "Not-Completed": 3,
+  };
+
   @override
   Widget build(BuildContext context) {
     _db = AppDb();
@@ -79,11 +84,6 @@ class _TodoScreenState extends State<TodoScreen> {
             );
           });
     }
-
-    Map<String, double> dataMap = {
-      "Completed": 5,
-      "In Completed": 3,
-    };
 
     return Scaffold(
       appBar: AppBar(
@@ -142,6 +142,21 @@ class _TodoScreenState extends State<TodoScreen> {
 
           if (todos != null) {
             _db.close();
+
+            double completed = 0, notCompleted = 0;
+            todos.forEach((t) {
+              if (t.isCompleted == 1) {
+                completed = completed + 1;
+              } else if (t.isCompleted == 0) {
+                notCompleted = notCompleted + 1;
+              }
+            });
+
+            dataMap = {
+              "Completed": completed,
+              "Not-Completed": notCompleted,
+            };
+
             return Container(
               width: double.infinity,
               height: double.infinity,

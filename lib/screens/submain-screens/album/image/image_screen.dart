@@ -417,7 +417,7 @@ class _ImageScreenState extends State<ImageScreen> {
                                 width: 4,
                               ),
                               Text(
-                                "10",
+                                myImages.length.toString(),
                                 style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
