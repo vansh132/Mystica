@@ -71,8 +71,7 @@ class _JournalScreenState extends State<JournalScreen> {
                             await prefs.remove('userProfileUrl');
                         Navigator.of(context).pop();
                         Navigator.of(context).pop();
-                        Navigator.of(context)
-                            .pushReplacementNamed(LoginScreen.routeName);
+                        Navigator.of(context).pushNamed(LoginScreen.routeName);
                       },
                     ),
                     const SizedBox(
