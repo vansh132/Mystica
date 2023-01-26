@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:mytica/widgets/navigation.dart';
 import 'package:file_picker/file_picker.dart';
@@ -16,6 +16,33 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  int userId = 0;
+  String username = "";
+  String userProfileUrl = "assets/profile.png";
+  String fullName = "";
+
+  void getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? id = prefs.getInt('userId');
+    final uname = prefs.getString('username');
+    final fName = prefs.getString('fullName');
+    final url = prefs.getString('userProfileUrl');
+    if (id != null && uname != null && url != null && fName != null) {
+      setState(() {
+        userId = id;
+        username = uname;
+        userProfileUrl = url;
+        fullName = fName;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getUserId();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     void _profileImage() {
@@ -184,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                "User name: ",
+                                "Username: ",
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
@@ -195,7 +222,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                "vansh132 ",
+                                username,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   fontSize: 20,
@@ -231,7 +258,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                "Vansh Shah",
+                                fullName,
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,

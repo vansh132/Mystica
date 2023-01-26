@@ -173,12 +173,12 @@ class _HomeScreenState extends State<HomeScreen> {
               imagesCount[11], remaindersCount[11]),
         ];
       });
+      _db.close();
     }
   }
 
   @override
   void initState() {
-    _db = AppDb();
     buildChart();
     super.initState();
   }
@@ -245,9 +245,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _db = AppDb();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home screen"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                buildChart();
+              },
+              icon: const Icon(Icons.refresh))
+        ],
       ),
       body: Container(
         decoration: const BoxDecoration(

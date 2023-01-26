@@ -56,6 +56,16 @@ class AppDb extends _$AppDb {
     return await into(users).insert(entity);
   }
 
+// Get User
+  Future<User> getUserById(int id) async {
+    return await (select(users)..where((tbl) => tbl.id.equals(id))).getSingle();
+  }
+
+// Update User
+  Future<bool> updateUser(UsersCompanion entity) async {
+    return await update(users).replace(entity);
+  }
+
   // Journals
   // Get All Journals
   Future<List<Journal>> getJournals() async {
