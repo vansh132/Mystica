@@ -27,11 +27,11 @@ class _AlbumItemState extends State<AlbumItem> {
         child: Column(
           children: [
             Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(
+              decoration: const BoxDecoration(
+                borderRadius:  BorderRadius.all(
                   Radius.circular(24),
                 ),
-                boxShadow: const [
+                boxShadow:  [
                   BoxShadow(
                     color: Colors.black54,
                     offset: Offset(0.0, 2.0), //(x,y)
