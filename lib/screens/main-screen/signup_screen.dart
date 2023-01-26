@@ -14,6 +14,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late AppDb _db;
 
   @override
+  void didChangeDependencies() {
+    precacheImage(AssetImage("assets/images/image3.jpg"), context);
+    precacheImage(AssetImage("assets/camera.png"), context);
+    super.didChangeDependencies();
+  }
+
+  @override
   void initState() {
     super.initState();
     _db = AppDb();
