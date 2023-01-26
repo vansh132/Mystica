@@ -101,6 +101,15 @@ flutter:
     - family: KronaOne
       fonts:
         - asset: assets/fonts/KronaOne-Regular.ttf
+    - family: PatrickHand
+      fonts:
+        - asset: assets/fonts/PatrickHand-Regular.ttf
+          weight: 400
+    - family: NotoSerifGeorgian
+      fonts:
+        - asset: assets/fonts/NotoSerifGeorgian-Regular.ttf
+        - asset: assets/fonts/NotoSerifGeorgian-SemiBold.ttf
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

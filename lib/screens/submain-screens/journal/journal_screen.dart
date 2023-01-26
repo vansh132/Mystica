@@ -258,17 +258,32 @@ class _JournalScreenState extends State<JournalScreen> {
                   Container(
                     padding: const EdgeInsets.all(32),
                     width: MediaQuery.of(context).size.width * 0.7,
-                    child: GridView.builder(
-                      itemCount: journals.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              childAspectRatio: 4.5 / 3,
-                              crossAxisSpacing: 40,
-                              mainAxisSpacing: 35),
-                      itemBuilder: (context, index) =>
-                          JournalItem(journals[index]),
-                    ),
+                    child: journals.isEmpty
+                        ? Container(
+                            // color: Colors.red,
+                            child: Center(
+                              child: Text(
+                                "Write Your First Journal 📝",
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  shadows: [Shadow(color: Colors.black)],
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          )
+                        : GridView.builder(
+                            itemCount: journals.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    childAspectRatio: 4.5 / 3,
+                                    crossAxisSpacing: 40,
+                                    mainAxisSpacing: 35),
+                            itemBuilder: (context, index) =>
+                                JournalItem(journals[index]),
+                          ),
                   ),
                   const VerticalDivider(
                     width: 4,

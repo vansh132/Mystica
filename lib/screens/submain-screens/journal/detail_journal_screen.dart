@@ -19,32 +19,6 @@ class _DetailJournalScreenState extends State<DetailJournalScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Center(child: Text("Detail Journal")),
-          actions: [
-            Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Center(
-                  child: Row(
-                    children: [
-                      TextButton(
-                        child: const Text(
-                          "Log out",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () {
-                          print("Log out ");
-                        },
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      const Icon(Icons.logout_rounded),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                    ],
-                  ),
-                )),
-          ],
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -55,25 +29,33 @@ class _DetailJournalScreenState extends State<DetailJournalScreen> {
             children: [
               Container(
                   decoration: const BoxDecoration(
-                    color: Colors.white,
+                    //color: Color(0xffdee2e6),
+                    color: Colors.white70,
                     borderRadius: BorderRadius.all(Radius.circular(25)),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black,
                         offset: Offset(0.0, 1.0), //(x,y)
-                        blurRadius: 6.0,
+                        blurRadius: 0.5,
                       ),
                     ],
                   ),
                   margin: const EdgeInsets.all(32),
                   padding: const EdgeInsets.all(16),
                   // color: Colors.red,
-                  width: MediaQuery.of(context).size.width * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.84,
                   child: Column(
                     children: [
                       Text(
                         journal.title,
-                        style: const TextStyle(fontSize: 56),
+                        style: const TextStyle(
+                            fontSize: 40,
+                            letterSpacing: 1,
+                            fontWeight: FontWeight.bold,
+                            // fontFamily: 'PatrickHand',
+                            fontFamily: 'NotoSerifGeorgian',
+                            color: Color(0xff001524)),
                       ),
                       const SizedBox(
                         height: 14,
@@ -85,45 +67,67 @@ class _DetailJournalScreenState extends State<DetailJournalScreen> {
                       const SizedBox(
                         height: 14,
                       ),
-                      Text(
-                        journal.body,
-                        style: const TextStyle(fontSize: 40),
+                      Expanded(
+                        flex: 26,
+                        child: SingleChildScrollView(
+                          child: Text(
+                            journal.body,
+                            overflow: TextOverflow.fade,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              letterSpacing: 1,
+                              // fontFamily: 'NotoSerifGeorgian',
+                            ),
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: 16,
                       ),
                       const Divider(
                         height: 2,
+                        color: Colors.transparent,
                       ),
                       const SizedBox(
                         height: 16,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            journal.tag,
-                            style: const TextStyle(fontWeight: FontWeight.w900),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                DateFormat('yyyy-MM-dd')
-                                    .format(journal.createdAt),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w900),
-                              ),
-                              SizedBox(
-                                width: 16,
-                              ),
-                              Text(
-                                DateFormat.Hms().format(journal.createdAt),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w900),
-                              )
-                            ],
-                          ),
-                        ],
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  journal.tag,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(journal.createdAt),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w900),
+                                    ),
+                                    SizedBox(
+                                      width: 16,
+                                    ),
+                                    Text(
+                                      DateFormat.Hms()
+                                          .format(journal.createdAt),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w900),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   )),

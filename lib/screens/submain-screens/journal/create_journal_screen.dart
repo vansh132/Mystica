@@ -42,14 +42,66 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
       final enteredJournalDescription = _journalDescriptionController.text;
       final enteredJournalTag = _journalTagController.text;
 
-      if (enteredJournalTitle.isEmpty ||
-          enteredJournalDescription.length < 10) {
+      if (enteredJournalTitle.isEmpty &&
+          enteredJournalDescription.isEmpty &&
+          enteredJournalTag.isEmpty) {
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text("Warning"),
+            content: Row(
+              children: [
+                Icon(Icons.warning_rounded),
+                SizedBox(
+                  width: 8,
+                ),
+                Text("Enter details")
+              ],
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: const Text("Okay"),
+              ),
+            ],
+          ),
+        );
+        return;
+        // Navigator.of(context).pushReplacementNamed(AlbumScreen.routeName);
+      }
+
+      if (enteredJournalTitle.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            "Enter Title",
+          ),
+          duration: Duration(seconds: 4),
+        ));
+        return;
+        // Navigator.of(context).pushReplacementNamed(AlbumScreen.routeName);
+      }
+
+      if (enteredJournalDescription.length < 10) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
             "Minimum 10 characters of description",
           ),
           duration: Duration(seconds: 4),
         ));
+        return;
+        // Navigator.of(context).pushReplacementNamed(AlbumScreen.routeName);
+      }
+      print("tag (vansh) - " + enteredJournalTag.startsWith("#", 0).toString());
+      if (!enteredJournalTag.startsWith("#", 0)) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            "Tag must start with #",
+          ),
+          duration: Duration(seconds: 4),
+        ));
+        return;
         // Navigator.of(context).pushReplacementNamed(AlbumScreen.routeName);
       }
 
