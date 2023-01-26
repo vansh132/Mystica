@@ -7,21 +7,25 @@ import 'package:mytica/screens/submain-screens/notebook/note/note_screen.dart';
 
 class NoteItem extends StatefulWidget {
   Note note;
-
-  NoteItem(this.note);
+  Color color;
+  NoteItem(this.note, this.color);
 
   @override
   State<NoteItem> createState() => _NoteItemState();
 }
 
 class _NoteItemState extends State<NoteItem> {
+    Color c = Color(0xffe63946);
+
   //To-Do: delele the note
   void _deleteNote() async {
     final db = AppDb();
     await db.deleteNote(widget.note.id);
     await db.close().whenComplete(() => {
-          Navigator.of(context).pushReplacementNamed(NoteScreen.routeName,
-              arguments: widget.note.notebookId)
+      Navigator.of(context).pushReplacementNamed(
+          NoteScreen.routeName,
+          arguments: [widget.note.notebookId, c],
+        )
         });
   }
 
@@ -38,7 +42,7 @@ class _NoteItemState extends State<NoteItem> {
         margin: const EdgeInsets.all(6.0),
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.greenAccent,
+          color: widget.color,
           borderRadius: const BorderRadius.all(Radius.circular(25)),
           boxShadow: const [
             BoxShadow(

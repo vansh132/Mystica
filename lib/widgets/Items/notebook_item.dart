@@ -62,7 +62,7 @@ class _NotebookItemState extends State<NotebookItem> {
       onTap: () {
         Navigator.of(context).pushNamed(
           NoteScreen.routeName,
-          arguments: widget.notebook.id,
+          arguments: [widget.notebook.id, color],
         );
       },
       child: Container(

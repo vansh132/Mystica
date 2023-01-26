@@ -32,6 +32,9 @@ class _Edit_NoteScreenState extends State<Edit_NoteScreen> {
     final body = _descriptionController.text;
     final tag = _tagController.text;
 
+    //color
+    Color c = Color(0xffe63946);
+
     if (title.isNotEmpty && body.isNotEmpty && tag.isNotEmpty) {
       final noteEntity = NotesCompanion(
           id: drift.Value(note.id),
@@ -51,7 +54,7 @@ class _Edit_NoteScreenState extends State<Edit_NoteScreen> {
         Navigator.of(context).pop();
         Navigator.of(context).pushReplacementNamed(
           NoteScreen.routeName,
-          arguments: note.notebookId,
+          arguments: [note.notebookId, c],
         );
       } else {
         showNotebookNotAddedDialogBox(context);

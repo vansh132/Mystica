@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/notebook/note/create_note.dart';
-import 'package:mytica/screens/submain-screens/notebook/note/detail_note_screen.dart';
 import 'package:mytica/widgets/Items/note_item.dart';
 
 class NoteScreen extends StatefulWidget {
@@ -18,7 +17,10 @@ class _NoteScreenState extends State<NoteScreen> {
   @override
   Widget build(BuildContext context) {
     _db = AppDb();
-    final notebookId = ModalRoute.of(context)?.settings.arguments as int;
+    final arguments =
+        ModalRoute.of(context)?.settings.arguments as List<Object>;
+    final notebookId = arguments[0] as int;
+    final color = arguments[1] as Color;
 
     return Scaffold(
       appBar: AppBar(
@@ -66,6 +68,32 @@ class _NoteScreenState extends State<NoteScreen> {
             );
           }
 
+          if (notes != null && notes.isEmpty) {
+            return Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
+                  stops: [0.4, 0.7],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  "\"The only difference between success and failure is the ability to take action.\"",
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    shadows: [Shadow(color: Colors.black)],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          }
+
           if (notes != null) {
             _db.close();
             return Container(
@@ -82,21 +110,18 @@ class _NoteScreenState extends State<NoteScreen> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(32),
-                    width: MediaQuery.of(context).size.width * 0.8255,
+                    width: MediaQuery.of(context).size.width,
                     child: GridView.builder(
                       itemCount: notes.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              childAspectRatio: 2 / 2,
+                              childAspectRatio: 10 / 9,
                               crossAxisSpacing: 45,
                               mainAxisSpacing: 35),
-                      itemBuilder: (context, index) => NoteItem(notes[index]),
+                      itemBuilder: (context, index) =>
+                          NoteItem(notes[index], color),
                     ),
-                  ),
-                  const VerticalDivider(
-                    width: 4,
-                    color: Colors.grey,
                   ),
                 ],
               ),
