@@ -191,7 +191,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                             await prefs.setString(
                                                 'username', user.username);
                                             await prefs.setString(
-                                                'userProfileUrl', "");
+                                                'userProfileUrl',
+                                                user.userProfileUrl);
                                             // TODO: Implement presistent user login
 
                                             // print(user);

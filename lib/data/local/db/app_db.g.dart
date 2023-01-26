@@ -35,8 +35,15 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   late final GeneratedColumn<String> password = GeneratedColumn<String>(
       'password', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _userProfileUrlMeta =
+      const VerificationMeta('userProfileUrl');
   @override
-  List<GeneratedColumn> get $columns => [id, username, fullname, password];
+  late final GeneratedColumn<String> userProfileUrl = GeneratedColumn<String>(
+      'user_profile_url', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, username, fullname, password, userProfileUrl];
   @override
   String get aliasedName => _alias ?? 'users';
   @override
@@ -67,6 +74,14 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
     } else if (isInserting) {
       context.missing(_passwordMeta);
     }
+    if (data.containsKey('user_profile_url')) {
+      context.handle(
+          _userProfileUrlMeta,
+          userProfileUrl.isAcceptableOrUnknown(
+              data['user_profile_url']!, _userProfileUrlMeta));
+    } else if (isInserting) {
+      context.missing(_userProfileUrlMeta);
+    }
     return context;
   }
 
@@ -84,6 +99,8 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
           .read(DriftSqlType.string, data['${effectivePrefix}fullname'])!,
       password: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}password'])!,
+      userProfileUrl: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}user_profile_url'])!,
     );
   }
 
@@ -98,11 +115,13 @@ class User extends DataClass implements Insertable<User> {
   final String username;
   final String fullname;
   final String password;
+  final String userProfileUrl;
   const User(
       {required this.id,
       required this.username,
       required this.fullname,
-      required this.password});
+      required this.password,
+      required this.userProfileUrl});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -110,6 +129,7 @@ class User extends DataClass implements Insertable<User> {
     map['username'] = Variable<String>(username);
     map['fullname'] = Variable<String>(fullname);
     map['password'] = Variable<String>(password);
+    map['user_profile_url'] = Variable<String>(userProfileUrl);
     return map;
   }
 
@@ -119,6 +139,7 @@ class User extends DataClass implements Insertable<User> {
       username: Value(username),
       fullname: Value(fullname),
       password: Value(password),
+      userProfileUrl: Value(userProfileUrl),
     );
   }
 
@@ -130,6 +151,7 @@ class User extends DataClass implements Insertable<User> {
       username: serializer.fromJson<String>(json['username']),
       fullname: serializer.fromJson<String>(json['fullname']),
       password: serializer.fromJson<String>(json['password']),
+      userProfileUrl: serializer.fromJson<String>(json['userProfileUrl']),
     );
   }
   @override
@@ -140,16 +162,22 @@ class User extends DataClass implements Insertable<User> {
       'username': serializer.toJson<String>(username),
       'fullname': serializer.toJson<String>(fullname),
       'password': serializer.toJson<String>(password),
+      'userProfileUrl': serializer.toJson<String>(userProfileUrl),
     };
   }
 
   User copyWith(
-          {int? id, String? username, String? fullname, String? password}) =>
+          {int? id,
+          String? username,
+          String? fullname,
+          String? password,
+          String? userProfileUrl}) =>
       User(
         id: id ?? this.id,
         username: username ?? this.username,
         fullname: fullname ?? this.fullname,
         password: password ?? this.password,
+        userProfileUrl: userProfileUrl ?? this.userProfileUrl,
       );
   @override
   String toString() {
@@ -157,13 +185,15 @@ class User extends DataClass implements Insertable<User> {
           ..write('id: $id, ')
           ..write('username: $username, ')
           ..write('fullname: $fullname, ')
-          ..write('password: $password')
+          ..write('password: $password, ')
+          ..write('userProfileUrl: $userProfileUrl')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, username, fullname, password);
+  int get hashCode =>
+      Object.hash(id, username, fullname, password, userProfileUrl);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -171,7 +201,8 @@ class User extends DataClass implements Insertable<User> {
           other.id == this.id &&
           other.username == this.username &&
           other.fullname == this.fullname &&
-          other.password == this.password);
+          other.password == this.password &&
+          other.userProfileUrl == this.userProfileUrl);
 }
 
 class UsersCompanion extends UpdateCompanion<User> {
@@ -179,31 +210,37 @@ class UsersCompanion extends UpdateCompanion<User> {
   final Value<String> username;
   final Value<String> fullname;
   final Value<String> password;
+  final Value<String> userProfileUrl;
   const UsersCompanion({
     this.id = const Value.absent(),
     this.username = const Value.absent(),
     this.fullname = const Value.absent(),
     this.password = const Value.absent(),
+    this.userProfileUrl = const Value.absent(),
   });
   UsersCompanion.insert({
     this.id = const Value.absent(),
     required String username,
     required String fullname,
     required String password,
+    required String userProfileUrl,
   })  : username = Value(username),
         fullname = Value(fullname),
-        password = Value(password);
+        password = Value(password),
+        userProfileUrl = Value(userProfileUrl);
   static Insertable<User> custom({
     Expression<int>? id,
     Expression<String>? username,
     Expression<String>? fullname,
     Expression<String>? password,
+    Expression<String>? userProfileUrl,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (username != null) 'username': username,
       if (fullname != null) 'fullname': fullname,
       if (password != null) 'password': password,
+      if (userProfileUrl != null) 'user_profile_url': userProfileUrl,
     });
   }
 
@@ -211,12 +248,14 @@ class UsersCompanion extends UpdateCompanion<User> {
       {Value<int>? id,
       Value<String>? username,
       Value<String>? fullname,
-      Value<String>? password}) {
+      Value<String>? password,
+      Value<String>? userProfileUrl}) {
     return UsersCompanion(
       id: id ?? this.id,
       username: username ?? this.username,
       fullname: fullname ?? this.fullname,
       password: password ?? this.password,
+      userProfileUrl: userProfileUrl ?? this.userProfileUrl,
     );
   }
 
@@ -235,6 +274,9 @@ class UsersCompanion extends UpdateCompanion<User> {
     if (password.present) {
       map['password'] = Variable<String>(password.value);
     }
+    if (userProfileUrl.present) {
+      map['user_profile_url'] = Variable<String>(userProfileUrl.value);
+    }
     return map;
   }
 
@@ -244,7 +286,8 @@ class UsersCompanion extends UpdateCompanion<User> {
           ..write('id: $id, ')
           ..write('username: $username, ')
           ..write('fullname: $fullname, ')
-          ..write('password: $password')
+          ..write('password: $password, ')
+          ..write('userProfileUrl: $userProfileUrl')
           ..write(')'))
         .toString();
   }
