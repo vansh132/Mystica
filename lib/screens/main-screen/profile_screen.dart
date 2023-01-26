@@ -93,17 +93,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               File("$pathImage"),
                             ),
                           )
-                        : Center(
-                            child: Text(
-                            "No profile Image",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              // backgroundColor: Colors.black,
-                              // color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
+                        : CircleAvatar(
+                            backgroundImage: AssetImage("assets/profile.png"),
+                          ),
+
                     // child: Image.file(
                     //   File("C:/Users/hpCND/Downloads/StudentPhoto.jpg"),
                     //   fit: BoxFit.cover,
