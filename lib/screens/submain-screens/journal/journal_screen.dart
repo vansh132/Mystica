@@ -40,13 +40,13 @@ class _JournalScreenState extends State<JournalScreen> {
     _db = AppDb();
 
     Map<String, double> dataMap = {
-      "Jan-Mar": 5,
-      "Apr-Jun": 3,
-      "July-Sept": 2,
-      "Oct-Dec": 6,
+      "Jan-Mar": 0,
+      "Apr-Jun": 0,
+      "July-Sept": 0,
+      "Oct-Dec": 0,
     };
 
-    print("******************userId: $userId");
+    // print("******************userId: $userId");
 
     return Scaffold(
       appBar: AppBar(
@@ -104,7 +104,28 @@ class _JournalScreenState extends State<JournalScreen> {
           }
 
           if (journals != null) {
+            _db.close();
             // print(journals);
+            double janToMarch = 0, aprToJune = 0, julyToSept = 0, octToDec = 0;
+            journals.forEach((j) {
+              if (j.createdAt.month <= 3) {
+                janToMarch = janToMarch + 1;
+              } else if (j.createdAt.month <= 6) {
+                aprToJune = aprToJune + 1;
+              } else if (j.createdAt.month <= 9) {
+                julyToSept = julyToSept + 1;
+              } else if (j.createdAt.month <= 12) {
+                octToDec = octToDec + 1;
+              }
+            });
+
+            dataMap = {
+              "Jan-Mar": janToMarch,
+              "Apr-Jun": aprToJune,
+              "July-Sept": julyToSept,
+              "Oct-Dec": octToDec,
+            };
+
             return Container(
               width: double.infinity,
               height: double.infinity,

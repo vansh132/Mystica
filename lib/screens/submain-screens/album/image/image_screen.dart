@@ -83,6 +83,27 @@ class _ImageScreenState extends State<ImageScreen> {
 
           if (myImages != null) {
             _db.close();
+
+            double janToMarch = 0, aprToJune = 0, julyToSept = 0, octToDec = 0;
+            myImages.forEach((j) {
+              if (j.createdAt.month <= 3) {
+                janToMarch = janToMarch + 1;
+              } else if (j.createdAt.month <= 6) {
+                aprToJune = aprToJune + 1;
+              } else if (j.createdAt.month <= 9) {
+                julyToSept = julyToSept + 1;
+              } else if (j.createdAt.month <= 12) {
+                octToDec = octToDec + 1;
+              }
+            });
+
+            dataMap = {
+              "Jan-Mar": janToMarch,
+              "Apr-Jun": aprToJune,
+              "July-Sept": julyToSept,
+              "Oct-Dec": octToDec,
+            };
+
             return Container(
               // padding: EdgeInsets.all(16),
               width: double.infinity,
