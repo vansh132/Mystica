@@ -171,8 +171,8 @@ class _AlbumScreenState extends State<AlbumScreen> {
                                           child: CircleAvatar(
                                             radius: 30,
                                             // backgroundColor: Colors.white,
-                                            // backgroundImage: FileImage(File(
-                                            //     "C:/Users/hpCND/OneDrive/Desktop/Mini Project/album_cover/cover_3.jpg")),
+                                            backgroundImage: AssetImage(
+                                                "assets/profile.png"),
                                           ),
                                         ),
                                         Expanded(
