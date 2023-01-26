@@ -232,18 +232,45 @@ class _AlbumScreenState extends State<AlbumScreen> {
                       // color: Colors.red,
                       padding: const EdgeInsets.all(32),
                       width: MediaQuery.of(context).size.width * 0.8773,
-                      child: GridView.builder(
-                        itemCount: albums.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          childAspectRatio: 1 / 1,
-                          crossAxisSpacing: 40,
-                          mainAxisSpacing: 48,
-                        ),
-                        itemBuilder: (context, index) =>
-                            AlbumItem(albums[index]),
-                      ),
+                      child: albums.isEmpty
+                          ? Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xffADD8FF),
+                                    Color(0xffEBF5FF)
+                                  ], //final - 1
+                                  stops: [0.4, 0.7],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "No memories   :(",
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    shadows: [Shadow(color: Colors.black)],
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            )
+                          : GridView.builder(
+                              itemCount: albums.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                childAspectRatio: 1 / 1,
+                                crossAxisSpacing: 40,
+                                mainAxisSpacing: 48,
+                              ),
+                              itemBuilder: (context, index) =>
+                                  AlbumItem(albums[index]),
+                            ),
                     ),
                   ],
                 ));

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mytica/data/local/db/app_db.dart';
 import 'package:mytica/screens/submain-screens/album/album_screen.dart';
@@ -88,17 +90,18 @@ class _EditAlbumScreenState extends State<EditAlbumScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
-              height: 500,
-              width: 500,
-              color: Colors.red,
-              child: Column(
-                children: [
-                  Text("Album Information"),
-                  Text("Name: "),
-                  Text("Desciption: "),
-                ],
-              ),
-            ),
+                height: 500,
+                width: 500,
+                color: Colors.transparent,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: Image(
+                    image: FileImage(File(album.imageurl)),
+                    fit: BoxFit.cover,
+                    filterQuality: FilterQuality.high,
+                    colorBlendMode: BlendMode.clear,
+                  ),
+                )),
             Container(
                 width: MediaQuery.of(context).size.width * 0.5,
                 height: MediaQuery.of(context).size.height,

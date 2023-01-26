@@ -230,18 +230,30 @@ class _ImageScreenState extends State<ImageScreen> {
                     // color: Colors.red,
                     padding: const EdgeInsets.all(32),
                     width: MediaQuery.of(context).size.width * 0.7,
-                    child: GridView.builder(
-                      itemCount: myImages.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        childAspectRatio: 1 / 1,
-                        crossAxisSpacing: 40,
-                        mainAxisSpacing: 36,
-                      ),
-                      itemBuilder: (context, index) =>
-                          ImageItem(myImages[index]),
-                    ),
+                    child: myImages.isEmpty
+                        ? Center(
+                            child: Text(
+                              "No Images",
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                shadows: [Shadow(color: Colors.black)],
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        : GridView.builder(
+                            itemCount: myImages.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                              childAspectRatio: 1 / 1,
+                              crossAxisSpacing: 40,
+                              mainAxisSpacing: 36,
+                            ),
+                            itemBuilder: (context, index) =>
+                                ImageItem(myImages[index]),
+                          ),
                   ),
                   const VerticalDivider(
                     width: 4,
