@@ -64,7 +64,6 @@ class _AddImageStateScreen extends State<AddImageScreen> {
       body: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-                // colors: [Color(0xff8EC5FC), Color(0xffE0C3FC)], //final - 1
                 colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
                 stops: [0.4, 0.7],
                 begin: Alignment.topLeft,
