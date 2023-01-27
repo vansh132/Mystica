@@ -290,11 +290,22 @@ class _TodoScreenState extends State<TodoScreen> {
                   Container(
                     padding: const EdgeInsets.all(32),
                     width: MediaQuery.of(context).size.width * 0.7,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) =>
-                          todo_item(todos[index], index),
-                      itemCount: todos.length,
-                    ),
+                    child: todos.isEmpty
+                        ? Center(
+                            child: Text(
+                              "No Tasks pending, Hurray 🥳",
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                shadows: [Shadow(color: Colors.black)],
+                              ),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemBuilder: (context, index) =>
+                                todo_item(todos[index], index),
+                            itemCount: todos.length,
+                          ),
                   ),
                   const VerticalDivider(
                     width: 4,

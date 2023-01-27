@@ -252,12 +252,12 @@ class _HomeScreenState extends State<HomeScreen> {
           child: const Text("Home screen"),
         ),
         actions: [
-          /* IconButton(
+          IconButton(
             onPressed: () {
               buildChart();
             },
             icon: const Icon(Icons.refresh),
-          ) */
+          )
         ],
       ),
       body: Container(
@@ -340,7 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       yValueMapper: (ChartData data, _) => data.notebook),
                   StackedColumn100Series<ChartData, String>(
                       dataSource: chartData,
-                      name: "Album",
+                      name: "Images",
                       xValueMapper: (ChartData data, _) => data.year,
                       yValueMapper: (ChartData data, _) => data.album),
                   StackedColumn100Series<ChartData, String>(
