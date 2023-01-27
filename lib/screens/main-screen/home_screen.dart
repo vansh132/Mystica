@@ -248,13 +248,16 @@ class _HomeScreenState extends State<HomeScreen> {
     _db = AppDb();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home screen"),
+        title: Center(
+          child: const Text("Home screen"),
+        ),
         actions: [
-          IconButton(
-              onPressed: () {
-                buildChart();
-              },
-              icon: const Icon(Icons.refresh))
+          /* IconButton(
+            onPressed: () {
+              buildChart();
+            },
+            icon: const Icon(Icons.refresh),
+          ) */
         ],
       ),
       body: Container(

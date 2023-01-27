@@ -297,11 +297,23 @@ class _ReminderScreenState extends State<ReminderScreen> {
                   Container(
                     padding: const EdgeInsets.all(32),
                     width: MediaQuery.of(context).size.width * 0.7,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) =>
-                          reminder_item(remainderList[index], index),
-                      itemCount: remainderList.length,
-                    ),
+                    child: remainderList.isEmpty
+                        ? Center(
+                            child: Text(
+                              "Don't miss anything :)",
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                shadows: [Shadow(color: Colors.black)],
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        : ListView.builder(
+                            itemBuilder: (context, index) =>
+                                reminder_item(remainderList[index], index),
+                            itemCount: remainderList.length,
+                          ),
                   ),
                   const VerticalDivider(
                     width: 4,
