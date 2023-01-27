@@ -107,7 +107,7 @@ class _CreateNotebookScreenState extends State<CreateNotebookScreen> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight),
         ),
-        width: double.infinity,
+        width: double.infinity, 
         height: MediaQuery.of(context).size.height,
         padding: EdgeInsets.only(
             top: 10,

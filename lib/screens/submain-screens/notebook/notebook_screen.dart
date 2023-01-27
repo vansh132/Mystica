@@ -77,8 +77,7 @@ class _NotebookScreenState extends State<NotebookScreen> {
                             await prefs.remove('userProfileUrl');
                         Navigator.of(context).pop();
                         Navigator.of(context).pop();
-                        Navigator.of(context)
-                            .pushNamed(LoginScreen.routeName);
+                        Navigator.of(context).pushNamed(LoginScreen.routeName);
                       },
                     ),
                     const SizedBox(
@@ -257,17 +256,29 @@ class _NotebookScreenState extends State<NotebookScreen> {
                   Container(
                     padding: const EdgeInsets.all(32),
                     width: MediaQuery.of(context).size.width * 0.7,
-                    child: GridView.builder(
-                      itemCount: notebooks.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              childAspectRatio: 2 / 2,
-                              crossAxisSpacing: 45,
-                              mainAxisSpacing: 35),
-                      itemBuilder: (context, index) =>
-                          NotebookItem(notebooks[index]),
-                    ),
+                    child: notebooks.isEmpty
+                        ? Center(
+                            child: Text(
+                              "Create first notebook 📒",
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                shadows: [Shadow(color: Colors.black)],
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        : GridView.builder(
+                            itemCount: notebooks.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    childAspectRatio: 2 / 2,
+                                    crossAxisSpacing: 45,
+                                    mainAxisSpacing: 35),
+                            itemBuilder: (context, index) =>
+                                NotebookItem(notebooks[index]),
+                          ),
                   ),
                   const VerticalDivider(
                     width: 4,
