@@ -121,7 +121,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                         Navigator.of(context).pop();
                         Navigator.of(context).pop();
                         Navigator.of(context)
-                            .pushReplacementNamed(LoginScreen.routeName);
+                            .pushNamed(LoginScreen.routeName);
                       },
                     ),
                     const SizedBox(

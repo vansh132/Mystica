@@ -78,7 +78,7 @@ class _NotebookScreenState extends State<NotebookScreen> {
                         Navigator.of(context).pop();
                         Navigator.of(context).pop();
                         Navigator.of(context)
-                            .pushReplacementNamed(LoginScreen.routeName);
+                            .pushNamed(LoginScreen.routeName);
                       },
                     ),
                     const SizedBox(

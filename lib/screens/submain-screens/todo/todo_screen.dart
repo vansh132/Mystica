@@ -118,7 +118,7 @@ class _TodoScreenState extends State<TodoScreen> {
                         Navigator.of(context).pop();
                         Navigator.of(context).pop();
                         Navigator.of(context)
-                            .pushReplacementNamed(LoginScreen.routeName);
+                            .pushNamed(LoginScreen.routeName);
                       },
                     ),
                     const SizedBox(
