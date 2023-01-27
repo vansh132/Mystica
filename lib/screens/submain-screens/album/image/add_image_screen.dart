@@ -62,7 +62,16 @@ class _AddImageStateScreen extends State<AddImageScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: Container(
-          height: MediaQuery.of(context).size.height * 0.4,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                // colors: [Color(0xff8EC5FC), Color(0xffE0C3FC)], //final - 1
+                colors: [Color(0xffADD8FF), Color(0xffEBF5FF)], //final - 1
+                stops: [0.4, 0.7],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight),
+          ),
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.only(
               top: 10,
               left: 20,
@@ -71,35 +80,69 @@ class _AddImageStateScreen extends State<AddImageScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'Tag'),
-                controller: _tagController,
-                onSubmitted: (_) => _addImage(),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              TextButton(
-                  onPressed: () async {
-                    FilePickerResult? result =
-                        await FilePicker.platform.pickFiles();
+              Container(
+                width: 500,
+                height: 500,
+                padding: const EdgeInsets.all(32),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    Color(0xffEBF5FF),
+                    Color(0xffADD8FF),
+                  ], //final - 1
+                      stops: [
+                        0.4,
+                        0.7
+                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  // color: Colors.black45,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      topRight: Radius.circular(24),
+                      bottomLeft: Radius.circular(24),
+                      bottomRight: Radius.circular(24)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black,
+                      offset: Offset(0.0, 1.0),
+                      blurRadius: 4.0,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextField(
+                      decoration: const InputDecoration(labelText: 'Tag'),
+                      controller: _tagController,
+                      onSubmitted: (_) => _addImage(),
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    TextButton(
+                        onPressed: () async {
+                          FilePickerResult? result =
+                              await FilePicker.platform.pickFiles();
 
-                    if (result != null) {
-                      PlatformFile file = result.files.first;
-                      String editedPath = file.path.toString();
-                      editedPath = editedPath.replaceAll('\\', '/').trim();
-                      pathImage = editedPath;
-                      // print(file.path);
-                    } else {
-                      // User canceled the picker
-                    }
-                  },
-                  child: Text("Pick an image")),
-              const SizedBox(
-                height: 55,
+                          if (result != null) {
+                            PlatformFile file = result.files.first;
+                            String editedPath = file.path.toString();
+                            editedPath =
+                                editedPath.replaceAll('\\', '/').trim();
+                            pathImage = editedPath;
+                            // print(file.path);
+                          } else {
+                            // User canceled the picker
+                          }
+                        },
+                        child: Text("Pick an image")),
+                    const SizedBox(
+                      height: 55,
+                    ),
+                    ElevatedButton(
+                        onPressed: _addImage, child: const Text("Add Image"))
+                  ],
+                ),
               ),
-              ElevatedButton(
-                  onPressed: _addImage, child: const Text("Add Image"))
             ],
           )),
     );
