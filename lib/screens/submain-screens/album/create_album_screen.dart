@@ -95,59 +95,91 @@ class _CreateAlbumState extends State<CreateAlbum> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight)),
           // color: Colors.yellow,
-          child: Container(
-              height: MediaQuery.of(context).size.height * 0.4,
-              padding: EdgeInsets.only(
-                  top: 10,
-                  left: 20,
-                  right: 20,
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 10),
-              child: Form(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextField(
-                    decoration: const InputDecoration(labelText: 'Album name'),
-                    controller: _albumTitleController,
-                    onSubmitted: (_) => _addAlbumData(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  width: 500,
+                  height: 500,
+                  padding: const EdgeInsets.all(32),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [
+                          Color(0xffEBF5FF),
+                          Color(0xffADD8FF),
+                        ], //final - 1
+                        stops: [
+                          0.4,
+                          0.7
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight),
+                    // color: Colors.black45,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
+                        bottomLeft: Radius.circular(24),
+                        bottomRight: Radius.circular(24)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        offset: Offset(0.0, 1.0),
+                        blurRadius: 4.0,
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextField(
-                    decoration: const InputDecoration(labelText: 'Description'),
-                    controller: _albumDescriptionController,
-                    onSubmitted: (_) => _addAlbumData(),
-                  ),
-                  const SizedBox(
-                    height: 55,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextButton(
-                      onPressed: () async {
-                        FilePickerResult? result =
-                            await FilePicker.platform.pickFiles();
+                  child: Form(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextField(
+                        decoration:
+                            const InputDecoration(labelText: 'Album name'),
+                        controller: _albumTitleController,
+                        onSubmitted: (_) => _addAlbumData(),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextField(
+                        decoration:
+                            const InputDecoration(labelText: 'Description'),
+                        controller: _albumDescriptionController,
+                        onSubmitted: (_) => _addAlbumData(),
+                      ),
+                      const SizedBox(
+                        height: 55,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextButton(
+                          onPressed: () async {
+                            FilePickerResult? result =
+                                await FilePicker.platform.pickFiles();
 
-                        if (result != null) {
-                          PlatformFile file = result.files.first;
-                          String editedPath = file.path.toString();
-                          editedPath = editedPath.replaceAll('\\', '/').trim();
-                          pathImage = editedPath;
-                          // print(file.path);
-                        } else {
-                          // User canceled the picker
-                        }
-                      },
-                      child: Text("Pick a cover image")),
-                  const SizedBox(
-                    height: 55,
-                  ),
-                  ElevatedButton(
-                      onPressed: _addAlbumData, child: const Text("Add Album"))
-                ],
-              ))),
+                            if (result != null) {
+                              PlatformFile file = result.files.first;
+                              String editedPath = file.path.toString();
+                              editedPath =
+                                  editedPath.replaceAll('\\', '/').trim();
+                              pathImage = editedPath;
+                              // print(file.path);
+                            } else {
+                              // User canceled the picker
+                            }
+                          },
+                          child: Text("Pick a cover image")),
+                      const SizedBox(
+                        height: 55,
+                      ),
+                      ElevatedButton(
+                          onPressed: _addAlbumData,
+                          child: const Text("Add Album"))
+                    ],
+                  ))),
+            ],
+          ),
         ));
   }
 

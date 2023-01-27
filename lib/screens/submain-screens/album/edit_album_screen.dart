@@ -106,37 +106,66 @@ class _EditAlbumScreenState extends State<EditAlbumScreen> {
                 width: MediaQuery.of(context).size.width * 0.5,
                 height: MediaQuery.of(context).size.height,
                 // color: Colors.yellow,
-                child: Container(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    padding: EdgeInsets.only(
-                        top: 10,
-                        left: 20,
-                        right: 20,
-                        bottom: MediaQuery.of(context).viewInsets.bottom + 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextField(
-                          controller: _titleController,
-                          decoration:
-                              const InputDecoration(labelText: 'Album name'),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        // height: MediaQuery.of(context).size.height * 0.4,
+                        width: 500,
+                        height: 500,
+                        padding: const EdgeInsets.all(32),
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [
+                                Color(0xffEBF5FF),
+                                Color(0xffADD8FF),
+                              ], //final - 1
+                              stops: [
+                                0.4,
+                                0.7
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight),
+                          // color: Colors.black45,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(24),
+                              topRight: Radius.circular(24),
+                              bottomLeft: Radius.circular(24),
+                              bottomRight: Radius.circular(24)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              offset: Offset(0.0, 1.0),
+                              blurRadius: 4.0,
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextField(
-                          controller: _descriptionController,
-                          decoration:
-                              const InputDecoration(labelText: 'Description'),
-                        ),
-                        const SizedBox(
-                          height: 55,
-                        ),
-                        ElevatedButton(
-                            onPressed: _updateAlbum,
-                            child: const Text("Update Album"))
-                      ],
-                    ))),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextField(
+                              controller: _titleController,
+                              decoration: const InputDecoration(
+                                  labelText: 'Album name'),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TextField(
+                              controller: _descriptionController,
+                              decoration: const InputDecoration(
+                                  labelText: 'Description'),
+                            ),
+                            const SizedBox(
+                              height: 55,
+                            ),
+                            ElevatedButton(
+                                onPressed: _updateAlbum,
+                                child: const Text("Update Album"))
+                          ],
+                        )),
+                  ],
+                )),
           ],
         ),
       ),
