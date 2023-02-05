@@ -113,7 +113,7 @@ class _EditNotebookScreenState extends State<EditNotebookScreen> {
                 end: Alignment.bottomRight),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
                   width: 500,
@@ -187,8 +187,15 @@ class _EditNotebookScreenState extends State<EditNotebookScreen> {
                         height: 55,
                       ),
                       ElevatedButton(
-                          onPressed: _updateNotebook,
-                          child: const Text("Update Notebook"))
+                        onPressed: _updateNotebook,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: const Text(
+                            "Edit Notebook",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      )
                     ],
                   )),
             ],

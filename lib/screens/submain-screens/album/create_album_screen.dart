@@ -83,7 +83,7 @@ class _CreateAlbumState extends State<CreateAlbum> {
     _db = AppDb();
     return Scaffold(
         appBar: AppBar(
-          title: Text("Create an album"),
+          title: Center(child: Text("Create an album")),
         ),
         body: Container(
           width: MediaQuery.of(context).size.width,
@@ -133,8 +133,14 @@ class _CreateAlbumState extends State<CreateAlbum> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextField(
-                        decoration:
-                            const InputDecoration(labelText: 'Album name'),
+                        decoration: const InputDecoration(
+                          labelText: 'Album Name',
+                          labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 0.24,
+                          ),
+                        ),
                         controller: _albumTitleController,
                         onSubmitted: (_) => _addAlbumData(),
                       ),
@@ -142,16 +148,22 @@ class _CreateAlbumState extends State<CreateAlbum> {
                         height: 15,
                       ),
                       TextField(
-                        decoration:
-                            const InputDecoration(labelText: 'Description'),
+                        decoration: const InputDecoration(
+                          labelText: 'Description',
+                          labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 0.24,
+                          ),
+                        ),
                         controller: _albumDescriptionController,
                         onSubmitted: (_) => _addAlbumData(),
                       ),
                       const SizedBox(
-                        height: 55,
+                        height: 48,
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 12,
                       ),
                       TextButton(
                           onPressed: () async {
@@ -169,13 +181,26 @@ class _CreateAlbumState extends State<CreateAlbum> {
                               // User canceled the picker
                             }
                           },
-                          child: Text("Pick a cover image")),
+                          child: Text(
+                            "Pick a cover image",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
                       const SizedBox(
                         height: 55,
                       ),
                       ElevatedButton(
-                          onPressed: _addAlbumData,
-                          child: const Text("Add Album"))
+                        onPressed: _addAlbumData,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: const Text(
+                            "Create Album",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      )
                     ],
                   ))),
             ],

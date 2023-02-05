@@ -165,7 +165,13 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
                   ),
                   ElevatedButton(
                     onPressed: _addNote,
-                    child: const Text("Add Note"),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Text(
+                        "Add Note",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
                   )
                 ],
               ),

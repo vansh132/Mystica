@@ -107,7 +107,7 @@ class _CreateNotebookScreenState extends State<CreateNotebookScreen> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight),
         ),
-        width: double.infinity, 
+        width: double.infinity,
         height: MediaQuery.of(context).size.height,
         padding: EdgeInsets.only(
             top: 10,
@@ -202,8 +202,15 @@ class _CreateNotebookScreenState extends State<CreateNotebookScreen> {
                     height: 35,
                   ),
                   ElevatedButton(
-                      onPressed: _addNotebook,
-                      child: const Text("Add Notebook"))
+                    onPressed: _addNotebook,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Text(
+                        "Add Notebook",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

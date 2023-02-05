@@ -161,7 +161,13 @@ class _EditAlbumScreenState extends State<EditAlbumScreen> {
                             ),
                             ElevatedButton(
                                 onPressed: _updateAlbum,
-                                child: const Text("Update Album"))
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: const Text(
+                                    "Update Album",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                )),
                           ],
                         )),
                   ],

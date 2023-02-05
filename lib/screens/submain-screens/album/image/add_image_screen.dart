@@ -60,7 +60,11 @@ class _AddImageStateScreen extends State<AddImageScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Center(
+          child: Text("Add Image"),
+        ),
+      ),
       body: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -110,12 +114,19 @@ class _AddImageStateScreen extends State<AddImageScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextField(
-                      decoration: const InputDecoration(labelText: 'Tag'),
+                      decoration: const InputDecoration(
+                        labelText: 'Tag',
+                        labelStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          letterSpacing: 0.24,
+                        ),
+                      ),
                       controller: _tagController,
                       onSubmitted: (_) => _addImage(),
                     ),
                     const SizedBox(
-                      height: 24,
+                      height: 30,
                     ),
                     TextButton(
                         onPressed: () async {
@@ -133,12 +144,26 @@ class _AddImageStateScreen extends State<AddImageScreen> {
                             // User canceled the picker
                           }
                         },
-                        child: Text("Pick an image")),
+                        child: Text(
+                          "Pick an image",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )),
                     const SizedBox(
                       height: 55,
                     ),
                     ElevatedButton(
-                        onPressed: _addImage, child: const Text("Add Image"))
+                      onPressed: _addImage,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Text(
+                          "Add Image to Album",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
