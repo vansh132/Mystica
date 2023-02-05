@@ -192,7 +192,14 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
                     SizedBox(
                       width: 550,
                       child: TextField(
-                        decoration: const InputDecoration(labelText: 'Title'),
+                        decoration: const InputDecoration(
+                          labelText: 'Title',
+                          labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 0.24,
+                          ),
+                        ),
                         controller: _journalTitleController,
                         onSubmitted: (_) => _addJournal(),
                       ),
@@ -203,8 +210,14 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
                     SizedBox(
                       width: 550,
                       child: TextField(
-                        decoration:
-                            const InputDecoration(labelText: 'Description'),
+                        decoration: const InputDecoration(
+                          labelText: 'Description',
+                          labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 0.24,
+                          ),
+                        ),
                         maxLines: 4,
                         controller: _journalDescriptionController,
                         onSubmitted: (_) => _addJournal(),
@@ -216,7 +229,14 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
                     SizedBox(
                       width: 550,
                       child: TextField(
-                        decoration: const InputDecoration(labelText: 'Tag'),
+                        decoration: const InputDecoration(
+                          labelText: 'Tag',
+                          labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 0.24,
+                          ),
+                        ),
                         controller: _journalTagController,
                         onSubmitted: (_) => _addJournal(),
                       ),
@@ -225,8 +245,15 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
                       height: 35,
                     ),
                     ElevatedButton(
-                        onPressed: _addJournal,
-                        child: const Text("Add Journal"))
+                      onPressed: _addJournal,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Text(
+                          "Add Journal",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
