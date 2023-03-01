@@ -71,6 +71,9 @@ class _EditAlbumScreenState extends State<EditAlbumScreen> {
     print("Alubm - $album");
     return Scaffold(
       appBar: AppBar(
+        title: Center(
+          child: Text("Edit Album"),
+        ),
         actions: [
           IconButton(
               onPressed: _deleteAlbum,

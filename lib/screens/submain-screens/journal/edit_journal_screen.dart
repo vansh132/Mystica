@@ -79,7 +79,7 @@ class _EditJournalScreenState extends State<EditJournalScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Edit Journal"),
+        title: const Center(child: Text("Edit Journal")),
         actions: [
           GestureDetector(
             onTap: () {

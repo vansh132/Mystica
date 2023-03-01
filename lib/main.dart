@@ -53,10 +53,10 @@ class MyApp extends StatelessWidget {
           primarySwatch: myColor,
           textTheme:
               TextTheme(displayMedium: TextStyle(color: Color(0xfffefae0)))),
-      home: LoginScreen(),
+      home: GetStartedScreen(),
       routes: {
         //main-screens
-        // LoginScreen.routeName: (ctx) => LoginScreen(),
+        LoginScreen.routeName: (ctx) => LoginScreen(),
         SignUpScreen.routeName: (ctx) => SignUpScreen(),
         HomeScreen.routeName: (ctx) => HomeScreen(),
         ProfileScreen.routeName: (ctx) => const ProfileScreen(),
@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
         ReminderScreen.routeName: (ctx) => const ReminderScreen(),
         //image-screens
         ImageScreen.routeName: (ctx) => const ImageScreen(),
-        DetailImageScreen.routeName:(ctx) => const DetailImageScreen(),
+        DetailImageScreen.routeName: (ctx) => const DetailImageScreen(),
         AddImageScreen.routeName: (ctx) => const AddImageScreen(),
         //testing-screen
         TestingScreen.routeName: (ctx) => TestingScreen()
