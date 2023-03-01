@@ -211,42 +211,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                "Username: ",
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Text(
-                                username,
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Divider(
-                          height: 2,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: SizedBox(
-                                width: 10,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Text(
                                 "Full name: ",
                                 style: TextStyle(
                                   fontSize: 24,
@@ -283,6 +247,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Expanded(
                               flex: 2,
                               child: Text(
+                                "Username: ",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                username,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          height: 2,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: SizedBox(
+                                width: 10,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
                                 "Password: ",
                                 style: TextStyle(
                                   fontSize: 24,
@@ -294,7 +294,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                "I won't tell you",
+                                "******",
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
