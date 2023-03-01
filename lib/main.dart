@@ -53,10 +53,10 @@ class MyApp extends StatelessWidget {
           primarySwatch: myColor,
           textTheme:
               TextTheme(displayMedium: TextStyle(color: Color(0xfffefae0)))),
-      home: GetStartedScreen(),
+      home: LoginScreen(),
       routes: {
         //main-screens
-        LoginScreen.routeName: (ctx) => LoginScreen(),
+        // LoginScreen.routeName: (ctx) => LoginScreen(),
         SignUpScreen.routeName: (ctx) => SignUpScreen(),
         HomeScreen.routeName: (ctx) => HomeScreen(),
         ProfileScreen.routeName: (ctx) => const ProfileScreen(),

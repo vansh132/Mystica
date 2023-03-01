@@ -134,11 +134,15 @@ class _NotebookItemState extends State<NotebookItem> {
             SizedBox(
               height: 16,
             ),
-            Text(
-              widget.notebook.description,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
+            Expanded(
+              flex: 3,
+              child: Text(
+                widget.notebook.description,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  overflow: TextOverflow.fade,
+                ),
               ),
             ),
             Expanded(

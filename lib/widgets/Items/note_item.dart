@@ -111,13 +111,16 @@ class _NoteItemState extends State<NoteItem> {
             SizedBox(
               height: 16,
             ),
-            Text(
-              widget.note.body,
-              overflow: TextOverflow.fade,
-              style: const TextStyle(
-                fontSize: 20,
-                letterSpacing: 1,
-                // fontFamily: 'NotoSerifGeorgian',
+            Expanded(
+              flex: 3,
+              child: Text(
+                widget.note.body,
+                overflow: TextOverflow.fade,
+                style: const TextStyle(
+                  fontSize: 20,
+                  letterSpacing: 1,
+                  // fontFamily: 'NotoSerifGeorgian',
+                ),
               ),
             ),
             Expanded(
