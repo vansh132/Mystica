@@ -5,7 +5,8 @@ class GetStartedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Welcome to your Mytica World")),
+        appBar: AppBar(
+            title: const Center(child: Text("Welcome to your Mystica World"))),
         body: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
