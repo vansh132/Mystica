@@ -1,16 +1,35 @@
-# mytica
+# Mystica - To-Do List and Journal with Mood Tracking
 
-A new Flutter project.
+**Mystica** is a standalone to-do list application that goes beyond task management by integrating personalized journal writing and mood tracking features. The app offers a complete productivity and well-being experience with reminders and insights into emotional well-being. Built using **Flutter** and **Sqflite**, Mystica ensures efficient data storage and a smooth user experience.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **To-Do List**: Organize daily tasks, set priorities, and manage deadlines with a simple yet effective task management system.
+- **Journal Writing**: Personalized journal entries for users to reflect on their day, thoughts, and goals.
+- **Mood Tracking**: Monitor emotional well-being over time with mood entries tied to journal entries, offering insights into mental health patterns.
+- **Reminders**: Get notifications for pending tasks and journal entries to stay on track.
+- **Insights**: Track progress and view analytics based on task completion and mood trends.
+- **Offline Storage**: Local database storage using Sqflite for seamless offline access.
 
-A few resources to get you started if this is your first Flutter project:
+## Tech Stack
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Flutter**: The UI is built with Flutter for cross-platform compatibility (iOS and Android).
+- **Sqflite**: Local SQLite database to store to-do items, journal entries, and mood tracking data.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Installation
+
+1. Clone this repository to your local machine:
+    ```bash
+    git clone https://github.com/vansh132/mystica.git
+    cd mystica
+    ```
+
+2. Install dependencies:
+    ```bash
+    flutter pub get
+    ```
+
+3. Run the app on an emulator or physical device:
+    ```bash
+    flutter run
+    ```
