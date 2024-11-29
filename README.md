@@ -13,7 +13,7 @@
 
 ## Tech Stack
 
-- **Flutter**: The UI is built with Flutter for cross-platform compatibility (iOS and Android).
+- **Flutter**: The UI is built with Flutter for cross-platform compatibility.
 - **Sqflite**: Local SQLite database to store to-do items, journal entries, and mood tracking data.
 
 ## Installation
